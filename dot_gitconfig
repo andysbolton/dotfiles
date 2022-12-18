@@ -1,0 +1,18 @@
+# This is Git's per-user configuration file.
+[user]
+	email = andy.bolton@smartwyre.com
+	name = Andy Bolton
+[core]
+  	editor = code --wait
+[diff]
+  	tool = vscode
+[difftool "vscode"]
+  	cmd = code --wait --diff $LOCAL $REMOTE
+[merge]
+  	tool = vscode
+[mergetool "vscode"]
+  	cmd = code --wait $MERGED
+[push]
+	autoSetupRemote = true
+[safe]
+	directory = *
