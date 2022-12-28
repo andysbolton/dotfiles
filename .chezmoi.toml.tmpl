@@ -1,0 +1,12 @@
+{{- $email := promptStringOnce . "email" "Email address" -}}
+
+[data]
+    email = {{ $email | quote }}
+    name = "Andy Bolton"
+
+[edit]
+    command = "code"
+    args = ["--wait"]
+
+[cd]
+    command = "pwsh"
