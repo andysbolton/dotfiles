@@ -10,6 +10,9 @@ Invoke-Expression (&starship init powershell)
 Enable-TransientPrompt
 
 Set-Alias -Name cm -Value chezmoi
+function cmad() {
+    chezmoi apply --dry-run --verbose
+}
 
 . "$PSScriptRoot\Util.ps1"
 . "$PSScriptRoot\Git.ps1"

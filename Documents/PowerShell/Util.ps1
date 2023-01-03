@@ -1,3 +1,20 @@
+function sudo() {
+  if ($args.Length -eq 1) {
+    Start-Process $args[0] -Verb RunAs
+  }
+  if ($args.Length -gt 1) {
+    Start-Process $args[0] -ArgumentList $args[1..$args.Length] -Verb RunAs
+  }
+}
+
+function which($Name) { 
+  Get-Command $Name -ErrorAction SilentlyContinue | Select-Object Definition
+}
+
+function touch($File) { 
+  "" | Out-File $File -Encoding ASCII 
+}
+
 function Set-Desktop {
   [Alias("dt")]
   param()
@@ -8,12 +25,6 @@ function Set-LocationToProfile {
   [Alias("pp")]
   param()
   code (Resolve-Path "$profile\..")
-}
-
-function Run-WithTimer([ScriptBlock]$Command) {
-  $stopWatch = [System.Diagnostics.Stopwatch]::StartNew()
-  Invoke-Command -ScriptBlock $Command
-  Write-Host "Completed in $($stopWatch.Elapsed.ToString())" -ForegroundColor Green;
 }
 
 function Get-PrettyJson([string]$JsonString) {
@@ -96,7 +107,7 @@ function List-FileSizes() {
   Get-ChildItem -Recurse | ForEach-Object (Measure-Object -InputObject $_ -Property Length -Sum -ErrorAction Stop).Sum / 1MB
 }
 
-function Reload-Profile() {
+function Reload-Profile {
   . $profile
 }
 
@@ -140,21 +151,21 @@ function Get-ChocoPackagesWithDependencies() {
     [xml]$xml = Get-Content $p.fullname
     $dependencies = $xml.package.metadata.dependencies.dependency
     if ($null -eq $dependencies) {  
-      $obj = New-Object -TypeName psobject
-      $obj | Add-Member -MemberType NoteProperty -name package -Value $xml.package.metadata.id
-      $obj | Add-Member -MemberType NoteProperty -name packageversion -Value $xml.package.metadata.version
-      $obj | Add-Member -MemberType NoteProperty -name dependency -Value ""
-      $obj | Add-Member -MemberType NoteProperty -name dependencyversion -Value ""
-      $obj
+      [pscustomobject]{
+        package = $xml.package.metadata.id;
+        packageversion = $xml.package.metadata.version;
+        dependency = "";
+        dependencyversion = ""
+      }
       continue
     }
-    foreach($d in $dependencies){
-      $obj = New-Object -TypeName psobject
-      $obj | Add-Member -MemberType NoteProperty -name package -Value $xml.package.metadata.id
-      $obj | Add-Member -MemberType NoteProperty -name packageversion -Value $xml.package.metadata.version
-      $obj | Add-Member -MemberType NoteProperty -name dependency -Value $d.id
-      $obj | Add-Member -MemberType NoteProperty -name dependencyversion -Value $d.version
-      $obj
+    foreach ($d in $dependencies){
+      [pscustomobject]{
+        package = $xml.package.metadata.id;
+        packageversion = $xml.package.metadata.version;
+        dependency = $d.id;
+        dependencyversion = $d.version;
+      }
     }
   }
 }
