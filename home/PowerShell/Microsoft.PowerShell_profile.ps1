@@ -17,7 +17,7 @@ function cma() {
     chezmoi apply --verbose
 }
 
-. "$PSScriptRoot\Util.ps1"
-. "$PSScriptRoot\Git.ps1"
+. "$PSScriptRoot\Functions.ps1"
+. "$PSScriptRoot\GitFunctions.ps1"
 . "$PSScriptRoot\Smartwyre.ps1"
 . "$PSScriptRoot\SmartwyreDb.ps1"
