@@ -6,12 +6,15 @@ function Invoke-Starship-TransientFunction {
 }
 
 Invoke-Expression (&starship init powershell)
-  
+
 Enable-TransientPrompt
 
 Set-Alias -Name cm -Value chezmoi
 function cmad() {
     chezmoi apply --dry-run --verbose
+}
+function cma() {
+    chezmoi apply --verbose
 }
 
 . "$PSScriptRoot\Util.ps1"

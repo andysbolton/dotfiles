@@ -1,1 +1,1 @@
-# Start-Process -Verb "runaAs" ~/Documents/Powershells/Remove-Spyware.ps1
+Start-Process pwsh -Verb "RunAs" -Wait -ArgumentList ("-NoExit", "-Command", "~/Documents/Powershell/Remove-Spyware.ps1")
