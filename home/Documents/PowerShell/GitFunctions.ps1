@@ -26,9 +26,13 @@ function Update-Branch {
 
 function New-GitBranch {
   [Alias("pn")]
-  param([Switch][Alias("n")]$NoVerify) 
+  param(
+    [Switch]
+    [Alias("n")]
+    $NoVerify
+  ) 
   Test-IsGitBranch
-  "git push --set-upstream origin" + $(if ($NoVerify) { " --no-verify" }) + " $(git branch --show-current)" | Invoke-Expression 
+  "git push --set-upstream origin $(if ($NoVerify) { "--no-verify" }) $(git branch --show-current)" | Invoke-Expression 
 }
 
 function New-PullRequest {
