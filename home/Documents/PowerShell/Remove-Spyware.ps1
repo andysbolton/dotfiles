@@ -1,55 +1,42 @@
-function Remove-Package($Package) {
-    $packages = Get-AppxPackage $Package -AllUsers 
-    if ($null -eq $packages) {
-        return
+param([Switch]$DryRun)
+
+function Remove-Package() {
+    param(
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
+        [String[]]
+        $PackageNames
+    )
+    process 
+    {
+        foreach ($packageName in $PackageNames) {
+            if ($DryRun) {
+                Write-Host "Will remove $packageName."
+                continue
+            }
+
+            $appx = Get-AppxPackage $packageName -AllUsers 
+            if ($null -eq $appx) {
+                return
+            }
+            $appx | Remove-AppxPackage -AllUsers
+            Get-AppXProvisionedPackage -Online 
+                | Where-Object DisplayName -like $packageName
+                | Remove-AppxProvisionedPackage -Online -AllUsers
+        }
     }
-    $packages | Remove-AppxPackage -AllUsers
-    Get-AppXProvisionedPackage -Online | Where-Object DisplayName -like $Package | Remove-AppxProvisionedPackage -Online -AllUsers
 }
 
-(
-    "*.AutodeskSketchBook",
-    "*.DisneyMagicKingdoms",
-    "*.MarchofEmpires",
-    "*.SlingTV",
-    "*.TikTok",
-    "*.Twitter",
-    "AdobeSystemsIncorporated.AdobeCreativeCloudExpress",
-    "AmazonVideo.PrimeVideo",
-    "Clipchamp.Clipchamp",
-    "Disney*",
-    "DolbyLaboratories.DolbyAccess",
-    "Facebook.Facebook*",
-    "Facebook.Instagram*",
-    "king.com.BubbleWitch3Saga",
-    "king.com.CandyCrushSodaSaga",
-    "Microsoft.3DBuilder",
-    "Microsoft.549981C3F5F10",
-    "Microsoft.BingFinance",
-    "Microsoft.BingNews",
-    "Microsoft.BingSports",
-    "Microsoft.BingWeather",
-    "Microsoft.GamingApp",
-    "Microsoft.Messaging",
-    "Microsoft.MicrosoftOfficeHub",
-    "Microsoft.MicrosoftSolitaireCollection",
-    "Microsoft.MicrosoftStickyNotes",
-    "Microsoft.Office.OneNote",
-    "Microsoft.Office.Sway",
-    "Microsoft.OneConnect",
-    "Microsoft.Paint",
-    "Microsoft.People",
-    "Microsoft.Print3D",
-    "Microsoft.SkypeApp",
-    "Microsoft.ToDos",
-    "Microsoft.WindowsAlarms",
-    "Microsoft.WindowsCommunicationsApps",
-    "Microsoft.WindowsMaps",
-    "Microsoft.WindowsSoundRecorder",
-    "Microsoft.XboxGamingOverlay",
-    "Microsoft.ZuneMusic",
-    "Microsoft.ZuneVideo",
-    "SpotifyAB.SpotifyMusic",
-    "Microsoft.XboxIdentityProvider",
-    "*.Netflix"
-) | ForEach-Object { Remove-Package -Package $_ }
+$Excemptions = @(
+    "Microsoft.OneDriveSync",
+    "Microsoft.Windows.Photos",
+    "Microsoft.WindowsTerminal",
+    "Microsoft.Winget.Source",
+    "Microsoft.YourPhone"
+)
+ 
+Get-AppxPackage -AllUsers 
+    | Where-Object { $_.NonRemovable -eq $false -and -not ($Excemptions -contains $_.Name) } 
+    | Select-Object -ExpandProperty Name 
+    | Get-Unique
+    | Sort-Object 
+    | Remove-Package

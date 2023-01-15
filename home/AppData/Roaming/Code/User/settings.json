@@ -69,5 +69,8 @@
   },
   "terminal.integrated.fontFamily": "CaskaydiaCove NF",
   "files.insertFinalNewline": true,
-  "terminal.integrated.defaultProfile.windows": "PowerShell"
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
