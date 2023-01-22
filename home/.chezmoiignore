@@ -8,4 +8,5 @@ packages
 .chezmoiscripts/windows/**
 Documents
 AppData
+private_dot_config/private_fish
 {{ end }}
