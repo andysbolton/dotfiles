@@ -1,3 +1,7 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/usr/bin/env pwsh
+{{- end }}
+
 $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $true
 

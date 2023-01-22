@@ -8,4 +8,13 @@
     command = "code"
 
 [cd]
+    {{- if eq .chezmoi.os "windows" }}
     command = "pwsh"
+    {{- end }}
+    {{- if eq .chezmoi.os "linux" }}
+    command = "fish"
+    {{- end }}
+
+[merge]
+    command = "code"
+    args = ["--wait", "--merge"]

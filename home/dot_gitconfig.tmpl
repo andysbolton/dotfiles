@@ -14,5 +14,7 @@
   	cmd = code --wait $MERGED
 [push]
 	autoSetupRemote = true
-[safe]
-	directory = *
+[credential "https://github.com"]
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = !/usr/bin/gh auth git-credential
