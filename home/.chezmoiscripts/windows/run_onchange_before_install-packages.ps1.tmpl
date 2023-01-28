@@ -11,9 +11,7 @@ Install-Packages (Get-Content "$PackagesSourcePath/common.txt")
 
 {{ if eq .chezmoi.hostname "work" }} 
 Install-Packages (Get-Content "$PackagesSourcePath/work.txt")
-{{ end -}}
-
-{{ if eq .chezmoi.hostname "personal" }}
+{{ else if eq .chezmoi.hostname "personal" }}
 Install-Packages (Get-Content "$PackagesSourcePath/personal.txt")
 {{ end -}} 
 
