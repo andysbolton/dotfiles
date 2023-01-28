@@ -2,12 +2,12 @@ packages
 
 {{- if eq .chezmoi.os "windows" }}
 .chezmoiscripts/linux/**
-.config/fish
-.config/powershell
+.config/fish/**
+.config/powershell/**
 {{- end }}
 
 {{- if eq .chezmoi.os "linux" }}
 .chezmoiscripts/windows/**
-Documents
-AppData
+Documents/**
+AppData/**
 {{- end }}
