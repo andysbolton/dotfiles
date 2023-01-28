@@ -14,6 +14,7 @@ golang
 GoogleChrome
 libreoffice-fresh
 logitech-options
+meld
 microsoft-windows-terminal
 op
 parsec

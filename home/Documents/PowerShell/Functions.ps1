@@ -100,7 +100,7 @@ function Get-AllEmptyDirectories($Dir = ".") {
 }
 
 function List-Functions() {
-  Get-ChildItem function: | Where-Object { (-Not $_.Source) -AND ($_.HelpFile -notmatch "System\.Management") }
+  Get-ChildItem function: | Where-Object { (-not $_.Source) -and ($_.HelpFile -notmatch "System\.Management") }
 }
 
 function List-FileSizes() {

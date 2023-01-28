@@ -72,5 +72,6 @@
   "terminal.integrated.defaultProfile.windows": "PowerShell",
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "git.mergeEditor": true
 }

@@ -1,9 +1,9 @@
-# This is Git's per-user configuration file.
 [user]
 	email = {{ .email }}
 	name = {{ .name }}
 [core]
   	editor = code --wait
+	longpaths = true
 [diff]
   	tool = vscode
 [difftool "vscode"]
@@ -11,10 +11,13 @@
 [merge]
   	tool = vscode
 [mergetool "vscode"]
-  	cmd = code --wait $MERGED
+	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 [push]
 	autoSetupRemote = true
+{{- $ghPath := lookPath "gh" }}
+{{- if $ghPath }}
 [credential "https://github.com"]
-	helper = !/usr/bin/gh auth git-credential
+	helper = gh auth git-credential
 [credential "https://gist.github.com"]
-	helper = !/usr/bin/gh auth git-credential
+	helper = gh auth git-credential
+{{- end }}

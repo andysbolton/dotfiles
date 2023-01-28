@@ -16,5 +16,8 @@
     {{- end }}
 
 [merge]
-    command = "code"
-    args = ["--wait", "--merge"]
+    command = "pwsh"
+    args = [
+        "-Command",
+        "Start-Process -Wait meld -ArgumentList (\"{{ "{{ .Destination }}" }}\", \"{{ "{{ .Source }}" }}\", \"{{ "{{ .Target }}" }}\")",
+    ]

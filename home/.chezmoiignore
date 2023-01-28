@@ -1,12 +1,12 @@
 packages
 
-{{ if ne .chezmoi.os "linux" }}
+{{- if eq .chezmoi.os "windows" }}
 .chezmoiscripts/linux/**
-{{ end }}
+.config/fish
+{{- end }}
 
-{{ if ne .chezmoi.os "windows" }}
+{{- if eq .chezmoi.os "linux" }}
 .chezmoiscripts/windows/**
 Documents
 AppData
-private_dot_config/private_fish
-{{ end }}
+{{- end }}

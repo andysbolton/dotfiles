@@ -1,5 +1,7 @@
 Import-Module PSReadLine
 Set-PSReadLineOption -PredictionSource History
+Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
+Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
 
 function Invoke-Starship-TransientFunction {
     &starship module character
