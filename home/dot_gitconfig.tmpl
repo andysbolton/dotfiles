@@ -16,7 +16,7 @@
 	autoSetupRemote = true
 {{- $ghPath := lookPath "gh" }}
 {{- if $ghPath }}
-{{- $ghCmd := eq .chezmoi.os "linux" | ternary (printf "!%s" $ghPath) (printf "\"%s\"" $ghPath) }}
+{{- $ghCmd := eq .chezmoi.os "linux" | ternary (printf "!%s" $ghPath) "gh.exe" }}
 [credential "https://github.com"]
 	helper = {{ $ghCmd }} auth git-credential
 [credential "https://gist.github.com"]
