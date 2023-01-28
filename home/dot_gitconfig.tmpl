@@ -17,7 +17,7 @@
 {{- $ghPath := lookPath "gh" }}
 {{- if $ghPath }}
 [credential "https://github.com"]
-	helper = gh auth git-credential
+	helper = !{{$ghPath}} auth git-credential
 [credential "https://gist.github.com"]
-	helper = gh auth git-credential
+	helper = !{{$ghPath}} auth git-credential
 {{- end }}
