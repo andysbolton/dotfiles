@@ -6,8 +6,7 @@ function Remove-Package() {
         [String[]]
         $PackageNames
     )
-    process 
-    {
+    process {
         foreach ($packageName in $PackageNames) {
             if ($DryRun) {
                 Write-Host "Will remove $packageName."
@@ -20,8 +19,8 @@ function Remove-Package() {
             }
             $appx | Remove-AppxPackage -AllUsers
             Get-AppXProvisionedPackage -Online 
-                | Where-Object DisplayName -like $packageName
-                | Remove-AppxProvisionedPackage -Online -AllUsers
+            | Where-Object DisplayName -like $packageName
+            | Remove-AppxProvisionedPackage -Online -AllUsers
         }
     }
 }
@@ -35,8 +34,8 @@ $Excemptions = @(
 )
  
 Get-AppxPackage -AllUsers 
-    | Where-Object { $_.NonRemovable -eq $false -and -not ($Excemptions -contains $_.Name) } 
-    | Select-Object -ExpandProperty Name 
-    | Get-Unique
-    | Sort-Object 
-    | Remove-Package
+| Where-Object { $_.NonRemovable -eq $false -and -not ($Excemptions -contains $_.Name) } 
+| Select-Object -ExpandProperty Name 
+| Get-Unique
+| Sort-Object 
+| Remove-Package

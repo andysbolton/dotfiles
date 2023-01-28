@@ -1,5 +1,6 @@
 Import-Module PSReadLine
 Set-PSReadLineOption -PredictionSource History
+Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
 Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
 
@@ -19,7 +20,13 @@ function cma() {
     chezmoi apply --verbose
 }
 
-. "$PSScriptRoot\Functions.ps1"
-. "$PSScriptRoot\GitFunctions.ps1"
-. "$PSScriptRoot\Smartwyre.ps1"
-. "$PSScriptRoot\SmartwyreDb.ps1"
+function Import-Scripts($Scripts) {
+    $Scripts | ForEach-Object {
+        $path = "$PSScriptRoot/$_"
+        if (Test-Path $path) {
+            . $path
+        }
+    }
+}
+
+Import-Scripts ("Functions.ps1", "GitFunctions.ps1", "Smartwyre.ps1", "SmartwyreDb.ps1")
