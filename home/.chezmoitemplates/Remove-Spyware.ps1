@@ -15,7 +15,7 @@ function Remove-Package() {
 
             $appx = Get-AppxPackage $packageName -AllUsers 
             if ($null -eq $appx) {
-                return
+                continue
             }
             $appx | Remove-AppxPackage -AllUsers
             Get-AppXProvisionedPackage -Online 
