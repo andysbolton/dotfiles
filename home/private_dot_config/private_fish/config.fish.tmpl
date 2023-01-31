@@ -22,11 +22,12 @@ function add -a message
 end
 
 function addp -a message
-    add
+    add $message
     git push
 end
 
 function starship_transient_prompt_func
+    starship module character
     starship module character
 end
 
