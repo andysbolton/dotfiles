@@ -12,7 +12,13 @@ alias bfg="java -jar /usr/share/java/bfg-1.14.0.jar"
 function add -a message
     set branch (git branch | grep \* | cut -d ' ' -f2)
     set match (string match --groups-only -r '(?i)(smart|ops-\d+)' $branch)
-    git commit -am "$match: $message"
+    if set -q match
+        set commit "$match: $message"
+    else
+        set commit "$message"
+    end
+    git commit -am "$commit"
+    echo "Commited with message: $message"
 end
 
 function addp -a message
@@ -21,11 +27,11 @@ function addp -a message
 end
 
 function starship_transient_prompt_func
-  starship module character
+    starship module character
 end
 
 function jit_and_conn
-	vm_jit_request_access.sh $argv && ssh $argv
+    vm_jit_request_access.sh $argv && ssh $argv
 end
 
 function set_mtu 
