@@ -24,9 +24,10 @@ function Import-Scripts($Scripts) {
     $Scripts | ForEach-Object {
         $path = "$PSScriptRoot/$_"
         if (Test-Path $path) {
+            Write-Host "Loading $path."
             . $path
         }
     }
 }
 
-Import-Scripts ("Functions.ps1", "GitFunctions.ps1", "Smartwyre.ps1", "SmartwyreDb.ps1")
+. Import-Scripts ("Functions.ps1", "GitFunctions.ps1", "Smartwyre.ps1", "SmartwyreDb.ps1")
