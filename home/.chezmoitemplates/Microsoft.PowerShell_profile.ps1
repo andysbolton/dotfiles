@@ -24,8 +24,9 @@ function Import-Scripts($Scripts) {
     $Scripts | ForEach-Object {
         $path = "$PSScriptRoot/$_"
         if (Test-Path $path) {
-            Write-Host "Loading $path."
-            . $path
+            $prettyPath = Resolve-Path $path
+            Write-Host "Loading $prettyPath."
+            . $prettyPath
         }
     }
 }
