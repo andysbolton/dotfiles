@@ -1,6 +1,6 @@
 [directory]
 {{ if eq .chezmoi.os "linux" -}}
-format = '[$path \(\)]($style)[$read_only]($read_only_style) '
+format = '[ ](bold yellow)($style)[$read_only]($read_only_style) '
 {{ else if eq .chezmoi.os "windows" -}}
 format = '[⊞ ](bold yellow)[$path]($style)[$read_only]($read_only_style) '
 {{ end -}}
