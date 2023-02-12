@@ -1,0 +1,68 @@
+#!/bin/bash
+
+sudo apt-get update
+type -p curl >/dev/null || sudo apt install curl -y
+
+function install_op {
+    curl -sS https://downloads.1password.com/linux/keys/1password.asc | \
+    sudo gpg --batch --yes --dearmor --output /usr/share/keyrings/1password-archive-keyring.gpg
+
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian/$(dpkg --print-architecture) stable main" |
+    sudo tee /etc/apt/sources.list.d/1password.list
+
+    sudo mkdir -p /etc/debsig/policies/AC2D62742012EA22/
+    curl -sS https://downloads.1password.com/linux/debian/debsig/1password.pol | \
+    sudo tee /etc/debsig/policies/AC2D62742012EA22/1password.pol
+    sudo mkdir -p /usr/share/debsig/keyrings/AC2D62742012EA22
+    curl -sS https://downloads.1password.com/linux/keys/1password.asc | \
+    sudo gpg --batch --yes --dearmor --output /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg
+
+    sudo apt install 1password-cli
+}
+
+function install_dotnet {
+    wget https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+    sudo dpkg -i packages-microsoft-prod.deb
+    rm packages-microsoft-prod.deb
+
+    sudo apt-get install -y dotnet-sdk-7.0
+    sudo apt-get install -y aspnetcore-runtime-7.0
+
+    sudo apt-get install -y dotnet-sdk-6.0
+    sudo apt-get install -y aspnetcore-runtime-6.0
+}
+
+function install_gh {
+    curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+    && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+    && sudo apt install gh -y
+}
+
+function install_pwsh {
+    wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb
+
+    sudo dpkg -i packages-microsoft-prod.deb
+
+    sudo apt-get install -y powershell
+}
+
+{{ $packages := list
+    "aptitude"
+    "ca-certificates"
+    "dnsutils" 
+    "gdb"
+    "net-tools"
+    "netcat"
+    "nmap"
+    "unzip"
+    "vim"
+    "wget"
+    "whois" -}}
+
+install_op
+install_dotnet
+install_gh
+install_pwsh
+
+sudo apt-get install -y {{ $packages | join " " }}
