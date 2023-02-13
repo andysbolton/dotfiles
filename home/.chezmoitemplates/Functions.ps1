@@ -35,26 +35,6 @@ function Get-PrettyJsonFromClipboard() {
     Get-Clipboard | Get-PrettyJson
 }
   
-function Set-File {
-    [Alias("touch")]
-    param (
-        [Parameter()]
-        [string]
-        $file
-    )
-  
-    if ($null -eq $file) {
-        throw "No filename supplied"
-    }
-  
-    if (Test-Path $file) {
-      (Get-ChildItem $file).LastWriteTime = Get-Date
-    }
-    else {
-        Add-Content $file $null
-    }
-}
-  
 function Format-Bytes {
     param
     (
