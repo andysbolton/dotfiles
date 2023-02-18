@@ -14,7 +14,7 @@ function which($Name) {
 function touch($File) { 
     "" | Out-File $File -Encoding ASCII 
 }
-  
+
 function Set-Desktop {
     [Alias("dt")]
     param()
@@ -33,26 +33,6 @@ function Get-PrettyJson([string]$JsonString) {
   
 function Get-PrettyJsonFromClipboard() {	
     Get-Clipboard | Get-PrettyJson
-}
-  
-function Set-File {
-    [Alias("touch")]
-    param (
-        [Parameter()]
-        [string]
-        $file
-    )
-  
-    if ($null -eq $file) {
-        throw "No filename supplied"
-    }
-  
-    if (Test-Path $file) {
-      (Get-ChildItem $file).LastWriteTime = Get-Date
-    }
-    else {
-        Add-Content $file $null
-    }
 }
   
 function Format-Bytes {
