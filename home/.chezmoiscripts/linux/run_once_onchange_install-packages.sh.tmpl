@@ -56,7 +56,7 @@ function install_pwsh {
     "netcat"
     "nmap"
     "unzip"
-    "vim"
+    "neovim"
     "wget"
     "whois" -}}
 
@@ -67,4 +67,8 @@ install_pwsh
 
 sudo apt-get install -y {{ $packages | join " " }}
 
+# install starship
 curl -sS https://starship.rs/install.sh | sh
+# install vim-plug
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
