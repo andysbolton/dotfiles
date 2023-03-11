@@ -12,7 +12,7 @@ alias bfg="java -jar /usr/share/java/bfg-1.14.0.jar"
 function add -a message
     set branch (git branch | grep \* | cut -d ' ' -f2)
     set match (string match --groups-only -r '(?i)(smart|ops-\d+)' $branch)
-    if set -q match
+    if set -q $match
         set commit "$match: $message"
     else
         set commit "$message"
