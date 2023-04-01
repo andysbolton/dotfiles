@@ -4,6 +4,7 @@ packages
 .chezmoiscripts/linux/**
 .config/fish/
 .config/powershell/
+.config/nvim
 {{- end }}
 
 {{- if eq .chezmoi.os "linux" }}

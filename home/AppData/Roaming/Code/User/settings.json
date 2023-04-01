@@ -21,7 +21,8 @@
   },
   "powershell.promptToUpdatePowerShell": false,
   "remote.SSH.remotePlatform": {
-    "vm-lab-marks": "linux"
+    "vm-lab-marks": "linux",
+    "vm-dbaops": "linux"
   },
   "[c]": {
     "editor.defaultFormatter": "ms-vscode.cpptools"
@@ -60,6 +61,9 @@
   "typescript.tsserver.experimental.enableProjectDiagnostics": true,
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[xml]": {
+    "editor.defaultFormatter": null
   },
   "terminal.integrated.enableMultiLinePasteWarning": false,
   "redhat.telemetry.enabled": true,

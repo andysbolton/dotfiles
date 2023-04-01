@@ -15,6 +15,13 @@ function touch($File) {
     "" | Out-File $File -Encoding ASCII 
 }
 
+function chown($Object, $User) {
+    $acl = Get-Acl $Object
+    $user = New-Object System.Security.Principal.Ntaccount($User)
+    $acl.SetOwner($user)
+    Set-Acl -AclObject $acl -Path $Object
+}
+
 function Set-Desktop {
     [Alias("dt")]
     param()
@@ -78,23 +85,23 @@ function Get-AllEmptyDirectories($Dir = ".") {
     | Where-Object { $_.Count -eq 0 } 
     | Select-Object -ExpandProperty Name
 }
-  
+
 function Show-Functions() {
     Get-ChildItem function: | Where-Object { (-not $_.Source) -and ($_.HelpFile -notmatch "System\.Management") }
 }
-  
+
 function Show-FileSizes() {
     Get-ChildItem -Recurse | ForEach-Object (Measure-Object -InputObject $_ -Property Length -Sum -ErrorAction Stop).Sum / 1MB
 }
-  
+
 function Reload-Profile {
     . $profile
 }
-  
+
 function Stop-Chrome() {
     taskkill /im chrome.exe /f
 }
-  
+
 function Get-ProcessId($fileName) {
     Get-Process -FileVersionInfo -ErrorAction SilentlyContinue | ForEach-Object {
         if ($_.FileName -like $fileName) {
@@ -102,7 +109,7 @@ function Get-ProcessId($fileName) {
         }
     }
 }
-  
+
 function Add-PathVariable([string]$addPath) {  
     if (-not (Test-Path $addPath)) {
         throw "'$addPath' is not a valid path."
