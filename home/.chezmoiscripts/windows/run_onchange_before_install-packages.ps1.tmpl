@@ -13,6 +13,10 @@ Install-Packages (Get-Content "$PackagesSourcePath/common.txt")
 Install-Packages (Get-Content "$PackagesSourcePath/work.txt")
 {{ else if eq .chezmoi.hostname "personal" }}
 Install-Packages (Get-Content "$PackagesSourcePath/personal.txt")
-{{ end -}} 
+{{ end -}}
+
+# install https://github.com/junegunn/vim-plug
+iwr -useb https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim |`
+    ni $HOME/vimfiles/autoload/plug.vim -Force
 
 {{ end -}}

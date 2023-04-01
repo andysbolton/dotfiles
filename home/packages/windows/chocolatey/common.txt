@@ -17,6 +17,7 @@ logitech-options
 make
 meld
 microsoft-windows-terminal
+neovim
 op
 parsec
 plexamp
