@@ -7,23 +7,26 @@ set -Ux BROWSER wslview
 alias cm="chezmoi"
 alias cma="chezmoi apply --verbose"
 alias cmad="chezmoi apply --verbose --dry-run"
-alias bfg="java -jar /usr/share/java/bfg-1.14.0.jar"
+alias nvim="nvim.appimage"
 
 function add -a message
-    set branch (git branch | grep \* | cut -d ' ' -f2)
+    set branch (git branch --show-current)
     set match (string match --groups-only -r '(?i)(smart|ops-\d+)' $branch)
     if set -q $match
         set commit "$match: $message"
     else
         set commit "$message"
     end
-    git commit -am "$commit"
+    git add -A
+    git commit -m "$commit"
     echo "Commited with message: $message"
 end
 
 function addp -a message
     add $message
-    git push
+    if ! git push
+        git push --set-upstream origin (git branch --show-current)
+    end
 end
 
 function starship_transient_prompt_func
@@ -38,6 +41,10 @@ function set_mtu
     sudo ip link set dev eth0 mtu 1420
 end
 
+function p
+    pwsh -Command $argv
+end
+
 if status is-login
     cd ~/
 end
@@ -48,3 +55,5 @@ end
 
 starship init fish | source
 enable_transience
+
+nvm use v16
