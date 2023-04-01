@@ -1,6 +1,9 @@
 set tabstop=4
 set shiftwidth=4
 set expandtab
+set number
+belowright split term:///usr/bin/fish
+set nonumber
 
 inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 
