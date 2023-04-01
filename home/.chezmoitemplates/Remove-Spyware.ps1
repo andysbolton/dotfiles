@@ -25,7 +25,7 @@ function Remove-Package() {
     }
 }
 
-$Excemptions = @(
+$Exemptions = @(
     "Microsoft.OneDriveSync",
     "Microsoft.Windows.Photos",
     "Microsoft.WindowsTerminal",
@@ -34,7 +34,7 @@ $Excemptions = @(
 )
  
 Get-AppxPackage -AllUsers 
-| Where-Object { $_.NonRemovable -eq $false -and -not ($Excemptions -contains $_.Name) } 
+| Where-Object { $_.NonRemovable -eq $false -and -not ($Exemptions -contains $_.Name) } 
 | Select-Object -ExpandProperty Name 
 | Get-Unique
 | Sort-Object 
