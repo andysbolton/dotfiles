@@ -8,6 +8,8 @@ alias cm="chezmoi"
 alias cma="chezmoi apply --verbose"
 alias cmad="chezmoi apply --verbose --dry-run"
 alias nvim="nvim.appimage"
+alias nvimconf="nvim ~/.config/nvim/init.vim"
+alias fishconf="nvim ~/.config/fish/config.fish"
 
 function add -a message
     set branch (git branch --show-current)
@@ -43,6 +45,10 @@ end
 
 function p
     pwsh -Command $argv
+end
+
+function ops
+    eval $(op signin)
 end
 
 if status is-login
