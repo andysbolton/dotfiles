@@ -1,4 +1,4 @@
-fish_add_path ~/smartwyre/smartwyre-infra/scripts
+fish_add_path ~/smartwyre/infra-orchestrator/smartwyre-infra/scripts
 fish_add_path ~/.local/bin
 fish_add_path ~/bin
 
@@ -8,13 +8,13 @@ alias cm="chezmoi"
 alias cma="chezmoi apply --verbose"
 alias cmad="chezmoi apply --verbose --dry-run"
 alias nvim="nvim.appimage"
-alias nvimconf="nvim ~/.config/nvim/init.vim"
+alias nvimconf="nvim ~/.config/nvim/init.lua"
 alias fishconf="nvim ~/.config/fish/config.fish"
 
 function add -a message
     set branch (git branch --show-current)
     set match (string match --groups-only -r '(?i)(smart|ops-\d+)' $branch)
-    if set -q $match
+    if set -q match
         set commit "$match: $message"
     else
         set commit "$message"
