@@ -18,6 +18,7 @@
 [merge]
     command = "pwsh"
     args = [
+        "-NoProfile",
         "-Command",
         "Start-Process -Wait meld -ArgumentList (\"{{ "{{ .Destination }}" }}\", \"{{ "{{ .Source }}" }}\", \"{{ "{{ .Target }}" }}\")",
     ]

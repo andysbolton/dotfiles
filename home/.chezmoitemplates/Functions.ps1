@@ -19,6 +19,10 @@ function ops() {
     Invoke-Expression $(op signin)
 }
 
+function nvimconf() {
+    nvim (Resolve-Path ~\AppData\Local\nvim\init.lua)
+}
+
 function chown($Object, $User) {
     $acl = Get-Acl $Object
     $user = New-Object System.Security.Principal.Ntaccount($User)
