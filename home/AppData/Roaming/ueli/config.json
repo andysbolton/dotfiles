@@ -115,7 +115,7 @@
 			"hideMainWindowOnBlur": true,
 			"hotKey": {
 				"key": "T",
-				"modifier": "Control",
+				"modifier": "Alt",
 				"secondModifier": "-"
 			},
 			"language": "English",

@@ -15,6 +15,10 @@ function touch($File) {
     "" | Out-File $File -Encoding ASCII 
 }
 
+function ops() {
+    Invoke-Expression $(op signin)
+}
+
 function chown($Object, $User) {
     $acl = Get-Acl $Object
     $user = New-Object System.Security.Principal.Ntaccount($User)
