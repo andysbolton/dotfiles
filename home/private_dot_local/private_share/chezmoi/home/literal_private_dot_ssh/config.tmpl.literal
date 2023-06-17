@@ -1,4 +1,0 @@
-Host github.com
-  User git
-
-{{ onepasswordRead "op://Personal/SSH Config/notesPlain" }}
