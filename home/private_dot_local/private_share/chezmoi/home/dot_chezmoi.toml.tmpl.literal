@@ -1,0 +1,24 @@
+{{- $email := promptStringOnce . "email" "Email address" -}}
+
+[data]
+    email = {{ $email | quote }}
+    name = "Andy Bolton"
+
+[edit]
+    command = "code"
+
+[cd]
+    {{- if eq .chezmoi.os "windows" }}
+    command = "pwsh"
+    {{- end }}
+    {{- if eq .chezmoi.os "linux" }}
+    command = "fish"
+    {{- end }}
+
+[merge]
+    command = "pwsh"
+    args = [
+        "-NoProfile",
+        "-Command",
+        "Start-Process -Wait meld -ArgumentList (\"{{ "{{ .Destination }}" }}\", \"{{ "{{ .Source }}" }}\", \"{{ "{{ .Target }}" }}\")",
+    ]

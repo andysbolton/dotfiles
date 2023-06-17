@@ -1,0 +1,26 @@
+[user]
+	email = {{ .email }}
+	name = {{ .name }}
+[core]
+  	editor = code --wait
+	longpaths = true
+[diff]
+  	tool = vscode
+[difftool "vscode"]
+  	cmd = code --wait --diff $LOCAL $REMOTE
+[merge]
+  	tool = vscode
+[mergetool "vscode"]
+	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
+[push]
+	autoSetupRemote = true
+{{- $ghPath := lookPath "gh" }}
+{{- if $ghPath }}
+{{- $ghCmd := eq .chezmoi.os "linux" | ternary (printf "!%s" $ghPath) "gh.exe" }}
+[credential "https://github.com"]
+	helper = {{ $ghCmd }} auth git-credential
+[credential "https://gist.github.com"]
+	helper = {{ $ghCmd }} auth git-credential
+{{- end }}
+[mergetool]
+	keepBackup = false
