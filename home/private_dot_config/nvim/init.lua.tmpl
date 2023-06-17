@@ -147,10 +147,18 @@ require('lazy').setup({
     'nvim-telescope/telescope-fzf-native.nvim',
     -- NOTE: If you are having trouble with this installation,
     --       refer to the README for telescope-fzf-native for more instructions.
+    
+    {{- if eq .chezmoi.os "windows" }}
+    build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
+    cond = function()
+      return vim.fn.executable 'cmake' == 1
+    end,
+    {{- else }}
     build = 'make',
     cond = function()
       return vim.fn.executable 'make' == 1
     end,
+    {{- end }}
   },
 
   {
@@ -262,11 +270,6 @@ require('nvim-treesitter.configs').setup {
 
   highlight = {
     enable = true,
-    disable = function(lang, bufnr)
-      if string.find(vim.bo.filetype, "chezmoitmpl") then
-        return true
-      end
-    end,
   },
   indent = { enable = true, disable = { 'python' } },
   incremental_selection = {
