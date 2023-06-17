@@ -1,0 +1,45 @@
+65553d3ea4b91e0a7ba240776ec9ea58f97eaa66 ef837b87ce067d8e37ee43921926988d6d3023e4 Andy Bolton <andy.bolton@smartwyre.com> 1674409063 -0700	commit: Adding fish config and install script for op
+ef837b87ce067d8e37ee43921926988d6d3023e4 65553d3ea4b91e0a7ba240776ec9ea58f97eaa66 Andy Bolton <andy.bolton@smartwyre.com> 1674409081 -0700	reset: moving to 65553d3ea4b91e0a7ba240776ec9ea58f97eaa66
+65553d3ea4b91e0a7ba240776ec9ea58f97eaa66 23ae8d3d665ddb9ec8e83a3e50193f163ebdbef2 Andy Bolton <andy.bolton@smartwyre.com> 1674409092 -0700	commit (amend): Fixing for debian, adding fish config
+23ae8d3d665ddb9ec8e83a3e50193f163ebdbef2 26ed3a6869981878ee70aa1746fe560f8f4b79a6 Andy Bolton <andy.bolton@smartwyre.com> 1674409117 -0700	commit: Adding fish config and install script for op
+26ed3a6869981878ee70aa1746fe560f8f4b79a6 6bb1916f0c6c183c35b4dabaedfc2f4e47db77d1 Andy Bolton <andy.bolton@smartwyre.com> 1674935099 -0700	pull: Fast-forward
+6bb1916f0c6c183c35b4dabaedfc2f4e47db77d1 c62b658a9116dfdebe21a8cbe447b9206474f0ae Andy Bolton <andy.bolton@smartwyre.com> 1674937184 -0700	pull: Fast-forward
+c62b658a9116dfdebe21a8cbe447b9206474f0ae beb620c61d17ac831f878e8dab9a10da9434a307 Andy Bolton <andy.bolton@smartwyre.com> 1674938544 -0700	commit: Adding Powershell for linux
+beb620c61d17ac831f878e8dab9a10da9434a307 9d255b30099eb1f63ae7a3ce8a4d1361f278a844 Andy Bolton <andy.bolton@smartwyre.com> 1674938799 -0700	commit: Fix for linux
+9d255b30099eb1f63ae7a3ce8a4d1361f278a844 1b7f5341c7d13e205a7379a250020ce4a0344cb2 Andy Bolton <andy.bolton@smartwyre.com> 1674940166 -0700	commit: Fix gh executable in gitconfig
+1b7f5341c7d13e205a7379a250020ce4a0344cb2 76fa128a1dbc80b945af25a52927e755850445f9 Andy Bolton <andy.bolton@smartwyre.com> 1675032953 -0700	pull: Fast-forward
+76fa128a1dbc80b945af25a52927e755850445f9 a48844fa21f247024778fb850e377090f3801135 Andy Bolton <andy.bolton@smartwyre.com> 1675197867 -0700	pull: Fast-forward
+a48844fa21f247024778fb850e377090f3801135 6034ca7ceb96261d3098b1334a11a414bfd5314d Andy Bolton <andy.bolton@smartwyre.com> 1675198541 -0700	commit: : Update ssh permissions'
+6034ca7ceb96261d3098b1334a11a414bfd5314d 99640dd67e9d038e777f74b495583926f0eeeb36 Andy Bolton <andy.bolton@smartwyre.com> 1675198549 -0700	commit (amend): Update ssh permissions
+99640dd67e9d038e777f74b495583926f0eeeb36 41921430a305669182d7ced9d817e739b09ef3d8 Andy Bolton <andy.bolton@smartwyre.com> 1676149175 -0700	pull: Fast-forward
+41921430a305669182d7ced9d817e739b09ef3d8 011c5cfc1dad88b97b6b2026e3921b989304517c Andy Bolton <andy.bolton@smartwyre.com> 1676149270 -0700	pull: Fast-forward
+011c5cfc1dad88b97b6b2026e3921b989304517c 6c786e9f0aba1ae1488447a9e03f46b10bc754e3 Andy Bolton <andy.bolton@smartwyre.com> 1676157441 -0700	commit: : Fixing a few issues
+6c786e9f0aba1ae1488447a9e03f46b10bc754e3 ce3bfaf858b234d9c6d664ae06c30c44a3b2f192 Andy Bolton <andy.bolton@smartwyre.com> 1676157459 -0700	commit (amend): Fixing a few issues
+ce3bfaf858b234d9c6d664ae06c30c44a3b2f192 61c6aa43bf5c151a43176bea8d0c553a1e86654a Andy Bolton <andy.bolton@smartwyre.com> 1676157642 -0700	commit: Fixing permission issues
+61c6aa43bf5c151a43176bea8d0c553a1e86654a cb3dea5d027c78e6ba638c533cf1280932778ccd Andy Bolton <andy.bolton@smartwyre.com> 1676157658 -0700	commit: : Add private_id_rsa
+cb3dea5d027c78e6ba638c533cf1280932778ccd 42913446c87dfd704a8f44e9419ac41c320899d9 Andy Bolton <andy.bolton@smartwyre.com> 1676157871 -0700	pull: Fast-forward
+42913446c87dfd704a8f44e9419ac41c320899d9 1553a019ea41e92830b4b3cb0e229fa1b8a05e85 Andy Bolton <andy.bolton@smartwyre.com> 1676160080 -0700	commit: Adding more Linux packages
+1553a019ea41e92830b4b3cb0e229fa1b8a05e85 7e9dc0ff88ae74a40ca551f11a311a1f1e034f6a Andy Bolton <andy.bolton@smartwyre.com> 1676160095 -0700	commit: Make into template
+7e9dc0ff88ae74a40ca551f11a311a1f1e034f6a 8f16d1e36038b40718c3e1b2109b998097e88ad9 Andy Bolton <andy.bolton@smartwyre.com> 1676160726 -0700	commit: Add starship to linux
+8f16d1e36038b40718c3e1b2109b998097e88ad9 77a2c79082f9764a5a2978bd63c601e59b6ac47c Andy Bolton <andy.bolton@smartwyre.com> 1676160834 -0700	commit: This isn't needed
+77a2c79082f9764a5a2978bd63c601e59b6ac47c c3c2589e1bd7f84a96a9889bcddd7910d63d1236 Andy Bolton <andy.bolton@smartwyre.com> 1676165333 -0700	commit: Empty
+c3c2589e1bd7f84a96a9889bcddd7910d63d1236 953fe88ea1bab77ebd078c8a5b8ec8886e4220a4 Andy Bolton <andy.bolton@smartwyre.com> 1676249887 -0700	commit: : Remove redundant function
+953fe88ea1bab77ebd078c8a5b8ec8886e4220a4 df8cabd3f9ca77c80dcbf293f39112abd112893f Andy Bolton <andy.bolton@smartwyre.com> 1678564216 -0700	pull: Fast-forward
+df8cabd3f9ca77c80dcbf293f39112abd112893f e7fbca584cc46408e4fa17f9f55cf07e8fc94d8c Andy Bolton <andy.bolton@smartwyre.com> 1678564548 -0700	commit: Add neovim and vim-plug
+e7fbca584cc46408e4fa17f9f55cf07e8fc94d8c 23ec3d1e0594859e3de490b6f99a41c453d5f9cd Andy Bolton <andy.bolton@smartwyre.com> 1678566962 -0700	commit: : Upldate vim-plug
+23ec3d1e0594859e3de490b6f99a41c453d5f9cd 3655c461369008004f768e75d040ab0cd4c9d43d Andy Bolton <andy.bolton@smartwyre.com> 1678566974 -0700	commit (amend): Upldate vim-plug
+3655c461369008004f768e75d040ab0cd4c9d43d 373c6142d8b16fe29095076287df8c81853f8209 Andy Bolton <andy.bolton@smartwyre.com> 1678567085 -0700	commit (amend): Update vim-plug
+373c6142d8b16fe29095076287df8c81853f8209 cde919e2224a9f2970d115ed0fb7482cd15cd412 Andy Bolton <andy.bolton@smartwyre.com> 1678567502 -0700	commit (amend): Update vim-plug
+cde919e2224a9f2970d115ed0fb7482cd15cd412 c01c2f2ded189361823fd2a4f930e126779f3d98 Andy Bolton <andy.bolton@smartwyre.com> 1678567516 -0700	pull: Merge made by the 'recursive' strategy.
+c01c2f2ded189361823fd2a4f930e126779f3d98 ae1c21220d1126a59799e26e6fa64b2fc05e7c43 Andy Bolton <andy.bolton@smartwyre.com> 1678567575 -0700	commit: Adding nvim config
+ae1c21220d1126a59799e26e6fa64b2fc05e7c43 00112584688039cb55ddc87089d032d7f2689bcc Andy Bolton <andy.bolton@smartwyre.com> 1678567749 -0700	commit: Update fish config
+00112584688039cb55ddc87089d032d7f2689bcc 4ce65125d42db8aaa49e05fc369e949c3c6ce3a2 Andy Bolton <andy.bolton@smartwyre.com> 1680363117 -0600	commit: Update fish and nvim configs
+4ce65125d42db8aaa49e05fc369e949c3c6ce3a2 509f94ee3f171e4853e55993b965889172751abc Andy Bolton <andy.bolton@smartwyre.com> 1680367679 -0600	commit: Add fish helpers
+509f94ee3f171e4853e55993b965889172751abc f4606acd1369349cc1ee09037316475cef19df2c Andy Bolton <andy.bolton@smartwyre.com> 1680367684 -0600	pull: Merge made by the 'recursive' strategy.
+f4606acd1369349cc1ee09037316475cef19df2c b934f2da2524801b1880c587da89b809c5640fa9 Andy Bolton <andy.bolton@smartwyre.com> 1680391216 -0600	commit: Update init.vim
+b934f2da2524801b1880c587da89b809c5640fa9 a283326400a729b8bd1d5e1744f1a30fceb93cfd Andy Bolton <andy.bolton@smartwyre.com> 1680392660 -0600	pull: Fast-forward
+a283326400a729b8bd1d5e1744f1a30fceb93cfd 5ff88d4b1fe34722370e540713e67e0f637cc4e0 Andy Bolton <andy.bolton@smartwyre.com> 1680392745 -0600	commit: Remove plugin install in init.vim
+5ff88d4b1fe34722370e540713e67e0f637cc4e0 5ddab33b30e946a9ad8baa155718a507025f6566 Andy Bolton <andy.bolton@smartwyre.com> 1684172424 -0600	commit: : Updating to init.lua
+5ddab33b30e946a9ad8baa155718a507025f6566 3cdf25a0b2373fc297f7584d1a9fd92faa1974f5 Andy Bolton <andy.bolton@smartwyre.com> 1684175139 -0600	pull: Fast-forward
+3cdf25a0b2373fc297f7584d1a9fd92faa1974f5 2fadd91cfe2f66341d02ed8df951ac2764f4ffc1 Andy Bolton <andy.bolton@smartwyre.com> 1684177717 -0600	pull: Fast-forward
+2fadd91cfe2f66341d02ed8df951ac2764f4ffc1 372fe9a0f28241d572a7ce9019f74a7210d0d038 Andy Bolton <andy.bolton@smartwyre.com> 1685028007 -0600	commit: : Update template
