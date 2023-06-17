@@ -10,7 +10,7 @@ alias cma="chezmoi apply --verbose"
 alias cmad="chezmoi apply --verbose --dry-run"
 alias nvim="nvim.appimage"
 alias nvimconf="nvim ~/.config/nvim/init.lua"
-alias fishconf="nvim ~/.config/fish/config.fish"
+alias fishconf="nvim ~/.config/fish/config.fish 
 
 function add -a message
     set branch (git branch --show-current)

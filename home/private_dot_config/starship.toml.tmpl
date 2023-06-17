@@ -1,22 +1,6 @@
 [directory]
 {{ if eq .chezmoi.os "linux" -}}
-format = '[](bold yellow)[$path]($style)[$read_only]($read_only_style) '
+format = '[ ](bold yellow)[$path]($style)[$read_only]($read_only_style) '
 {{ else if eq .chezmoi.os "windows" -}}
-format = '[󰨡](bold yellow)[$path]($style)[$read_only]($read_only_style) '
+format = '[⊞ ](bold yellow)[$path]($style)[$read_only]($read_only_style) '
 {{ end -}}
-
-[[battery.display]]
-threshold = 30
-style = "bold red"
-
-[memory_usage]
-format = "[${ram} @ $ram_pct]($style) "
-threshold = 50
-disabled = false
-
-[hostname]
-ssh_only = false
-format = "<[$hostname]($style)>"
-trim_at = "-"
-style = "bold dimmed white"
-disabled = true
