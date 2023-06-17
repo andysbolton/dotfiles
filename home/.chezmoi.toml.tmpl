@@ -5,7 +5,7 @@
     name = "Andy Bolton"
 
 [edit]
-    command = "code"
+    command = "nvim"
 
 [cd]
     {{- if eq .chezmoi.os "windows" }}
@@ -22,3 +22,4 @@
         "-Command",
         "Start-Process -Wait meld -ArgumentList (\"{{ "{{ .Destination }}" }}\", \"{{ "{{ .Source }}" }}\", \"{{ "{{ .Target }}" }}\")",
     ]
+

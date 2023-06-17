@@ -29,6 +29,14 @@ require('lazy').setup({
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
+  {
+    'alker0/chezmoi.vim',
+    lazy = false,
+    init = function()
+      vim.g['chezmoi#use_tmp_buffer'] = true
+    end,
+  },
+
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
   {
@@ -247,7 +255,14 @@ require('nvim-treesitter.configs').setup {
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
 
-  highlight = { enable = true },
+  highlight = {
+    enable = true,
+    disable = function(lang, bufnr)
+      if string.find(vim.bo.filetype, "chezmoitmpl") then
+        return true
+      end
+    end,
+  },
   indent = { enable = true, disable = { 'python' } },
   incremental_selection = {
     enable = true,
@@ -344,7 +359,7 @@ require('nvim-treesitter.configs').setup {
     enable = true,
     use_virtual_text = true,
     lint_events = { "BufWrite", "CursorHold" },
-  },
+  }, 
 }
 
 -- Diagnostic keymaps
