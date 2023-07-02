@@ -3,12 +3,11 @@ fish_add_path ~/.local/bin
 fish_add_path ~/bin
 
 set -Ux BROWSER wslview
-set -Ux EDITOR nvim.appimage
+set -Ux EDITOR nvim
 
 alias cm="chezmoi"
 alias cma="chezmoi apply --verbose"
 alias cmad="chezmoi apply --verbose --dry-run"
-alias nvim="nvim.appimage"
 alias nvimconf="nvim ~/.config/nvim/init.lua"
 alias fishconf="nvim ~/.config/fish/config.fish"
 
