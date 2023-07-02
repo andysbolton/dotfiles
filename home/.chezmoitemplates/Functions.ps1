@@ -20,7 +20,11 @@ function ops() {
 }
 
 function nvimconf() {
-    nvim (Resolve-Path ~\AppData\Local\nvim\init.lua)
+    nvim (Resolve-Path ~\.config\nvim\init.lua) -c ":Neotree $(Resolve-Path ~\.config\nvim)"
+}
+
+function wezconf() {
+    nvim (Resolve-Path ~\.wezterm.lua)
 }
 
 function chown($Object, $User) {
@@ -37,9 +41,9 @@ function Set-Desktop {
 }
   
 function Set-LocationToProfile {
-    [Alias("pp")]
+    [Alias("pwshconf")]
     param()
-    code (Resolve-Path "$profile\..")
+    nvim (Resolve-Path "$profile\..")
 }
   
 function Get-PrettyJson([string]$JsonString) {
@@ -171,3 +175,4 @@ function Get-LocalChocoPackagesWithNoDependecies() {
   
     $allPackageNames | Where-Object { -not ($dependencyNames -contains $_) } | Sort-Object
 }
+

@@ -42,6 +42,8 @@ vim.o.termguicolors   = true
 vim.o.splitbelow      = true
 vim.o.splitright      = true
 
+vim.o.shell           = 'pwsh'
+
 -- Keymaps for vim-visual-multi
 vim.g.VM_theme        = 'iceblue'
 vim.g.VM_maps         = {}

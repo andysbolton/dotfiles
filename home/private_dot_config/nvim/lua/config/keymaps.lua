@@ -20,9 +20,12 @@ vim.keymap.set("n", "<leader>o", "o<Esc>k", { silent = true })
 vim.keymap.set("n", "<leader>O", "O<Esc>k", { silent = true })
 
 -- Leader +w to save the file
--- vim.keymap.set("n", "<leader>w", ":w<cr>", opts)
--- vim.keymap.set("n", "<leader>wz", ":wq!<cr>", opts)
---
+vim.keymap.set("n", "<leader>w", ":w<cr>", { silent = true })
+vim.keymap.set("n", "<leader>wz", ":wq!<cr>", { silent = true })
+
 vim.keymap.set("n", "<leader>t", ":split term:///usr/bin/fish<cr> | :set nonumber<cr>i", { silent = true })
 
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { silent = true })
+
+-- Leader +dd to delete to black hole register
+vim.keymap.set({ 'n', 'v' }, '<leader>dd', '"_dd', { silent = true })
