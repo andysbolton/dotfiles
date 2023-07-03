@@ -28,4 +28,4 @@ vim.keymap.set("n", "<leader>t", ":split term:///usr/bin/fish<cr> | :set nonumbe
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { silent = true })
 
 -- Leader +dd to delete to black hole register
-vim.keymap.set({ 'n', 'v' }, '<leader>dd', '"_dd', { silent = true })
+-- vim.keymap.set({ 'n', 'v' }, '<leader>dd', '"_dd', { silent = true })
