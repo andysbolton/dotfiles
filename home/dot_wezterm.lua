@@ -47,7 +47,7 @@ function fmt_working_dir(s)
   fmt_profile = string.gsub(wezterm.home_dir, "\\", "/")
   s = string.gsub(s, fmt_profile, '~')
   -- TODO: find a better way to format home directory if we're in WSL
-  -- s = string.gsub(s, 'work/home/asbolton', '~')
+  s = string.gsub(s, 'work/home/asbolton', '~')
   return s
 end
 
