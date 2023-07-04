@@ -3,18 +3,12 @@ local wezterm = require 'wezterm'
 local mux = wezterm.mux
 local act = wezterm.action
 
--- This table will hold the configuration.
 local config = {}
 
--- In newer versions of wezterm, use the config_builder which will
--- help provide clearer error messages
 if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
--- This is where you actually apply your config choices
-
--- For example, changing the color scheme:
 config.color_scheme = 'TokyoNight (Gogh)'
 config.font = wezterm.font 'CaskaydiaCove NF'
 config.default_prog = { 'pwsh' }
@@ -22,9 +16,6 @@ config.font_size = 11
 config.line_height = 1.1
 config.window_decorations = "RESIZE"
 config.use_dead_keys = false
--- config.window_frame = {
---   font = wezterm.font { family = 'Noto Sans', weight = 'Regular' },
---  }
 
 -- Dump any object to string
 local function dump(o)
@@ -42,15 +33,6 @@ local function dump(o)
   end
 end
 
-wezterm.on('gui-startup', function()
-  local tab, pane, window = mux.spawn_window({})
-  window:gui_window():maximize()
-end)
-
-wezterm.on('format-window-title', function(tab, pane, tabs, panes, config)
-  return ''
-end)
-
 -- Equivalent to POSIX basename(3)
 -- Given "/foo/bar" returns "bar"
 -- Given "c:\\foo\\bar" returns "bar"
@@ -59,23 +41,23 @@ function basename(s)
 end
 
 function fmt_working_dir(s)
-  s = string.gsub(s, 'file:///', '')
-  fmtprofile = string.gsub(wezterm.home_dir, "\\", "/")
-  return string.gsub(s, fmtprofile, '~')
+  s = string.gsub(s, 'file://', '')
+  -- clean up leftover front slash if it exists
+  s = string.gsub(s, '^/', '')
+  fmt_profile = string.gsub(wezterm.home_dir, "\\", "/")
+  s = string.gsub(s, fmt_profile, '~')
+  -- TODO: find a better way to format home directory if we're in WSL
+  -- s = string.gsub(s, 'work/home/asbolton', '~')
+  return s
 end
 
 local tab_title = function(tab_info)
-  -- local title = tab_info.tab_title
-  -- if title and #title > 0 then
-  --   return title
-  -- end
-  local baseexe = basename(tab_info.active_pane.title):lower()
-  return baseexe .. ' @ ' .. fmt_working_dir(tab_info.active_pane.current_working_dir)
+  local baseexe = basename(tab_info.active_pane.foreground_process_name)
+  fmt_dir = fmt_working_dir(tab_info.active_pane.current_working_dir)
+  return baseexe .. ' @ ' .. fmt_dir
 end
 
 wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
-  -- Not sure if it will slow down the performance, at least so far it's good
-  -- Is there a better way to get the tab or window cols ?
   local mux_window = wezterm.mux.get_window(tab.window_id)
   local mux_tab = mux_window:active_tab()
   local mux_tab_cols = mux_tab:get_size().cols
@@ -121,6 +103,11 @@ wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_wid
       { Text = wezterm.pad_right('', right_cols) },
     }
   end
+end)
+
+wezterm.on('gui-startup', function()
+  local tab, pane, window = mux.spawn_window({})
+  window:gui_window():maximize()
 end)
 
 config.leader = { key = 'a', mods = 'CTRL' }
