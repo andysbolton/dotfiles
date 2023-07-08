@@ -14,7 +14,7 @@ config.font = wezterm.font 'CaskaydiaCove NF'
 config.default_prog = { 'pwsh' }
 config.font_size = 11
 config.line_height = 1.1
-config.window_decorations = "RESIZE"
+config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 config.use_dead_keys = false
 
 -- Dump any object to string
