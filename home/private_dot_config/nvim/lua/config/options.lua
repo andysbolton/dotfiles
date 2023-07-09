@@ -1,6 +1,7 @@
 vim.o.hlsearch      = true
 
 vim.wo.number       = true
+vim.wo.relativenumber = true
 
 -- Enable mouse mode
 vim.o.mouse         = 'a'
@@ -35,4 +36,7 @@ vim.o.termguicolors = true
 vim.o.splitbelow    = true
 vim.o.splitright    = true
 
-vim.o.shell         = 'pwsh'
+vim.o.tabstop       = 4
+vim.o.shiftwidth    = 4
+vim.o.softtab       = 4
+vim.o.expandtab     = true
