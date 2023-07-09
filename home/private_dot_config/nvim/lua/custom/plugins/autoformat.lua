@@ -37,10 +37,6 @@ return {
           group = get_augroup(client),
           buffer = bufnr,
           callback = function()
-            if not format_is_enabled then
-              return
-            end
-
             vim.lsp.buf.format {
               async = false,
               filter = function(c)
