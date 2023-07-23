@@ -1,18 +1,12 @@
--- [[ Setting options ]]
--- See `:help vim.o`
+vim.o.hlsearch        = true
 
--- Set highlight on search
-vim.o.hlsearch        = false
-
--- Make line numbers default
 vim.wo.number         = true
+vim.wo.relativenumber = true
 
 -- Enable mouse mode
 vim.o.mouse           = 'a'
 
 -- Sync clipboard between OS and Neovim.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
 vim.o.clipboard       = 'unnamedplus'
 
 -- Enable break indent
@@ -42,10 +36,10 @@ vim.o.termguicolors   = true
 vim.o.splitbelow      = true
 vim.o.splitright      = true
 
-vim.o.shell           = 'pwsh'
+vim.o.tabstop         = 4
+vim.o.shiftwidth      = 4
+vim.o.softtab         = 4
+vim.o.expandtab       = true
 
--- Keymaps for vim-visual-multi
-vim.g.VM_theme        = 'iceblue'
-vim.g.VM_maps         = {}
-vim.g.VM_maps["Undo"] = 'u'
-vim.g.VM_maps["Redo"] = '<C-r>'
+vim.opt.list          = true
+vim.opt.listchars:append({ extends = "›", precedes = "‹", eol = "⏎", trail = "·", nbsp = "⎵" })

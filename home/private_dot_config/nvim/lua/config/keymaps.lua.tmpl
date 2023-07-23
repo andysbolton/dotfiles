@@ -23,9 +23,15 @@ vim.keymap.set("n", "<leader>O", "O<Esc>k", { silent = true })
 vim.keymap.set("n", "<leader>w", ":w<cr>", { silent = true })
 vim.keymap.set("n", "<leader>wz", ":wq!<cr>", { silent = true })
 
-vim.keymap.set("n", "<leader>t", ":split term:///usr/bin/fish<cr> | :set nonumber<cr>i", { silent = true })
+{{- if eq .chezmoi.os "windows" }}
+vim.keymap.set("n", "<leader>t", ":split term://pwsh<cr> | :set nonumber<cr> | :set norelativenumber<cr>i", { silent = true })
+{{- else if eq .chezmoi.os "linux " }} 
+vim.keymap.set("n", "<leader>t", ":split term:///usr/bin/fish<cr> | :set nonumber<cr> | set norelativenumber<cr>i", { silent = true })
+{{- end }}
 
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { silent = true })
 
 -- Leader +dd to delete to black hole register
 -- vim.keymap.set({ 'n', 'v' }, '<leader>dd', '"_dd', { silent = true })
+
+vim.keymap.set("n", "<leader>x", ":source %<cr>", { silent = true })

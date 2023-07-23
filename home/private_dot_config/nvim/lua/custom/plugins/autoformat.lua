@@ -1,19 +1,6 @@
--- autoformat.lua
---
--- Use your language server to automatically format your code on save.
--- Adds additional commands as well to manage the behavior
-
 return {
   'neovim/nvim-lspconfig',
   config = function()
-    -- Switch for controlling whether you want autoformatting.
-    --  Use :KickstartFormatToggle to toggle autoformatting on or off
-    local format_is_enabled = true
-    vim.api.nvim_create_user_command('KickstartFormatToggle', function()
-      format_is_enabled = not format_is_enabled
-      print('Setting autoformatting to: ' .. tostring(format_is_enabled))
-    end, {})
-
     -- Create an augroup that is used for managing our formatting autocmds.
     --      We need one augroup per client to make sure that multiple clients
     --      can attach to the same buffer without interfering with each other.
@@ -44,22 +31,12 @@ return {
           return
         end
 
-        -- Tsserver usually works poorly. Sorry you work with bad languages
-        -- You can remove this line if you know what you're doing :)
-        if client.name == 'tsserver' then
-          return
-        end
-
         -- Create an autocmd that will run *before* we save the buffer.
         --  Run the formatting command for the LSP that has just attached.
         vim.api.nvim_create_autocmd('BufWritePre', {
           group = get_augroup(client),
           buffer = bufnr,
           callback = function()
-            if not format_is_enabled then
-              return
-            end
-
             vim.lsp.buf.format {
               async = false,
               filter = function(c)

@@ -28,17 +28,44 @@ require('lazy').setup({
 
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
+
   {
     "iamcco/markdown-preview.nvim",
     config = function()
       vim.fn["mkdp#util#install"]()
     end,
   },
+  
+  {
+    'rmagatti/auto-session',
+    config = function()
+      require("auto-session").setup {
+        log_level = "error",
+        auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
+      }
+    end
+  },
+
   {
     'alker0/chezmoi.vim',
     lazy = false,
     init = function()
       vim.g['chezmoi#use_tmp_buffer'] = true
+    end,
+  },
+  
+  {
+    'windwp/nvim-autopairs',
+    dependencies = { 'hrsh7th/nvim-cmp' },
+    config = function()
+      require("nvim-autopairs").setup {}
+      -- If you want to automatically add `(` after selecting a function or method
+      local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+      local cmp = require('cmp')
+      cmp.event:on(
+        'confirm_done',
+        cmp_autopairs.on_confirm_done()
+      )
     end,
   },
 
@@ -132,18 +159,15 @@ require('lazy').setup({
     },
   },
 
-  -- "gc" to comment visual regions/lines
+  'romainl/vim-cool',
+
   {
     'numToStr/Comment.nvim',
     opts = {}
   },
 
-  -- Fuzzy Finder (files, lsp, etc)
   { 'nvim-telescope/telescope.nvim', version = '*', dependencies = { 'nvim-lua/plenary.nvim' } },
 
-  -- Fuzzy Finder Algorithm which requires local dependencies to be built.
-  -- Only load if `make` is available. Make sure you have the system
-  -- requirements installed.
   {
     'nvim-telescope/telescope-fzf-native.nvim',
     -- NOTE: If you are having trouble with this installation,
@@ -164,7 +188,6 @@ require('lazy').setup({
   },
 
   {
-    -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
@@ -172,6 +195,13 @@ require('lazy').setup({
       'nvim-treesitter/playground'
     },
     build = ":TSUpdate",
+  },
+
+  {
+    "ray-x/lsp_signature.nvim",
+    config = function()
+      require("lsp_signature").setup {}
+    end,
   },
 
   {
@@ -191,18 +221,26 @@ require('lazy').setup({
     },
   },
 
-  -- require 'kickstart.plugins.autoformat',
+  {
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+  },
 
-  -- require 'kickstart.plugins.debug',
+  {
+    'nvimdev/lspsaga.nvim',
+    config = function()
+      require('lspsaga').setup({
+        lightbulb = {
+          virtual_text = false
+        }
+      })
+    end,
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-tree/nvim-web-devicons'
+    }
+  },
 
-  -- NOTE: The import below automatically adds your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-  --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
-  --    up-to-date with whatever is in the kickstart repo.
-  --
-  --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
-  --
-  --    An additional note is that if you only copied in the `init.lua`, you can just comment this line
-  --    to get rid of the warning telling you that there are not plugins in `lua/custom/plugins/`.
   { import = 'custom.plugins' },
 }, {})
 
@@ -246,7 +284,6 @@ pcall(require('telescope').load_extension, 'fzf')
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
 vim.keymap.set('n', '<leader>/', function()
-  -- You can pass additional configuration to telescope to change theme, layout, etc.
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
     winblend = 10,
     previewer = false,
@@ -259,15 +296,11 @@ vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
-vim.keymap.set('n', '<leader>km', require('telescope.builtin').keymaps, { desc = '[K]ey[m]aps' })
+vim.keymap.set('n', '<leader>km', require('telescope.builtin').keymaps, { desc = '[S]earch [K]eymaps' })
 
--- [[ Configure Treesitter ]]
--- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
-  -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim' },
+  ensure_installed = { 'c', 'go', 'lua', 'python', 'rust', 'vimdoc', 'vim', 'c_sharp' },
 
-  -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
 
   highlight = {
@@ -390,7 +423,10 @@ local on_attach = function(_, bufnr)
   end
 
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-  nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+  -- nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+  nmap('<leader>ca', function()
+    vim.cmd [[ Lspsaga code_action ]]
+  end, '[C]ode [A]ction')
 
   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
@@ -399,7 +435,6 @@ local on_attach = function(_, bufnr)
   nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
-  -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
   nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
@@ -417,22 +452,48 @@ local on_attach = function(_, bufnr)
   end, { desc = 'Format current buffer with LSP' })
 end
 
--- Enable the following language servers
---  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
---
---  Add any additional override configuration in the following tables. They will be passed to
---  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
   clangd = {},
-  -- gopls = {},
+  csharp_ls = {},
+  gopls = {
+    settings = {
+      gopls = {
+        gofumpt = true,
+        usePlaceholders = true,
+        analyses = {
+          unusedparams = true,
+        }
+      },
+      hints = {
+        assignVariableTypes = true,
+        compositeLiteralFields = true,
+        compositeLiteralTypes = true,
+        constantValues = true,
+        functionTypeParameters = true,
+        parameterNames = true,
+        rangeVariableTypes = true,
+      },
+    }
+  },
   -- pyright = {},
   -- rust_analyzer = {},
-  tsserver = {},
+  -- tsserver = {},
+  -- powershell_es = {},
+  -- dockerls = {},
+  -- azure_pipelines_ls = {},
+  -- bashls = {},
 
   lua_ls = {
     Lua = {
-      workspace = { checkThirdParty = false },
       telemetry = { enable = false },
+      diagnostics = {
+        globals = { 'vim' }
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file("", true),
+        checkThirdParty = false
+      },
     },
   },
 }
@@ -473,11 +534,16 @@ cmp.setup {
       luasnip.lsp_expand(args.body)
     end,
   },
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  },
   mapping = cmp.mapping.preset.insert {
     ['<C-n>'] = cmp.mapping.select_next_item(),
     ['<C-p>'] = cmp.mapping.select_prev_item(),
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-e>'] = cmp.mapping.abort(),
     ['<C-Space>'] = cmp.mapping.complete {},
     ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
@@ -508,5 +574,4 @@ cmp.setup {
   },
 }
 
--- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
