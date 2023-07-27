@@ -25,7 +25,7 @@ vim.keymap.set("n", "<leader>wz", ":wq!<cr>", { silent = true })
 
 {{- if eq .chezmoi.os "windows" }}
 vim.keymap.set("n", "<leader>t", ":split term://pwsh<cr> | :set nonumber<cr> | :set norelativenumber<cr>i", { silent = true })
-{{- else if eq .chezmoi.os "linux " }} 
+{{- else if eq .chezmoi.os "linux" }} 
 vim.keymap.set("n", "<leader>t", ":split term:///usr/bin/fish<cr> | :set nonumber<cr> | set norelativenumber<cr>i", { silent = true })
 {{- end }}
 
