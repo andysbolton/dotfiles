@@ -42,4 +42,4 @@ vim.o.softtab         = 4
 vim.o.expandtab       = true
 
 vim.opt.list          = true
-vim.opt.listchars:append({ extends = "›", precedes = "‹", eol = "⏎", trail = "·", nbsp = "⎵" })
+vim.opt.listchars:append({ extends = "›", precedes = "‹", eol = "⏎", trail = "·", nbsp = "⎵", space = " " })

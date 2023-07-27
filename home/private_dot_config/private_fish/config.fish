@@ -1,6 +1,7 @@
 fish_add_path ~/smartwyre/infra-orchestrator/smartwyre-infra/scripts
 fish_add_path ~/.local/bin
 fish_add_path ~/bin
+fish_add_path /usr/local/go/bin
 
 set -Ux BROWSER wslview
 set -Ux EDITOR nvim
@@ -8,7 +9,7 @@ set -Ux EDITOR nvim
 alias cm="chezmoi"
 alias cma="chezmoi apply --verbose"
 alias cmad="chezmoi apply --verbose --dry-run"
-alias nvimconf="nvim ~/.config/nvim/init.lua"
+alias nvimconf="nvim ~/.config/nvim/init.lua -c \":Neotree ~/.config/nvim\""
 alias fishconf="nvim ~/.config/fish/config.fish"
 
 function add -a message
