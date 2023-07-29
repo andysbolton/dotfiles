@@ -158,7 +158,7 @@ require('lazy').setup({
         -- show_current_context = true,
         -- show_current_context_start = true,
       }
-      -- vim.cmd [[highlight IndentBlanklineSpaceChar guifg=nocombine gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineSpaceChar guifg=nocombine gui=nocombine]]
     end,
   },
 
@@ -302,7 +302,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 vim.keymap.set('n', '<leader>km', require('telescope.builtin').keymaps, { desc = '[S]earch [K]eymaps' })
 
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { 'c', 'go', 'lua', 'python', 'rust', 'vimdoc', 'vim', 'c_sharp' },
+  ensure_installed = { 'c', 'go', 'lua', 'python', 'rust', 'vimdoc', 'vim', 'c_sharp', 'yaml' },
 
   auto_install = false,
 
@@ -476,14 +476,15 @@ local servers = {
         parameterNames = true,
         rangeVariableTypes = true,
       },
-    }
+    },
   },
+  azure_pipelines_ls = {},
+  powershell_es = {},
+
   -- pyright = {},
   -- rust_analyzer = {},
   -- tsserver = {},
-  -- powershell_es = {},
   -- dockerls = {},
-  -- azure_pipelines_ls = {},
   -- bashls = {},
 
   lua_ls = {
