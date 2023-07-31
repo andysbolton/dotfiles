@@ -29,20 +29,33 @@ require('lazy').setup({
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
-  {
-    "iamcco/markdown-preview.nvim",
-    config = function()
-      vim.fn["mkdp#util#install"]()
-    end,
-  },
+  -- {
+  --   "iamcco/markdown-preview.nvim",
+  --   config = function()
+  --     vim.fn["mkdp#util#install"]()
+  --   end,
+  -- },
 
   {
     'rmagatti/auto-session',
     config = function()
       require("auto-session").setup {
         log_level = "error",
-        auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
+        -- auto_session_create_enabled = false,
+        pre_save_cmds = {
+          function()
+            vim.notify('closing neotree')
+            require 'neo-tree.sources.manager'.close_all()
+          end
+        },
+        post_restore_cmds = {
+          function()
+            vim.notify('opening neotree')
+            require 'neo-tree.sources.manager'.show('filesystem')
+          end
+        },
       }
+      vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
     end
   },
 
@@ -456,7 +469,9 @@ local on_attach = function(_, bufnr)
 end
 
 local servers = {
-  clangd = {},
+  clangd = {
+    cmd = { 'clangd', '--clang-tidy', '--offset-encoding=utf-8' }
+  },
   csharp_ls = {},
   gopls = {
     settings = {
@@ -480,7 +495,7 @@ local servers = {
   },
   azure_pipelines_ls = {},
   powershell_es = {},
-
+  asm_lsp = {},
   -- pyright = {},
   -- rust_analyzer = {},
   -- tsserver = {},

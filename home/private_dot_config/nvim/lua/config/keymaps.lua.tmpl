@@ -19,9 +19,6 @@ vim.keymap.set("v", "<A-Up>", ":m '<-2<CR>gv=gv", { silent = true })
 vim.keymap.set("n", "<leader>o", "o<Esc>k", { silent = true })
 vim.keymap.set("n", "<leader>O", "O<Esc>k", { silent = true })
 
--- Leader +w to save the file
-vim.keymap.set("n", "<leader>w", ":w<cr>", { silent = true })
-vim.keymap.set("n", "<leader>wz", ":wq!<cr>", { silent = true })
 
 {{- if eq .chezmoi.os "windows" }}
 vim.keymap.set("n", "<leader>t", ":split term://pwsh<cr> | :set nonumber<cr> | :set norelativenumber<cr>i", { silent = true })
@@ -29,9 +26,29 @@ vim.keymap.set("n", "<leader>t", ":split term://pwsh<cr> | :set nonumber<cr> | :
 vim.keymap.set("n", "<leader>t", ":split term:///usr/bin/fish<cr> | :set nonumber<cr> | :set norelativenumber<cr>i", { silent = true })
 {{- end }}
 
+-- Exit terminal mode with <Esc>
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { silent = true })
 
--- Leader +dd to delete to black hole register
--- vim.keymap.set({ 'n', 'v' }, '<leader>dd', '"_dd', { silent = true })
+-- Delete to black hole register
+vim.keymap.set({ 'n', 'v' }, '<leader>dd', '"_dd', { silent = true })
 
-vim.keymap.set("n", "<leader>x", ":source %<cr>", { silent = true })
+vim.keymap.set("n", "<leader>xx", ":source %<cr>", { silent = true })
+
+-- Window navigation
+vim.keymap.set("n", "<C-h>", "<C-w>h", { silent = true })
+vim.keymap.set("n", "<C-j>", "<C-w>j", { silent = true })
+vim.keymap.set("n", "<C-k>", "<C-w>k", { silent = true })
+vim.keymap.set("n", "<C-l>", "<C-w>l", { silent = true })
+
+-- Resize with arrows
+vim.keymap.set("n", "<S-Down>", ":resize -2<CR>", { silent = true })
+vim.keymap.set("n", "<S-Up>", ":resize +2<CR>", { silent = true })
+vim.keymap.set("n", "<S-Left>", ":vertical resize -2<CR>", { silent = true })
+vim.keymap.set("n", "<S-Right>", ":vertical resize +2<CR>", { silent = true })
+
+-- Workaround to write and close all buffers when one or more is a terminal
+-- https://github.com/neovim/neovim/issues/14061
+vim.api.nvim_create_user_command('WriteAllAndQuitAll', 'wa | qa', { nargs = 0 })
+
+vim.keymap.set("n", "<leader>xa", ":WriteAllAndQuitAll<cr>", { silent = true })
+vim.keymap.set("n", "<leader>w", ":w<cr>", { silent = true })
