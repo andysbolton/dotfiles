@@ -49,6 +49,9 @@
   "files.associations": {
     "*.yml": "azure-pipelines"
   },
+  "[xml]": {
+    "editor.formatOnSave": false
+  },
   "[yaml]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -61,9 +64,6 @@
   "typescript.tsserver.experimental.enableProjectDiagnostics": true,
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features"
-  },
-  "[xml]": {
-    "editor.defaultFormatter": null
   },
   "terminal.integrated.enableMultiLinePasteWarning": false,
   "redhat.telemetry.enabled": true,
