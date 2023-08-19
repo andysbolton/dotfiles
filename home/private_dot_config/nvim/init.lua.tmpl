@@ -47,6 +47,12 @@ require('lazy').setup({
             require 'neo-tree.sources.manager'.close_all()
           end
         },
+        pre_restore_cmds = {
+          function()
+            vim.notify('closing neotree')
+            require 'neo-tree.sources.manager'.close_all()
+          end
+        },
         post_restore_cmds = {
           function()
             vim.notify('opening neotree')
@@ -152,9 +158,14 @@ require('lazy').setup({
       "nvim-tree/nvim-web-devicons",
       "MunifTanjim/nui.nvim",
     },
-    config = function()
-      require('neo-tree').setup {}
-    end,
+    opts = {
+      filesystem = {
+        follow_current_file = {
+          enabled = true
+        },
+        use_libuv_file_watcher = true,
+      }
+    }
   },
 
   {
@@ -181,13 +192,18 @@ require('lazy').setup({
     opts = {}
   },
 
-  { 'nvim-telescope/telescope.nvim', version = '*', dependencies = { 'nvim-lua/plenary.nvim' } },
+  {
+    'nvim-telescope/telescope.nvim',
+    version = '*',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'BurntSushi/ripgrep',
+      'nvim-telescope/telescope-live-grep-args.nvim'
+    }
+  },
 
   {
     'nvim-telescope/telescope-fzf-native.nvim',
-    -- NOTE: If you are having trouble with this installation,
-    --       refer to the README for telescope-fzf-native for more instructions.
-    
     {{- if eq .chezmoi.os "windows" }}
     build = 
     'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
@@ -217,6 +233,12 @@ require('lazy').setup({
     config = function()
       require("lsp_signature").setup {}
     end,
+  },
+
+  {
+    "kevinhwang91/nvim-bqf",
+    ft = "qf",
+    opts = {},
   },
 
   {
@@ -279,9 +301,21 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+local lga_actions = require("telescope-live-grep-args.actions")
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
+  extensions = {
+    live_grep_args = {
+      auto_quoting = true,
+      mappings = {
+        i = {
+          ['<C-k>'] = lga_actions.quote_prompt(),
+          ['<C-i>'] = lga_actions.quote_prompt({ postfix = ' --iglob ' }),
+        },
+      }
+    }
+  },
   defaults = {
     mappings = {
       i = {
@@ -290,6 +324,11 @@ require('telescope').setup {
       },
     },
   },
+  pickers = {
+    find_files = {
+      hidden = true
+    }
+  }
 }
 
 -- Enable telescope fzf native, if installed
@@ -309,12 +348,14 @@ vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
-vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
+vim.keymap.set("n", "<leader>sg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
+  { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>km', require('telescope.builtin').keymaps, { desc = '[S]earch [K]eymaps' })
 
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { 'c', 'go', 'lua', 'python', 'rust', 'vimdoc', 'vim', 'c_sharp', 'yaml', 'markdown', 'markdown_inline' },
+  ensure_installed = { 'c', 'go', 'lua', 'python', 'rust', 'vimdoc', 'vim', 'c_sharp', 'yaml', 'markdown',
+    'markdown_inline', 'terraform' },
 
   auto_install = false,
 
@@ -494,12 +535,13 @@ local servers = {
   },
   azure_pipelines_ls = {},
   powershell_es = {},
-  asm_lsp = {},
+  -- asm_lsp = {},
+  terraformls = {},
   -- pyright = {},
   -- rust_analyzer = {},
   -- tsserver = {},
   -- dockerls = {},
-  -- bashls = {},
+  bashls = {},
 
   lua_ls = {
     Lua = {
