@@ -42,7 +42,7 @@
 			"useNativeIcons": true
 		},
 		"browserBookmarksOptions": {
-			"browser": "Google Chrome",
+			"browser": "Firefox",
 			"isEnabled": true
 		},
 		"calculatorOptions": {
