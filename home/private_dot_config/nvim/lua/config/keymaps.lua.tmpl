@@ -8,17 +8,16 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Move lines up/down
-vim.keymap.set("n", "<A-Down>", ":m .+1<CR>==", { silent = true })
-vim.keymap.set("n", "<A-Up>", ":m .-2<CR>==", { silent = true })
-vim.keymap.set("i", "<A-Down>", "<Esc>:m .+1<CR>==gi", { silent = true })
-vim.keymap.set("i", "<A-Up>", "<Esc>:m .-2<CR>==gi", { silent = true })
-vim.keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv", { silent = true })
-vim.keymap.set("v", "<A-Up>", ":m '<-2<CR>gv=gv", { silent = true })
+vim.keymap.set("n", "<A-Down>", ":m .+1<CR>==", { silent = true, desc = "Move line down" })
+vim.keymap.set("n", "<A-Up>", ":m .-2<CR>==", { silent = true, desc = "Move line up" })
+vim.keymap.set("i", "<A-Down>", "<Esc>:m .+1<CR>==gi", { silent = true, desc = "Move line down" })
+vim.keymap.set("i", "<A-Up>", "<Esc>:m .-2<CR>==gi", { silent = true, desc = "Move line up" })
+vim.keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv", { silent = true, desc = "Move line down" })
+vim.keymap.set("v", "<A-Up>", ":m '<-2<CR>gv=gv", { silent = true, desc = "Move line up" })
 
 -- Insert newlines without entering insert mode
 vim.keymap.set("n", "<leader>o", "o<Esc>k", { silent = true })
 vim.keymap.set("n", "<leader>O", "O<Esc>k", { silent = true })
-
 
 {{- if eq .chezmoi.os "windows" }}
 vim.keymap.set("n", "<leader>t", ":split term://pwsh<cr> | :set nonumber<cr> | :set norelativenumber<cr>i", { silent = true })

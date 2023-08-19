@@ -9,7 +9,7 @@ set -Ux EDITOR nvim
 alias cm="chezmoi"
 alias cma="chezmoi apply --verbose"
 alias cmad="chezmoi apply --verbose --dry-run"
-alias nvimconf='nvim ~/.config/nvim -c ":SessionRestore"'
+alias nvimconf='nvim -c ":cd ~/.config/nvim"'
 alias fishconf="nvim ~/.config/fish/config.fish"
 
 function add -a message
