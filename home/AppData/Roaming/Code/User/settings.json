@@ -77,5 +77,6 @@
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "git.mergeEditor": true
+  "git.mergeEditor": true,
+  "editor.inlineSuggest.enabled": true
 }

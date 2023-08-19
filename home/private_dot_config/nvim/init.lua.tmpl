@@ -34,6 +34,7 @@ require('lazy').setup({
   --     vim.fn["mkdp#util#install"]()
   --   end,
   -- },
+  { "ellisonleao/glow.nvim",         config = true, cmd = "Glow" },
 
   {
     'rmagatti/auto-session',
@@ -314,7 +315,8 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 vim.keymap.set('n', '<leader>km', require('telescope.builtin').keymaps, { desc = '[S]earch [K]eymaps' })
 
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { 'c', 'go', 'lua', 'python', 'rust', 'vimdoc', 'vim', 'c_sharp', 'yaml', 'markdown', 'markdown_inline' },
+  ensure_installed = { 'c', 'go', 'lua', 'python', 'rust', 'vimdoc', 'vim', 'c_sharp', 'yaml', 'markdown',
+    'markdown_inline' },
 
   auto_install = false,
 
