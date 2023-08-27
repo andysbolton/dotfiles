@@ -19,8 +19,11 @@ function ops() {
     Invoke-Expression $(op signin)
 }
 
-function nvimconf() {
-    nvim (Resolve-Path ~\.config\nvim\init.lua) -c ":Neotree $(Resolve-Path ~\.config\nvim)"
+function Start-NvimConfig {
+    [Alias("nvimconf")]
+    [Alias("nc")]
+    param()
+    nvim -c ":cd ~/.config/nvim"
 }
 
 function wezconf() {
@@ -42,8 +45,9 @@ function Set-Desktop {
   
 function Set-LocationToProfile {
     [Alias("pwshconf")]
+    [Alias("pc")]
     param()
-    nvim (Resolve-Path "$profile\..")
+    nvim -c ":Neotree $(Resolve-Path "$profile\..")"
 }
   
 function Get-PrettyJson([string]$JsonString) {
