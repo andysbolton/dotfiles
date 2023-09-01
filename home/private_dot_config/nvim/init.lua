@@ -25,12 +25,12 @@ require('lazy').setup({
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
-  {
-    "iamcco/markdown-preview.nvim",
-    config = function()
-      vim.fn["mkdp#util#install"]()
-    end,
-  },
+  -- {
+  --   "iamcco/markdown-preview.nvim",
+  --   config = function()
+  --     vim.fn["mkdp#util#install"]()
+  --   end,
+  -- },
 
   {
     "ellisonleao/glow.nvim",
@@ -92,8 +92,8 @@ require('lazy').setup({
   'romainl/vim-cool',
 
   {
-     'numToStr/Comment.nvim',
-     config = true
+    'numToStr/Comment.nvim',
+    config = true
   },
 
   {
