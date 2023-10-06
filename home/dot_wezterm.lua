@@ -16,6 +16,9 @@ config.font_size = 11
 config.line_height = 1.1
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 config.use_dead_keys = false
+config.colors = {
+  cursor_fg = 'black'
+}
 
 -- Dump any object to string
 local function dump(o)
