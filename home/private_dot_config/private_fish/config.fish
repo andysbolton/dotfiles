@@ -2,6 +2,7 @@ fish_add_path ~/smartwyre/infra-orchestrator/smartwyre-infra/scripts
 fish_add_path ~/.local/bin
 fish_add_path ~/bin
 fish_add_path /usr/local/go/bin
+fish_add_path ~/.cargo/bin
 
 set -Ux BROWSER wslview
 set -Ux EDITOR nvim
@@ -65,4 +66,4 @@ end
 starship init fish | source
 enable_transience
 
-nvm use v16
+nvm use 18 --silent

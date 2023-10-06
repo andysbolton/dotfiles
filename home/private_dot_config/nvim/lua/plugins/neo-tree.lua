@@ -6,8 +6,10 @@ return {
     "MunifTanjim/nui.nvim",
   },
   version = "*",
-  cmd = "Neotree",
   init = function() vim.g.neo_tree_remove_legacy_commands = true end,
+  keys = {
+    { "<leader>e", ":Neotree toggle<cr>", { desc = "Toggle Neotree", silent = true } },
+  },
   opts =
   {
     auto_clean_after_session_restore = true,
