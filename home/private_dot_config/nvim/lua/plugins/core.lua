@@ -14,7 +14,12 @@ return {
 
   {
     "numToStr/Comment.nvim",
-    config = true,
+    config = function()
+      require("Comment").setup()
+      local ft = require "Comment.ft"
+      -- Formatting for jq files
+      ft.jq = "#%s"
+    end,
   },
 
   {
@@ -30,12 +35,65 @@ return {
 
   "tpope/vim-sensible",
 
-  "github/copilot.vim",
+  {
+    "github/copilot.vim",
+    config = function() vim.g.copilot_filetypes = { jq = false } end,
+  },
 
   -- Detect tabstop and shiftwidth automatically
   "tpope/vim-sleuth",
 
   "romainl/vim-cool",
+
+  {
+    "mrjones2014/smart-splits.nvim",
+    keys = {
+      {
+        "<A-h>",
+        function() require("smart-splits").resize_left() end,
+        mode = { "n", "t" },
+      },
+      {
+        "<A-l>",
+        function() require("smart-splits").resize_right() end,
+        mode = { "n", "t" },
+      },
+      {
+        "<A-k>",
+        function() require("smart-splits").resize_up() end,
+        mode = { "n", "t" },
+      },
+      {
+        "<A-j>",
+        function() require("smart-splits").resize_down() end,
+        mode = { "n", "t" },
+      },
+      {
+        "<leader>sh",
+        function() require("smart-splits").swap_buf_left() end,
+        mode = { "n", "t" },
+        desc = "[S]wap buffer left",
+      },
+      {
+        "<leader>sj",
+        function() require("smart-splits").swap_buf_down() end,
+        mode = { "n", "t" },
+        desc = "[S]wap buffer down",
+      },
+      {
+        "<leader>sk",
+        function() require("smart-splits").swap_buf_up() end,
+        mode = { "n", "t" },
+        desc = "[S]wap buffer up",
+      },
+      {
+        "<leader>sl",
+        function() require("smart-splits").swap_buf_right() end,
+        mode = { "n", "t" },
+        desc = "[S]wap buffer right",
+      },
+    },
+  },
 
   {
     "rmagatti/auto-session",

@@ -2,16 +2,16 @@
 	email = {{ .email }}
 	name = {{ .name }}
 [core]
-  	editor = code --wait
+	editor = code --wait
 	longpaths = true
 [diff]
-  	tool = vscode
+  	tool = meld 
 [difftool "vscode"]
-  	cmd = code --wait --diff $LOCAL $REMOTE
+  	cmd = meld $LOCAL $REMOTE
 [merge]
   	tool = vscode
 [mergetool "vscode"]
-	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
+	cmd = meld $REMOTE $LOCAL $BASE $MERGED
 [push]
 	autoSetupRemote = true
 {{- $ghPath := lookPath "gh" }}

@@ -30,12 +30,6 @@ vim.keymap.set("n", "<C-j>", "<C-w>j", { silent = true })
 vim.keymap.set("n", "<C-k>", "<C-w>k", { silent = true })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { silent = true })
 
--- Resize with arrows
-vim.keymap.set("n", "<S-Down>", ":resize -2<CR>", { silent = true })
-vim.keymap.set("n", "<S-Up>", ":resize +2<CR>", { silent = true })
-vim.keymap.set("n", "<S-Left>", ":vertical resize -2<CR>", { silent = true })
-vim.keymap.set("n", "<S-Right>", ":vertical resize +2<CR>", { silent = true })
-
 -- Workaround to write and close all buffers when one or more is a terminal
 -- https://github.com/neovim/neovim/issues/14061
 vim.keymap.set(
@@ -54,3 +48,6 @@ vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous dia
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
+
+-- Copy current buffer name
+vim.keymap.set("n", "<leader>c", ":let @+=expand('%')<cr>", { silent = true, desc = "[C]opy current buffer name" })

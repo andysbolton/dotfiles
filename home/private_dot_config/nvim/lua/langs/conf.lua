@@ -53,10 +53,10 @@ return {
       settings = {
         yaml = {
           schemas = {
-            -- ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = {
-            --   "docker-compose*.yml",
-            --   "docker-compose.*.yml",
-            -- },
+            ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = {
+              "docker-compose*.yml",
+              "docker-compose.*.yml",
+            },
             ["https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json"] = {
               ".ci/*.yml",
               "azure-pipelines.yml",
@@ -67,6 +67,7 @@ return {
     },
     formatter = "prettierd",
   },
+  jq = { jqls = {} },
   powershell = { powershell_es = {} },
   asm = { asm_lsp = {} },
   terraform = { terraformls = {}, formatter = "terraformfmt" },

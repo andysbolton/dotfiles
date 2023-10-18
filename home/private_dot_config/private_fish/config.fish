@@ -6,6 +6,7 @@ fish_add_path ~/.cargo/bin
 
 set -Ux BROWSER wslview
 set -Ux EDITOR nvim
+set -Ux RIPGREP_CONFIG_PATH $HOME/.ripgreprc
 
 alias cm="chezmoi"
 alias cma="chezmoi apply --verbose"
@@ -53,6 +54,14 @@ end
 
 function ops
     eval $(op signin)
+end
+
+function exercism
+    if $argv[1] == "download"
+        set dir (~/bin/exercism $argv) && echo $dir && cd $dir 
+    else
+        ~/bin/exercism $argv
+    end
 end
 
 if status is-login

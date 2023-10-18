@@ -69,13 +69,13 @@ return {
                 local context = { diagnostics = vim.lsp.diagnostic.get_line_diagnostics() }
                 local params = lsp_util.make_range_params()
                 params.context = context
-                vim.lsp.buf_request(bufnr, "textDocument/codeAction", params, function(err, result, ctx, config)
-                  -- do something with result - e.g. check if empty and show some indication such as a sign
-                  -- if count == 0 then
-                  --   vim.notify(require("utils.debug").dump(result[1]))
-                  --   count = count + 1
-                  -- end
-                end)
+                -- vim.lsp.buf_request(bufnr, "textDocument/codeAction", params, function(err, result, ctx, config)
+                --   -- do something with result - e.g. check if empty and show some indication such as a sign
+                --   -- if count == 0 then
+                --   --   vim.notify(require("utils.debug").dump(result[1]))
+                --   --   count = count + 1
+                --   -- end
+                -- end)
               end,
               group = code_action_group,
               pattern = "*",

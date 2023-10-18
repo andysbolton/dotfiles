@@ -21,6 +21,7 @@ return {
         "markdown",
         "markdown_inline",
         "terraform",
+        "jq",
       },
 
       sync_install = false,
