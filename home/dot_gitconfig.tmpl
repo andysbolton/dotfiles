@@ -2,15 +2,15 @@
 	email = {{ .email }}
 	name = {{ .name }}
 [core]
-	editor = code --wait
+	editor = nvim
 	longpaths = true
 [diff]
   	tool = meld 
-[difftool "vscode"]
+[difftool "meld"]
   	cmd = meld $LOCAL $REMOTE
 [merge]
-  	tool = vscode
-[mergetool "vscode"]
+  	tool = meld 
+[mergetool "meld"]
 	cmd = meld $REMOTE $LOCAL $BASE $MERGED
 [push]
 	autoSetupRemote = true
