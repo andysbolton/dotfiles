@@ -1,19 +1,4 @@
 return {
-  -- {
-  --   "nvimdev/lspsaga.nvim",
-  --   config = function()
-  --     require("lspsaga").setup {
-  --       lightbulb = {
-  --         virtual_text = false,
-  --       },
-  --     }
-  --   end,
-  --   dependencies = {
-  --     "nvim-treesitter/nvim-treesitter",
-  --     "nvim-tree/nvim-web-devicons",
-  --   },
-  -- },
-
   {
     -- LSP Configuration & Plugins
     "neovim/nvim-lspconfig",
@@ -41,8 +26,10 @@ return {
             -- nmap("<leader>ca", function() vim.cmd [[ Lspsaga code_action ]] end, "[C]ode [A]ction")
 
             nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
+            nmap("gD", vim.lsp.buf.definition, "[G]oto [D]eclaration")
             nmap("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
             nmap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
+
             nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition")
             nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
             nmap("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
@@ -69,13 +56,21 @@ return {
                 local context = { diagnostics = vim.lsp.diagnostic.get_line_diagnostics() }
                 local params = lsp_util.make_range_params()
                 params.context = context
-                -- vim.lsp.buf_request(bufnr, "textDocument/codeAction", params, function(err, result, ctx, config)
-                --   -- do something with result - e.g. check if empty and show some indication such as a sign
-                --   -- if count == 0 then
-                --   --   vim.notify(require("utils.debug").dump(result[1]))
-                --   --   count = count + 1
-                --   -- end
-                -- end)
+                vim.lsp.buf_request_all(bufnr, "textDocument/codeAction", params, function(_, result, ctx)
+                  -- print(vim.inspect(result))
+                  if result and #result > 0 then
+                    -- local inspect = require "inspect"
+                    -- io.open("/tmp/lsp.log", "a"):write(require("utils.debug").dump(result)):close()
+                    -- print(require("utils.debug").dump(result))
+                    print(vim.inspect(result[1].edit.changes))
+                    print(vim.inspect(ctx))
+                  end
+                  -- do something with result - e.g. check if empty and show some indication such as a sign
+                  -- if count == 0 then
+                  --   vim.notify(require("utils.debug").dump(result[1]))
+                  --   count = count + 1
+                  -- end
+                end)
               end,
               group = code_action_group,
               pattern = "*",

@@ -20,15 +20,10 @@ vim.keymap.set("n", "<leader>O", "O<Esc>j", { silent = true })
 
 -- Delete to black hole register
 vim.keymap.set({ "n", "v" }, "<leader>dd", '"_dd<Esc>', { silent = true })
+vim.keymap.set({ "v" }, "<leader>d", '"_d<Esc>', { silent = true })
 
 -- Source current file
 vim.keymap.set("n", "<leader>xx", ":source %<cr>", { silent = true })
-
--- Window navigation
-vim.keymap.set("n", "<C-h>", "<C-w>h", { silent = true })
-vim.keymap.set("n", "<C-j>", "<C-w>j", { silent = true })
-vim.keymap.set("n", "<C-k>", "<C-w>k", { silent = true })
-vim.keymap.set("n", "<C-l>", "<C-w>l", { silent = true })
 
 -- Workaround to write and close all buffers when one or more is a terminal
 -- https://github.com/neovim/neovim/issues/14061

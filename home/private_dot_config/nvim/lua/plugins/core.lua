@@ -35,10 +35,7 @@ return {
 
   "tpope/vim-sensible",
 
-  {
-    "github/copilot.vim",
-    config = function() vim.g.copilot_filetypes = { jq = false } end,
-  },
+  "github/copilot.vim",
 
   -- Detect tabstop and shiftwidth automatically
   "tpope/vim-sleuth",
@@ -69,28 +66,48 @@ return {
         mode = { "n", "t" },
       },
       {
-        "<leader>sh",
+        "<leader>swh",
         function() require("smart-splits").swap_buf_left() end,
         mode = { "n", "t" },
-        desc = "[S]wap buffer left",
+        desc = "[S][w]ap buffer left",
       },
       {
-        "<leader>sj",
+        "<leader>swj",
         function() require("smart-splits").swap_buf_down() end,
         mode = { "n", "t" },
-        desc = "[S]wap buffer down",
+        desc = "[S][w]ap buffer down",
       },
       {
-        "<leader>sk",
+        "<leader>swk",
         function() require("smart-splits").swap_buf_up() end,
         mode = { "n", "t" },
-        desc = "[S]wap buffer up",
+        desc = "[S][w]ap buffer up",
       },
       {
-        "<leader>sl",
+        "<leader>swl",
         function() require("smart-splits").swap_buf_right() end,
         mode = { "n", "t" },
-        desc = "[S]wap buffer right",
+        desc = "[S][w]ap buffer right",
+      },
+      {
+        "<C-h>",
+        function() require("smart-splits").move_cursor_left() end,
+        mode = { "n", "t" },
+      },
+      {
+        "<C-j>",
+        function() require("smart-splits").move_cursor_down() end,
+        mode = { "n", "t" },
+      },
+      {
+        "<C-k>",
+        function() require("smart-splits").move_cursor_up() end,
+        mode = { "n", "t" },
+      },
+      {
+        "<C-l>",
+        function() require("smart-splits").move_cursor_right() end,
+        mode = { "n", "t" },
       },
     },
   },
@@ -98,13 +115,16 @@ return {
   {
     "rmagatti/auto-session",
     config = function()
+      local function close_neo_tree() require("neo-tree.sources.manager").close_all() end
+
+      ---@diagnostic disable-next-line: missing-fields
       require("auto-session").setup {
         log_level = "error",
         pre_save_cmds = {
-          function() require("neo-tree.sources.manager").close_all() end,
+          close_neo_tree,
         },
         pre_restore_cmds = {
-          function() require("neo-tree.sources.manager").close_all() end,
+          close_neo_tree,
         },
         post_restore_cmds = {
           function() require("neo-tree.sources.manager").show "filesystem" end,

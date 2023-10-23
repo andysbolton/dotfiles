@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 return {
   {
     "akinsho/bufferline.nvim",
@@ -29,6 +30,7 @@ return {
               filetype = "neo-tree",
             },
           },
+          ---@diagnostic disable-next-line: undefined-field
           numbers = function(opts) return string.format("%s.%s", opts.ordinal, opts.lower(opts.id)) end,
         },
       }

@@ -57,7 +57,7 @@ function ops
 end
 
 function exercism
-    if $argv[1] == "download"
+    if [ $argv[1] = "download" ]
         set dir (~/bin/exercism $argv) && echo $dir && cd $dir 
     else
         ~/bin/exercism $argv
