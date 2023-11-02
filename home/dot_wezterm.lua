@@ -12,29 +12,13 @@ end
 config.color_scheme = 'TokyoNight (Gogh)'
 config.font = wezterm.font 'CaskaydiaCove NF'
 config.default_prog = { 'pwsh' }
-config.font_size = 11
+config.font_size = 12
 config.line_height = 1.1
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 config.use_dead_keys = false
 config.colors = {
   cursor_fg = 'black'
 }
-
--- Dump any object to string
-local function dump(o)
-  if type(o) == 'table' then
-    local s = '{ '
-    for k, v in pairs(o) do
-      if type(k) ~= 'number' then
-        k = '"' .. k .. '"'
-      end
-      s = s .. '[' .. k .. '] = ' .. dump(v) .. ','
-    end
-    return s .. '} '
-  else
-    return tostring(o)
-  end
-end
 
 -- Equivalent to POSIX basename(3)
 -- Given "/foo/bar" returns "bar"
