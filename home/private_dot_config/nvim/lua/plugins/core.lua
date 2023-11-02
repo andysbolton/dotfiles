@@ -13,6 +13,11 @@ return {
   },
 
   {
+    "williamboman/mason.nvim",
+    config = true,
+  },
+
+  {
     "numToStr/Comment.nvim",
     config = function()
       require("Comment").setup()
@@ -112,6 +117,8 @@ return {
     },
   },
 
+  { "stevearc/stickybuf.nvim", config = true },
+
   {
     "rmagatti/auto-session",
     config = function()
@@ -130,7 +137,8 @@ return {
           function() require("neo-tree.sources.manager").show "filesystem" end,
         },
       }
-      vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+      -- vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+      vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,localoptions"
     end,
   },
 
@@ -162,9 +170,9 @@ return {
     cmd = "Glow",
   },
 
-  -- {
-  --   "kevinhwang91/nvim-bqf",
-  --   ft = "qf",
-  --   opts = {},
-  -- },
+  {
+    "kevinhwang91/nvim-bqf",
+    ft = "qf",
+    opts = {},
+  },
 }

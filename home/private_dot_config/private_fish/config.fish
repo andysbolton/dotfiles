@@ -4,6 +4,8 @@ fish_add_path ~/bin
 fish_add_path /usr/local/go/bin
 fish_add_path ~/.cargo/bin
 
+. ~/.asdf/asdf.fish
+
 set -Ux BROWSER wslview
 set -Ux EDITOR nvim
 set -Ux RIPGREP_CONFIG_PATH $HOME/.ripgreprc
@@ -75,4 +77,3 @@ end
 starship init fish | source
 enable_transience
 
-nvm use 18 --silent

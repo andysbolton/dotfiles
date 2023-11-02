@@ -3,18 +3,12 @@ return {
     -- LSP Configuration & Plugins
     "neovim/nvim-lspconfig",
     dependencies = {
-      -- Automatically install LSPs to stdpath for neovim
-      {
-        "williamboman/mason.nvim",
-        config = true,
-      },
+      "williamboman/mason.nvim",
 
       {
         "williamboman/mason-lspconfig.nvim",
         config = function()
-          -- LSP settings.
-          -- This function gets run when an LSP connects to a particular buffer.
-          local on_attach = function(_, bufnr)
+          local on_attach = function(client, bufnr)
             local nmap = function(keys, func, desc)
               if desc then desc = "LSP: " .. desc end
 
@@ -22,8 +16,6 @@ return {
             end
 
             nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
-            nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
-            -- nmap("<leader>ca", function() vim.cmd [[ Lspsaga code_action ]] end, "[C]ode [A]ction")
 
             nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
             nmap("gD", vim.lsp.buf.definition, "[G]oto [D]eclaration")
@@ -37,57 +29,30 @@ return {
             nmap("K", vim.lsp.buf.hover, "Hover Documentation")
             nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
 
-            -- Lesser used LSP functionality
-            nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-            -- nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")
-            -- nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder")
-            -- nmap(
-            --   "<leader>wl",
-            --   function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
-            --   "[W]orkspace [L]ist Folders"
-            -- )
-            --
-            --
-            local lsp_util = vim.lsp.util
-            local code_action_group = vim.api.nvim_create_augroup("CodeAction", { clear = true })
-            local count = 0
-            vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-              callback = function()
-                local context = { diagnostics = vim.lsp.diagnostic.get_line_diagnostics() }
-                local params = lsp_util.make_range_params()
-                params.context = context
-                vim.lsp.buf_request_all(bufnr, "textDocument/codeAction", params, function(_, result, ctx)
-                  -- print(vim.inspect(result))
-                  if result and #result > 0 then
-                    -- local inspect = require "inspect"
-                    -- io.open("/tmp/lsp.log", "a"):write(require("utils.debug").dump(result)):close()
-                    -- print(require("utils.debug").dump(result))
-                    print(vim.inspect(result[1].edit.changes))
-                    print(vim.inspect(ctx))
-                  end
-                  -- do something with result - e.g. check if empty and show some indication such as a sign
-                  -- if count == 0 then
-                  --   vim.notify(require("utils.debug").dump(result[1]))
-                  --   count = count + 1
-                  -- end
-                end)
-              end,
-              group = code_action_group,
-              pattern = "*",
-            })
+            nmap("<leader>wra", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")
+            nmap("<leader>wrr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder")
+            nmap(
+              "<leader>wrl",
+              function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
+              "[W]orkspace [L]ist Folders"
+            )
+
+            if client.supports_method "textDocument/codeAction" then
+              nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
+              require("cmds.lsp").setup_codeactions(bufnr)
+            end
           end
 
           local capabilities = vim.lsp.protocol.make_client_capabilities()
           -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
           capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
-          -- Ensure the servers above are installed
           local mason_lspconfig = require "mason-lspconfig"
 
-          local lsp_config = require("langs.util").get_lsp_conf_table()
+          local language_servers = require("configs.util").get_language_servers()
 
           mason_lspconfig.setup {
-            ensure_installed = vim.tbl_keys(lsp_config),
+            ensure_installed = vim.tbl_keys(language_servers),
           }
 
           mason_lspconfig.setup_handlers {
@@ -95,7 +60,7 @@ return {
               require("lspconfig")[server_name].setup {
                 capabilities = capabilities,
                 on_attach = on_attach,
-                settings = lsp_config[server_name],
+                settings = language_servers[server_name],
               }
             end,
           }

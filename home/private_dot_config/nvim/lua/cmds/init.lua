@@ -5,3 +5,11 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   pattern = "*",
 })
 
+-- disable Copilot in exercism directory
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+  pattern = vim.fn.expand "~" .. "/exercism/*",
+  callback = function()
+    vim.notify "Copilot disabled in exercism directory"
+    vim.cmd "Copilot disable"
+  end,
+})

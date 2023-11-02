@@ -1,7 +1,6 @@
--- local start_insert = function()
---   print("var is " .. vim.g.SessionLoad)
---   if not vim.g.SessionLoad then vim.cmd "startinsert!" end
--- end
+local start_insert = function()
+  if not vim.g.SessionLoad then vim.cmd "startinsert!" end
+end
 
 return {
   {
@@ -12,10 +11,9 @@ return {
         open_mapping = "<F7>",
         terminal_mappings = false,
         insert_mappings = false,
-        -- on_open = start_insert,
+        on_open = start_insert,
       }
 
-      -- print("var is " .. vim.g.SessionLoad)
       -- Exit terminal mode with <Esc>
       vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { silent = true })
 
@@ -40,12 +38,12 @@ return {
         { silent = true, desc = "[T]oggle [s]ide terminal" }
       )
 
-      -- local term_insert_group = vim.api.nvim_create_augroup("TermStartInsert", { clear = true })
-      -- vim.api.nvim_create_autocmd("BufEnter", {
-      --   callback = start_insert,
-      --   group = term_insert_group,
-      --   pattern = "term://*",
-      -- })
+      local term_insert_group = vim.api.nvim_create_augroup("TermStartInsert", { clear = true })
+      vim.api.nvim_create_autocmd("BufEnter", {
+        callback = start_insert,
+        group = term_insert_group,
+        pattern = "term://*",
+      })
     end,
   },
 }

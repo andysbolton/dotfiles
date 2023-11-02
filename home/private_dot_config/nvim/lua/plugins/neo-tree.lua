@@ -9,6 +9,7 @@ return {
   init = function() vim.g.neo_tree_remove_legacy_commands = true end,
   keys = {
     { "<leader>e", ":Neotree toggle<cr>", { desc = "Toggle Neotree", silent = true } },
+    { "|", ":Neotree reveal<cr>", { silent = true } },
   },
   config = function()
     require("neo-tree").setup {

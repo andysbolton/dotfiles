@@ -7,22 +7,11 @@ return {
   },
   build = ":TSUpdate",
   config = function()
+    local treesitters = require("configs.util").get_treesitters()
+    local default_treesitters = { "vimdoc", "vim", "markdown", "markdown_inline" }
+
     require("nvim-treesitter.configs").setup {
-      ensure_installed = {
-        "c",
-        "go",
-        "lua",
-        "python",
-        "rust",
-        "vimdoc",
-        "vim",
-        "c_sharp",
-        "yaml",
-        "markdown",
-        "markdown_inline",
-        "terraform",
-        "jq",
-      },
+      ensure_installed = { table.unpack(treesitters), table.unpack(default_treesitters) },
 
       sync_install = false,
 
