@@ -1,11 +1,12 @@
 return {
   name = "c",
+  ft = { "c" },
   ls = {
     name = "clangd",
     settings = {
       cmd = { "clangd", "--clang-tidy", "--offset-encoding=utf-16" },
     },
   },
-  linter = "cpplint",
+  linter = { name = "cpplint" },
   treesitter = "c",
 }

@@ -10,8 +10,12 @@ return {
     local treesitters = require("configs.util").get_treesitters()
     local default_treesitters = { "vimdoc", "vim", "markdown", "markdown_inline" }
 
+    for _, v in ipairs(default_treesitters) do
+      table.insert(treesitters, v)
+    end
+
     require("nvim-treesitter.configs").setup {
-      ensure_installed = { table.unpack(treesitters), table.unpack(default_treesitters) },
+      ensure_installed = treesitters,
 
       sync_install = false,
 

@@ -25,7 +25,7 @@ return {
   formatter = {
     name = "prettierd",
     actions = {
-      function() return require("formatter.filetypes.yaml").prettierd end,
+      function() return require("formatter.filetypes.yaml").prettierd() end,
     },
   },
   treesitter = "yaml",

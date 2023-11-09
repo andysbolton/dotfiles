@@ -19,7 +19,7 @@ return {
   },
   formatter = {
     name = "stylua",
-    actions = { function() return require("formatter.filetypes.lua").stylua end },
+    actions = { function() return require("formatter.filetypes.lua").stylua() end },
   },
   treesitter = "lua",
 }

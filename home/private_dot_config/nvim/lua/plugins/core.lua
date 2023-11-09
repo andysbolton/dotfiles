@@ -17,6 +17,8 @@ return {
     config = true,
   },
 
+  "svermeulen/nvim-teal-maker",
+
   {
     "numToStr/Comment.nvim",
     config = function()

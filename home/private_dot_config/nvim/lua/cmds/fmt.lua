@@ -1,5 +1,13 @@
 local M = {}
 
+local utils = require "utils"
+local config_utils = require "configs.util"
+
+local ls_formatters = {}
+for _, lang in pairs(config_utils.get_configs()) do
+  if lang.formatter then ls_formatters[lang.ls.name] = lang.formatter end
+end
+
 M.register_formatters = function()
   -- Create an augroup that is used for managing our formatting autocmds.
   -- We need one augroup per client to make sure that multiple clients
@@ -22,15 +30,15 @@ M.register_formatters = function()
       local client = vim.lsp.get_client_by_id(client_id)
       local bufnr = args.buf
 
-      local conf = require("configs.util").get_config_from_lsp_name(client.name)
+      local formatter = ls_formatters[client.name]
 
-      if not conf then
+      if utils.empty(formatter) then
         vim.notify("No conf found for client " .. client.name)
         return
       end
 
       -- Only attach to clients that support document formatting
-      if not client.server_capabilities.documentFormattingProvider and not conf.formatter then
+      if not client.server_capabilities.documentFormattingProvider and not formatter then
         vim.notify("Client " .. client.name .. " does not support formatting")
         return
       end
@@ -40,14 +48,15 @@ M.register_formatters = function()
         buffer = bufnr,
         callback = function()
           -- Prefer an installed formatter over an LSP-formatter if it exists
-          if conf.formatter then
-            vim.cmd [[FormatWrite]]
+
+          if formatter then
+            vim.cmd "FormatWrite"
           else
             vim.lsp.buf.format {
               async = false,
               filter = function(c) return c.id == client.id end,
             }
-            vim.cmd [[write]]
+            vim.cmd "write"
           end
         end,
       })

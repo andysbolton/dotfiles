@@ -5,11 +5,12 @@ return {
     name = "bashls",
     settings = {},
   },
-  linter = "shellcheck",
+  linter = { name = "shellcheck" },
   formatter = {
     name = "shfmt",
     actions = {
-      function() return require("formatter.filetypes.sh").shfmt end
-    }
+      function() return require("formatter.filetypes.sh").shfmt() end,
+    },
   },
+  treesitter = "bash",
 }

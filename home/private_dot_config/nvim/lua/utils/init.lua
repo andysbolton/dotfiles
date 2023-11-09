@@ -1,7 +1,7 @@
 local M = {}
 
-local function empty(tabl)
-    return next(tabl) == nil
+local function empty(table)
+    return table == nil or next(table) == nil
 end
 
 M.empty = empty
