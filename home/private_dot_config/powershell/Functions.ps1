@@ -26,7 +26,9 @@ function Start-NvimConfig {
     nvim -c ":cd ~/.config/nvim"
 }
 
-function wezconf() {
+function wezconf {
+    [Alias("wc")]
+    param()
     nvim (Resolve-Path ~\.wezterm.lua)
 }
 
@@ -47,7 +49,7 @@ function Set-LocationToProfile {
     [Alias("pwshconf")]
     [Alias("pc")]
     param()
-    nvim -c ":Neotree $(Resolve-Path "$profile\..")"
+    nvim -c ":cd $(Resolve-Path "$profile\..")"
 }
   
 function Get-PrettyJson([string]$JsonString) {
