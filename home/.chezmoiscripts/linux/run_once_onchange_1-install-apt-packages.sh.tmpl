@@ -1,0 +1,17 @@
+#!/bin/bash
+
+sudo apt-get update
+
+{{ $packages := list
+    "aptitude"
+    "ca-certificates"
+    "dnsutils" 
+    "gdb"
+    "gpg"
+    "nmap"
+    "unzip"
+    "wget"
+    "whois" -}}
+
+sudo apt-get install -y {{ $packages | join " " }}
+
