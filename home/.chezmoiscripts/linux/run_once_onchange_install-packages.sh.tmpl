@@ -1,7 +1,6 @@
 #!/bin/bash
 
 sudo apt-get update
-type -p curl >/dev/null || sudo apt install curl -y
 
 function install_op {
     curl -sS https://downloads.1password.com/linux/keys/1password.asc | \
@@ -52,7 +51,7 @@ function install_pwsh {
     "ca-certificates"
     "dnsutils" 
     "gdb"
-    "net-tools"
+    "gpg"
     "netcat"
     "nmap"
     "unzip"
