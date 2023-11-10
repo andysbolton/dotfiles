@@ -3,6 +3,7 @@ packages
 {{- if eq .chezmoi.os "windows" }}
 .chezmoiscripts/linux/**
 .config/fish/
+.tool-versions
 {{- end }}
 
 {{- if eq .chezmoi.os "linux" }}
