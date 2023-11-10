@@ -19,18 +19,6 @@ function install_op {
     sudo apt install 1password-cli
 }
 
-function install_dotnet {
-    wget https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-    sudo dpkg -i packages-microsoft-prod.deb
-    rm packages-microsoft-prod.deb
-
-    sudo apt-get install -y dotnet-sdk-7.0
-    sudo apt-get install -y aspnetcore-runtime-7.0
-
-    sudo apt-get install -y dotnet-sdk-6.0
-    sudo apt-get install -y aspnetcore-runtime-6.0
-}
-
 function install_gh {
     curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
     && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
@@ -39,11 +27,20 @@ function install_gh {
 }
 
 function install_pwsh {
-    wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb
-
+    sudo apt-get update
+    source /etc/os-release
+    wget -q https://packages.microsoft.com/config/debian/$VERSION_ID/packages-microsoft-prod.deb
     sudo dpkg -i packages-microsoft-prod.deb
-
+    rm packages-microsoft-prod.deb
+    sudo apt-get update
     sudo apt-get install -y powershell
+}
+
+function install_neovim {
+    mkdir -p ~/.local/bin
+    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+    chmod u+x nvim.appimage
+    mv nvim.appimage ~/.local/bin/nvim
 }
 
 {{ $packages := list
@@ -55,19 +52,16 @@ function install_pwsh {
     "netcat"
     "nmap"
     "unzip"
-    "neovim"
+    "git-all"
     "wget"
     "whois" -}}
 
+sudo apt-get install -y {{ $packages | join " " }}
+
 install_op
-install_dotnet
 install_gh
 install_pwsh
 
-sudo apt-get install -y {{ $packages | join " " }}
-
 # install starship
 curl -sS https://starship.rs/install.sh | sh
-# install vim-plug
-sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
