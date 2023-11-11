@@ -4,3 +4,4 @@ dotnet-core 7.0.403
 clojure 1.11.1.1413
 leiningen 2.10.0
 tree-sitter 0.20.8
+lua 5.4.6
