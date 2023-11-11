@@ -12,7 +12,7 @@ end
 config.color_scheme = 'TokyoNight (Gogh)'
 config.font = wezterm.font 'CaskaydiaCove NF'
 config.default_prog = { 'pwsh' }
-config.font_size = 12
+config.font_size = 13
 config.line_height = 1.1
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 config.use_dead_keys = false
@@ -23,15 +23,15 @@ config.colors = {
 -- Equivalent to POSIX basename(3)
 -- Given "/foo/bar" returns "bar"
 -- Given "c:\\foo\\bar" returns "bar"
-function basename(s)
+local function basename(s)
   return string.gsub(s, '(.*[/\\])(.*)', '%2')
 end
 
-function fmt_working_dir(s)
+local function fmt_working_dir(s)
   s = string.gsub(s, 'file://', '')
   -- clean up leftover front slash if it exists
   s = string.gsub(s, '^/', '')
-  fmt_profile = string.gsub(wezterm.home_dir, "\\", "/")
+  local fmt_profile = string.gsub(wezterm.home_dir, "\\", "/")
   s = string.gsub(s, fmt_profile, '~')
   -- TODO: find a better way to format home directory if we're in WSL
   s = string.gsub(s, 'work/home/asbolton', '~')
@@ -40,11 +40,11 @@ end
 
 local tab_title = function(tab_info)
   local baseexe = basename(tab_info.active_pane.foreground_process_name)
-  fmt_dir = fmt_working_dir(tab_info.active_pane.current_working_dir)
+  local fmt_dir = fmt_working_dir(tab_info.active_pane.current_working_dir)
   return baseexe .. ' @ ' .. fmt_dir
 end
 
-wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
+wezterm.on('format-tab-title', function(tab, tabs)
   local mux_window = wezterm.mux.get_window(tab.window_id)
   local mux_tab = mux_window:active_tab()
   local mux_tab_cols = mux_tab:get_size().cols
