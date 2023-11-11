@@ -1,9 +1,9 @@
 return {
   name = "fsharp",
   -- ft = { "fs", "fsi", "fsx" },
-  ls = {
-    name = "fsautocomplete",
-    settings = {},
-  },
+  -- ls = {
+  --   name = "fsautocomplete",
+  --   settings = {},
+  -- },
   -- formatter = "fantomas",
 }

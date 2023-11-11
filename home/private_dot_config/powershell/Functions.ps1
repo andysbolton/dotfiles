@@ -128,25 +128,12 @@ function Get-ProcessId($fileName) {
     }
 }
 
-function Add-PathVariable([string]$addPath) {  
-    if (-not (Test-Path $addPath)) {
-        throw "'$addPath' is not a valid path."
+function Add-PathVariable([string]$path) {  
+    if (-not (Test-Path $path)) {
+        throw "'$path' is not a valid path."
     }
-  
-    $Environment = [System.Environment]::GetEnvironmentVariable("Path", "Machine")
-  
-    foreach ($path in ($Environment).Split(";")) {
-        if ($path -like "*SysWOW64\WIndowsPowerShell\v1.0*") {
-            $Environment = $Environment.Replace($Path , "")
-        }
-        if ($path -like "c:\temp*") {
-            $Environment = $Environment.Replace($Path , "")
-        }
-    }
-  
-    $Environment = $Environment.Insert($Environment.Length, $AddPathItems + ";")
-  
-    [System.Environment]::SetEnvironmentVariable("Path", $Environment, "Machine")
+
+    [System.Environment]::SetEnvironmentVariable("Path", $env:PATH + ";$path", "Machine")
 }
   
 function Get-ChocoPackagesWithDependencies() {

@@ -13,9 +13,9 @@ if (-not (Test-IsSymlink $nvimLink)) {
 
 # Here, the link target is reversed from above.
 # ~/AppData/Local/nvim-data/ is created by nvim, whereas ~/.config/nvim is created by chezmoi.
-$nvimDataLink = Resolve-Path "~/AppData/Local/nvim-data/"
+$nvimDataLink = ("$(Resolve-Path ~)" + "\.local\share\nvim\")
 if (-not (Test-IsSymlink $nvimDataLink)) {
-    Start-Process pwsh -Verb "RunAs" -ArgumentList ("-NoExit", "-Command", "New-Item", "-ItemType", "symboliclink", "-Path", ("$(Resolve-Path ~)" + "\.local\share\nvim\"), "-Value", $nvimDataLink)
+    Start-Process pwsh -Verb "RunAs" -ArgumentList ("-NoExit", "-Command", "New-Item", "-ItemType", "symboliclink", "-Path", $nvimDataLink, "-Value", "~/AppData/Local/nvim-data/")
 }
 
 Get-ChildItem "~/.config/powershell" |
