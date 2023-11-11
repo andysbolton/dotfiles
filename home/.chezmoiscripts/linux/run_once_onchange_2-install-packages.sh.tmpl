@@ -4,6 +4,7 @@ sudo apt update
 
 function install_op {
     if dpkg -l | grep 1password; then
+        echo "1password is already installed."
         return
     fi
 
@@ -20,7 +21,7 @@ function install_op {
     curl -sS https://downloads.1password.com/linux/keys/1password.asc | \
     sudo gpg --dearmor --output /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg
 
-    sudo apt update && sudo apt install -y 1password-cli
+    sudo apt install -y 1password-cli
 }
 
 function install_gh {
@@ -35,7 +36,6 @@ function install_pwsh {
     wget -q https://packages.microsoft.com/config/debian/$VERSION_ID/packages-microsoft-prod.deb
     sudo dpkg -i packages-microsoft-prod.deb
     rm packages-microsoft-prod.deb
-    sudo apt update
     sudo apt install -y powershell
 }
 
