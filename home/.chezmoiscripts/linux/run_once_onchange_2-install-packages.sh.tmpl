@@ -4,6 +4,7 @@ sudo apt update
 
 function install_op {
     if dpkg -l | grep 1password; then
+        echo "1password is already installed."
         return
     fi
 
@@ -31,12 +32,10 @@ function install_gh {
 }
 
 function install_pwsh {
-    source /etc/os-release
-    wget -q https://packages.microsoft.com/config/debian/$VERSION_ID/packages-microsoft-prod.deb
-    sudo dpkg -i packages-microsoft-prod.deb
-    rm packages-microsoft-prod.deb
+    curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+    echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-debian-bullseye-prod bullseye main" | sudo tee /etc/apt/sources.list.d/microsoft.list
     sudo apt update
-    sudo apt install -y powershell
+    sudo apt install powershell
 }
 
 function install_neovim {
@@ -49,7 +48,7 @@ function install_neovim {
 function install_fish {
     echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_12/ /' | sudo tee /etc/apt/sources.list.d/shells:fish:release:3.list
     curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg > /dev/null
-    sudo apt install -y fish
+    sudo apt update && sudo apt install -y fish
 }
 
 install_op

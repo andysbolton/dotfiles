@@ -3,7 +3,6 @@
 sudo apt-get update
 
 {{ $packages := list
-    "aptitude"
     "ca-certificates"
     "dnsutils" 
     "gdb"
@@ -11,6 +10,8 @@ sudo apt-get update
     "nmap"
     "unzip"
     "wget"
+    "make"
+    "gcc"
     "whois" -}}
 
 sudo apt-get install -y {{ $packages | join " " }}
