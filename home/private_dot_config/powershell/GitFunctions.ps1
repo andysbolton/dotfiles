@@ -71,7 +71,7 @@ function Set-Branch {
     return
   }
   
-  git checkout (git branch --sort=-committerdate | select -index $Index).TrimStart()
+  git checkout (git branch --sort=-committerdate | Select-Object -index $Index).TrimStart()
 }
 
 function Remove-GitChanges {

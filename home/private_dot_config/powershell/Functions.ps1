@@ -32,6 +32,8 @@ function wezconf {
     nvim (Resolve-Path ~\.wezterm.lua)
 }
 
+function ahk { autohotkey.exe $args }
+
 function chown($Object, $User) {
     $acl = Get-Acl $Object
     $user = New-Object System.Security.Principal.Ntaccount($User)
@@ -123,8 +125,22 @@ function Stop-Chrome() {
 function Get-ProcessId($fileName) {
     Get-Process -FileVersionInfo -ErrorAction SilentlyContinue | ForEach-Object {
         if ($_.FileName -like $fileName) {
-            $_.Name + " PID:" + $_.Id    
+            $_.Name + " PID:" + $_.Id
         }
+    }
+}
+
+function Stay-Awake {
+    [alias("awake")]
+    param()
+
+    $wsh = New-Object -ComObject WScript.Shell
+    while (1) {
+      # Send Shift+F15 - this is the least intrusive key combination I can think of and is also used as default by:
+      # http://www.zhornsoftware.co.uk/caffeine/
+      # Unfortunately the above triggers a malware alert on Sophos so I needed to find a native solution - hence this script...
+      $wsh.SendKeys('+{F15}')
+      Start-Sleep -seconds 59
     }
 }
 

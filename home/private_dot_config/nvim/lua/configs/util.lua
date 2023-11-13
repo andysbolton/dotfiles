@@ -4,7 +4,6 @@ local M = {}
 
 local language_servers = {}
 local formatters = {}
-local ls_formatters = {}
 local linters = {}
 local treesitters = {}
 
