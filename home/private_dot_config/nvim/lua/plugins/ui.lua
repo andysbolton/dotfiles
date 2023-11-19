@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 return {
   {
     "akinsho/bufferline.nvim",
@@ -12,8 +13,17 @@ return {
       vim.keymap.set("n", "<leader>bdo", ":BufferLineCloseOthers<cr>", { desc = "Delete other buffers" })
 
       for i = 1, 15 do
-        vim.keymap.set("n", "<leader>b" .. i, ":BufferLineGoToBuffer " .. i .. "<cr>", { desc = "Go to buffer #" .. i })
-        vim.keymap.set("n", "<leader>bd" .. i, ":Bdelete " .. i .. "<cr>", { desc = "Delete buffer #" .. i })
+        vim.keymap.set(
+          "n",
+          "<leader>b" .. i,
+          ":BufferLineGoToBuffer " .. i .. "<cr>",
+          { desc = "Go to buffer at " .. i }
+        )
+        vim.keymap.set("n", "<leader>bd" .. i, function()
+          for _, buf in pairs(require("bufferline.buffers").get_components(require "bufferline.state")) do
+            if buf.ordinal == i then vim.cmd("Bdelete! " .. buf.id) end
+          end
+        end, { desc = "Delete buffer at " .. i })
       end
 
       require("bufferline").setup {

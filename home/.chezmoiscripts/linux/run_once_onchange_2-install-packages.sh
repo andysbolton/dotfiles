@@ -4,10 +4,11 @@ sudo apt update
 
 function package_exists {
     local package=$1
-    if ! dpkg -l | grep -w $package > /dev/null; then
+    if dpkg -s "$package" > /dev/null; then
+        echo "$package is already installed."
         return
     fi
-    echo "$package is already installed."
+    false
 }
 
 function install_op {
@@ -43,7 +44,7 @@ function install_gh {
 }
 
 function install_pwsh {
-    if package_exists pwsh; then
+    if package_exists powershell; then
         return
     fi
 
@@ -61,12 +62,12 @@ function install_neovim {
 }
 
 function install_fish {
-    if package_exists pwsh; then
+    if package_exists fish; then
         return
     fi
  
-    echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_12/ /' | sudo tee /etc/apt/sources.list.d/shells:fish:release:3.list
-    curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg > /dev/null
+    echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_11/ /' | sudo tee /etc/apt/sources.list.d/shells:fish:release:3.list
+    curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_11/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg > /dev/null
     sudo apt update && sudo apt install -y fish
 }
 
