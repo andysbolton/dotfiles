@@ -105,6 +105,11 @@ return {
             filetypes = { "teal" },
           }
 
+          require("lspconfig").ahk2_ls.setup {
+            capabilities = capabilities,
+            on_attach = on_attach,
+          }
+
           require("lspkind").init {
             mode = "symbol_text",
             preset = "codicons",

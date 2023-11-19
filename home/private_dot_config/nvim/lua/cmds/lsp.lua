@@ -7,7 +7,6 @@ vim.fn.sign_define("LightBulbSign", { text = "💡", texthl = "LspDiagnosticsDef
 M.setup_codeactions = function(bufnr)
   local ns_id = vim.api.nvim_create_namespace("code-actions-virtual-text" .. bufnr)
   local lsp_util = vim.lsp.util
-  local next = next
   local code_action_group = vim.api.nvim_create_augroup("code-action-" .. bufnr, { clear = true })
 
   local line = 0

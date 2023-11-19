@@ -1,12 +1,3 @@
-function sudo() {
-    if ($args.Length -eq 1) {
-        Start-Process $args[0] -Verb RunAs
-    }
-    if ($args.Length -gt 1) {
-        Start-Process $args[0] -ArgumentList $args[1..$args.Length] -Verb RunAs
-    }
-}
-  
 function which($Name) { 
     Get-Command $Name -ErrorAction SilentlyContinue | Select-Object Definition
 }
@@ -23,7 +14,7 @@ function Start-NvimConfig {
     [Alias("nvimconf")]
     [Alias("nc")]
     param()
-    nvim -c ":cd ~/.config/nvim"
+    nvim --cmd ":cd ~/.config/nvim"
 }
 
 function wezconf {
@@ -31,6 +22,8 @@ function wezconf {
     param()
     nvim (Resolve-Path ~\.wezterm.lua)
 }
+
+function ahk { autohotkey.exe $args }
 
 function chown($Object, $User) {
     $acl = Get-Acl $Object
@@ -49,7 +42,7 @@ function Set-LocationToProfile {
     [Alias("pwshconf")]
     [Alias("pc")]
     param()
-    nvim -c ":cd $(Resolve-Path "$profile\..")"
+    nvim --cmd ":cd $(Resolve-Path "$profile\..")"
 }
   
 function Get-PrettyJson([string]$JsonString) {
@@ -123,8 +116,22 @@ function Stop-Chrome() {
 function Get-ProcessId($fileName) {
     Get-Process -FileVersionInfo -ErrorAction SilentlyContinue | ForEach-Object {
         if ($_.FileName -like $fileName) {
-            $_.Name + " PID:" + $_.Id    
+            $_.Name + " PID:" + $_.Id
         }
+    }
+}
+
+function Stay-Awake {
+    [alias("awake")]
+    param()
+
+    $wsh = New-Object -ComObject WScript.Shell
+    while (1) {
+      # Send Shift+F15 - this is the least intrusive key combination I can think of and is also used as default by:
+      # http://www.zhornsoftware.co.uk/caffeine/
+      # Unfortunately the above triggers a malware alert on Sophos so I needed to find a native solution - hence this script...
+      $wsh.SendKeys('+{F15}')
+      Start-Sleep -seconds 59
     }
 }
 

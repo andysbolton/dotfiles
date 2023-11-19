@@ -48,7 +48,6 @@ M.register_formatters = function()
         buffer = bufnr,
         callback = function()
           -- Prefer an installed formatter over an LSP-formatter if it exists
-
           if formatter then
             vim.cmd "FormatWrite"
           else

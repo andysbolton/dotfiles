@@ -7,11 +7,10 @@ return {
   },
   version = "*",
   init = function() vim.g.neo_tree_remove_legacy_commands = true end,
-  keys = {
-    { "<leader>e", ":Neotree toggle<cr>", { desc = "Toggle Neotree", silent = true } },
-    { "|", ":Neotree reveal<cr>", { silent = true } },
-  },
   config = function()
+    vim.keymap.set("n", "<leader>e", ":Neotree toggle<cr>", { desc = "Toggle Neotree", silent = true })
+    vim.keymap.set("n", "|", ":Neotree reveal<cr>", { silent = true })
+
     require("neo-tree").setup {
       auto_clean_after_session_restore = true,
       -- close_if_last_window = true,

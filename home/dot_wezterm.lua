@@ -19,6 +19,7 @@ config.use_dead_keys = false
 config.colors = {
   cursor_fg = 'black'
 }
+config.window_close_confirmation = "NeverPrompt"
 
 -- Equivalent to POSIX basename(3)
 -- Given "/foo/bar" returns "bar"
@@ -93,7 +94,7 @@ wezterm.on('format-tab-title', function(tab, tabs)
 end)
 
 wezterm.on('gui-startup', function()
-  local tab, pane, window = mux.spawn_window({})
+  local _, _, window = mux.spawn_window({})
   window:gui_window():maximize()
 end)
 
