@@ -34,7 +34,7 @@ function cma() {
 
 function Import-Scripts($Scripts) {
     $Scripts | ForEach-Object {
-        $path = "$PSScriptRoot/$_"
+        $path = "~/.config/powershell/$_"
         if (Test-Path $path) {
             $prettyPath = Resolve-Path $path
             Write-Host "Loading $prettyPath."

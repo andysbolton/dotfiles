@@ -6,23 +6,20 @@ function Test-IsSymlink($Path) {
     return $false
 }
 
-$nvimLink = Resolve-Path "~/AppData/Local/nvim/"
-if (-not (Test-IsSymlink $nvimLink)) {
-    Start-Process pwsh -Verb "RunAs" -ArgumentList ("-NoExit", "-Command", "New-Item", "-ItemType", "symboliclink", "-Path", "$nvimLink", "-Value", "$(Resolve-Path "~/.config/nvim")")
+function New-SymLink($Source, $Target) {
+    if (Test-IsSymlink $Target) {
+        Write-Host "Symlink from $Source to $Target already exists."
+        return
+    }
+    Write-Host "Creating symlink from $Source to $Target."
+    Start-Process pwsh -Verb "RunAs" -ArgumentList ("-NoExit", "-Command", "New-Item", "-ItemType", "symboliclink", "-Path", "'$Target'", "-Value", "'$Source'")
 }
 
-# Here, the link target is reversed from above.
-# ~/AppData/Local/nvim-data/ is created by nvim, whereas ~/.config/nvim is created by chezmoi.
-$nvimDataLink = ("$(Resolve-Path ~)" + "\.local\share\nvim\")
-if (-not (Test-IsSymlink $nvimDataLink)) {
-    Start-Process pwsh -Verb "RunAs" -ArgumentList ("-NoExit", "-Command", "New-Item", "-ItemType", "symboliclink", "-Path", $nvimDataLink, "-Value", "~/AppData/Local/nvim-data/")
-}
+New-SymLink -Source "~/.config/nvim/" -Target "~/AppData/Local/nvim/"
+New-SymLink -Source "~/AppData/Local/nvim-data/" -Target "~/.local/share/nvim/"
+New-SymLink -Source "~/autohotkey/init.ahk" -Target "~/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/init.ahk"
 
 Get-ChildItem "~/.config/powershell" |
     ForEach-Object {
-	$scriptLink = "~/Documents/PowerShell/$($_.Name)"
-        if (-not (Test-IsSymlink $scriptLink)) {
-            Start-Process pwsh -Verb "RunAs" -ArgumentList ("-NoExit", "-Command", "New-Item", "-ItemType", "symboliclink", "-Path", "$scriptLink", "-Value", "$($_.FullName)")
-        }
+        New-SymLink -Source $_.FullName -Target "~/Documents/PowerShell/$($_.Name)"
     }
-

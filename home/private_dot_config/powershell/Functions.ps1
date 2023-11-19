@@ -1,12 +1,3 @@
-function sudo() {
-    if ($args.Length -eq 1) {
-        Start-Process $args[0] -Verb RunAs
-    }
-    if ($args.Length -gt 1) {
-        Start-Process $args[0] -ArgumentList $args[1..$args.Length] -Verb RunAs
-    }
-}
-  
 function which($Name) { 
     Get-Command $Name -ErrorAction SilentlyContinue | Select-Object Definition
 }
@@ -23,7 +14,7 @@ function Start-NvimConfig {
     [Alias("nvimconf")]
     [Alias("nc")]
     param()
-    nvim -c ":cd ~/.config/nvim"
+    nvim --cmd ":cd ~/.config/nvim"
 }
 
 function wezconf {
@@ -51,7 +42,7 @@ function Set-LocationToProfile {
     [Alias("pwshconf")]
     [Alias("pc")]
     param()
-    nvim -c ":cd $(Resolve-Path "$profile\..")"
+    nvim --cmd ":cd $(Resolve-Path "$profile\..")"
 }
   
 function Get-PrettyJson([string]$JsonString) {
