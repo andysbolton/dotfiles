@@ -2,9 +2,16 @@
 
 sudo apt update
 
+function package_exists {
+    local package=$1
+    if ! dpkg -l | grep -w $package > /dev/null; then
+        return
+    fi
+    echo "$package is already installed."
+}
+
 function install_op {
-    if dpkg -l | grep 1password; then
-        echo "1password is already installed."
+    if package_exists 1password; then
         return
     fi
 
@@ -25,6 +32,10 @@ function install_op {
 }
 
 function install_gh {
+    if package_exists gh; then
+        return
+    fi
+
     curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
     && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
     && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
@@ -32,6 +43,10 @@ function install_gh {
 }
 
 function install_pwsh {
+    if package_exists pwsh; then
+        return
+    fi
+
     curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
     echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-debian-bullseye-prod bullseye main" | sudo tee /etc/apt/sources.list.d/microsoft.list
     sudo apt update
@@ -46,6 +61,10 @@ function install_neovim {
 }
 
 function install_fish {
+    if package_exists pwsh; then
+        return
+    fi
+ 
     echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_12/ /' | sudo tee /etc/apt/sources.list.d/shells:fish:release:3.list
     curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg > /dev/null
     sudo apt update && sudo apt install -y fish

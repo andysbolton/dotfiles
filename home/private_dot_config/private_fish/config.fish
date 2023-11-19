@@ -13,14 +13,14 @@ set -Ux RIPGREP_CONFIG_PATH $HOME/.ripgreprc
 alias cm="chezmoi"
 alias cma="chezmoi apply --verbose"
 alias cmad="chezmoi apply --verbose --dry-run"
-alias nvimconf='nvim -c ":cd ~/.config/nvim"'
+alias nvimconf='nvim --cmd ":cd ~/.config/nvim"'
 alias nc="nvimconf"
 alias fishconf="nvim ~/.config/fish/config.fish"
 alias fc="fishconf"
 
 function add -a message
     set branch (git branch --show-current)
-    set match (string match --groups-only -r '(?i)(smart|ops-\d+)' $branch)
+    set match (string match --groups-only -r '(?i)(smart|cloud-\d+)' $branch)
     if [ -n "$match" ]
         set commit "$match: $message"
     else
