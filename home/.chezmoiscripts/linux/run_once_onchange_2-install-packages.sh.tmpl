@@ -57,6 +57,9 @@ install_pwsh
 install_neovim
 install_fish
 
+echo "Changing shell to fish."
+chsh -s /usr/bin/fish
+
 # install starship
-curl -sS https://starship.rs/install.sh | sh
+curl -sS https://starship.rs/install.sh | sh -s -- -y
 
