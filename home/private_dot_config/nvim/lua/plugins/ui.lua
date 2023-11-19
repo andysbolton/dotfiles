@@ -17,13 +17,13 @@ return {
           "n",
           "<leader>b" .. i,
           ":BufferLineGoToBuffer " .. i .. "<cr>",
-          { desc = "Go to buffer at " .. i }
+          { desc = "Go to [b]uffer at " .. i }
         )
-        vim.keymap.set("n", "<leader>bd" .. i, function()
+        vim.keymap.set("n", "<leader>db" .. i, function()
           for _, buf in pairs(require("bufferline.buffers").get_components(require "bufferline.state")) do
             if buf.ordinal == i then vim.cmd("Bdelete! " .. buf.id) end
           end
-        end, { desc = "Delete buffer at " .. i })
+        end, { desc = "[D]elete [b]uffer at " .. i })
       end
 
       require("bufferline").setup {
