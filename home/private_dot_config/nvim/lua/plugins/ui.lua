@@ -98,10 +98,53 @@ return {
   },
 
   {
-    'goolord/alpha-nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = function ()
-        require'alpha'.setup(require'alpha.themes.startify'.config)
-    end
-}
+    "goolord/alpha-nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function() require("alpha").setup(require("alpha.themes.startify").config) end,
+  },
+
+  {
+    "rcarriga/nvim-notify",
+    config = function()
+      require("notify").setup {
+        stages = "fade_in_slide_out",
+        timeout = 5000,
+        icons = {
+          ERROR = "",
+          WARN = "",
+          INFO = "",
+          DEBUG = "",
+          TRACE = "✎",
+        },
+      }
+      vim.notify = require "notify"
+    end,
+  },
+
+  -- {
+  --   "folke/noice.nvim",
+  --   event = "VeryLazy",
+  --   opts = {
+  --     lsp = {
+  --       -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+  --       override = {
+  --         ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+  --         ["vim.lsp.util.stylize_markdown"] = true,
+  --         ["cmp.entry.get_documentation"] = true,
+  --       },
+  --     },
+  --     -- you can enable a preset for easier configuration
+  --     presets = {
+  --       bottom_search = true, -- use a classic bottom cmdline for search
+  --       command_palette = false, -- position the cmdline and popupmenu together
+  --       -- long_message_to_split = true, -- long messages will be sent to a split
+  --       inc_rename = false, -- enables an input dialog for inc-rename.nvim
+  --       lsp_doc_border = true, -- add a border to hover docs and signature help
+  --     },
+  --   },
+  --   dependencies = {
+  --     "MunifTanjim/nui.nvim",
+  --     "rcarriga/nvim-notify",
+  --   },
+  -- },
 }

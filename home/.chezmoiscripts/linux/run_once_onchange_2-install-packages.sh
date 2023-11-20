@@ -4,7 +4,7 @@ sudo apt update
 
 function package_exists {
     local package=$1
-    if dpkg -s "$package" > /dev/null; then
+    if dpkg -s "$package" >/dev/null; then
         echo "$package is already installed."
         return
     fi
@@ -16,18 +16,18 @@ function install_op {
         return
     fi
 
-    curl -sS https://downloads.1password.com/linux/keys/1password.asc | \
-    sudo gpg --dearmor --output /usr/share/keyrings/1password-archive-keyring.gpg
+    curl -sS https://downloads.1password.com/linux/keys/1password.asc |
+        sudo gpg --dearmor --output /usr/share/keyrings/1password-archive-keyring.gpg
 
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian/$(dpkg --print-architecture) stable main" |
-    sudo tee /etc/apt/sources.list.d/1password.list
+        sudo tee /etc/apt/sources.list.d/1password.list
 
     sudo mkdir -p /etc/debsig/policies/AC2D62742012EA22/
-    curl -sS https://downloads.1password.com/linux/debian/debsig/1password.pol | \
-    sudo tee /etc/debsig/policies/AC2D62742012EA22/1password.pol
+    curl -sS https://downloads.1password.com/linux/debian/debsig/1password.pol |
+        sudo tee /etc/debsig/policies/AC2D62742012EA22/1password.pol
     sudo mkdir -p /usr/share/debsig/keyrings/AC2D62742012EA22
-    curl -sS https://downloads.1password.com/linux/keys/1password.asc | \
-    sudo gpg --dearmor --output /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg
+    curl -sS https://downloads.1password.com/linux/keys/1password.asc |
+        sudo gpg --dearmor --output /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg
 
     sudo apt update && sudo apt install -y 1password-cli
 }
@@ -37,10 +37,10 @@ function install_gh {
         return
     fi
 
-    curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
-    && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
-    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
-    && sudo apt install -y gh
+    curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg &&
+        sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg &&
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null &&
+        sudo apt install -y gh
 }
 
 function install_pwsh {
@@ -57,6 +57,7 @@ function install_pwsh {
 function install_neovim {
     mkdir -p ~/.local/bin
     curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+    # curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
     chmod u+x nvim.appimage
     mv nvim.appimage ~/.local/bin/nvim
 }
@@ -65,9 +66,9 @@ function install_fish {
     if package_exists fish; then
         return
     fi
- 
+
     echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_11/ /' | sudo tee /etc/apt/sources.list.d/shells:fish:release:3.list
-    curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_11/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg > /dev/null
+    curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_11/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg >/dev/null
     sudo apt update && sudo apt install -y fish
 }
 
@@ -82,4 +83,3 @@ chsh -s /usr/bin/fish
 
 # install starship
 curl -sS https://starship.rs/install.sh | sh -s -- -y
-

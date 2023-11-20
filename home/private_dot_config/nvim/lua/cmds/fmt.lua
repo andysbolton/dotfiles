@@ -57,6 +57,7 @@ M.register_formatters = function()
             }
             vim.cmd "write"
           end
+          vim.notify("Formatted " .. vim.api.nvim_buf_get_name(bufnr) .. ".")
         end,
       })
     end,
