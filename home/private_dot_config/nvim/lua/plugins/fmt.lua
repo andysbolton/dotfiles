@@ -29,9 +29,12 @@ return {
         ensure_installed = { table.unpack(formatter_names) },
       }
 
-      filetype_actions["*"] = {
-        require("formatter.filetypes.any").remove_trailing_whitespace,
-      }
+      if not vim.fn.has "win32" then
+        -- This formatter is dependent on sed, so disabling for win32.
+        filetype_actions["*"] = {
+          require("formatter.filetypes.any").remove_trailing_whitespace,
+        }
+      end
 
       require("formatter").setup {
         logging = true,

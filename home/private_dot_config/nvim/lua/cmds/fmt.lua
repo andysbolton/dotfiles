@@ -8,6 +8,11 @@ for _, lang in pairs(config_utils.get_configs()) do
   if lang.formatter then ls_formatters[lang.ls.name] = lang.formatter end
 end
 
+--- Register formatters.
+-- Registers formatters on LspAttach, which are called on BufWritePost. Will
+-- try to attach to the LPS's code formatter, if it exists. If an external
+-- formatter is specified in the config, that will be used instead of the LSP
+-- formatter.
 M.register_formatters = function()
   -- Create an augroup that is used for managing our formatting autocmds.
   -- We need one augroup per client to make sure that multiple clients
