@@ -1,6 +1,5 @@
 return {
   {
-
     "neovim/nvim-lspconfig",
     dependencies = {
       "williamboman/mason.nvim",
@@ -50,41 +49,10 @@ return {
 
           local language_servers = require("configs.util").get_language_servers()
 
-          local efm = {
-            languages = {
-              teal = {
-                {
-                  lintStdin = true,
-                  lintIgnoreExitCode = true,
-                  -- the sed command will transform the output from:
-                  --   2 warnings:
-                  --   teal/init.tl:1:1: unused function add: function(number): number
-                  --   teal/init.tl:2:1: unused function add2: function(number): number
-                  --   ========================================
-                  --   3 errors:
-                  --   teal/init.tl:4:1: unknown variable: vim
-                  --   teal/init.tl:5:1: unknown variable: vim
-                  --   teal/init.tl:7:1: unknown variable: vim
-                  -- to:
-                  --   2 warnings:
-                  --   w: teal/init.tl:1:1: unused function add: function(number): number
-                  --   w: teal/init.tl:2:1: unused function add2: function(number): number
-                  --   ========================================
-                  --   13 errors:
-                  --   e: teal/init.tl:4:1: unknown variable: vim
-                  --   e: teal/init.tl:5:1: unknown variable: vim
-                  --   e: teal/init.tl:7:1: unknown variable: vim
-                  lintCommand = "tl check ${INPUT} 2>&1 | sed -r '/warning/,/=/ { /warning/b; /=/b; s/^/w: / }; /error/,/$p/ { /error/b; /$p/b; s/^/e: / }'",
-                  lintFormats = {
-                    "%t: %f:%l:%c: %m",
-                  },
-                },
-              },
-            },
-          }
-
+          local language_servers_to_install = vim.tbl_keys(language_servers)
+          table.insert(language_servers_to_install, "efm")
           mason_lspconfig.setup {
-            ensure_installed = vim.tbl_keys(language_servers),
+            ensure_installed = language_servers_to_install,
           }
 
           mason_lspconfig.setup_handlers {
@@ -100,14 +68,48 @@ return {
           require("lspconfig").efm.setup {
             capabilities = capabilities,
             on_attach = on_attach,
-            settings = efm,
+            settings = {
+              languages = {
+                teal = {
+                  {
+                    lintStdin = true,
+                    lintIgnoreExitCode = true,
+                    -- the sed command will transform the output from:
+                    --   2 warnings:
+                    --   teal/init.tl:1:1: unused function add: function(number): number
+                    --   teal/init.tl:2:1: unused function add2: function(number): number
+                    --   ========================================
+                    --   3 errors:
+                    --   teal/init.tl:4:1: unknown variable: vim
+                    --   teal/init.tl:5:1: unknown variable: vim
+                    --   teal/init.tl:7:1: unknown variable: vim
+                    -- to:
+                    --   2 warnings:
+                    --   w: teal/init.tl:1:1: unused function add: function(number): number
+                    --   w: teal/init.tl:2:1: unused function add2: function(number): number
+                    --   ========================================
+                    --   13 errors:
+                    --   e: teal/init.tl:4:1: unknown variable: vim
+                    --   e: teal/init.tl:5:1: unknown variable: vim
+                    --   e: teal/init.tl:7:1: unknown variable: vim
+                    lintCommand = "tl check ${INPUT} 2>&1 | sed -r '/warning/,/=/ { /warning/b; /=/b; s/^/w: / }; /error/,/$p/ { /error/b; /$p/b; s/^/e: / }'",
+                    lintFormats = {
+                      "%t: %f:%l:%c: %m",
+                    },
+                  },
+                },
+              },
+            },
             filetypes = { "teal" },
+            root_dir = require("lspconfig.util").root_pattern "tlconfig.lua",
           }
 
-          require("lspconfig").ahk2_ls.setup {
-            capabilities = capabilities,
-            on_attach = on_attach,
-          }
+          if vim.fn.has "win32" == 1 then
+            require("lspconfig").ahk2_ls.setup {
+              capabilities = capabilities,
+              on_attach = on_attach,
+            }
+          end
 
           require("lspkind").init {
             mode = "symbol_text",
