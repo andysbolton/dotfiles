@@ -9,4 +9,5 @@ packages
 {{- if eq .chezmoi.os "linux" }}
 .chezmoiscripts/windows/**
 AppData/
+autohotkey/
 {{- end }}
