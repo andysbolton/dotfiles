@@ -4,8 +4,11 @@ fish_add_path ~/bin
 fish_add_path /usr/local/go/bin
 fish_add_path ~/.cargo/bin
 fish_add_path ~/.asdf/installs/lua/5.4.6/luarocks/bin
+fish_add_path ~/.dotnet/tools
+fish_add_path ~/go/bin
 
 . ~/.asdf/asdf.fish
+. ~/.asdf/plugins/dotnet-core/set-dotnet-home.fish
 
 set -Ux BROWSER wslview
 set -Ux EDITOR nvim
@@ -65,6 +68,10 @@ function exercism
     else
         ~/bin/exercism $argv
     end
+end
+
+function cdn 
+    cd $argv[1] && nvim
 end
 
 if status is-login

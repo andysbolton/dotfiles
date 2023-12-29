@@ -5,25 +5,40 @@ return {
     version = "*",
     dependencies = { "nvim-tree/nvim-web-devicons", "famiu/bufdelete.nvim" },
     config = function()
-      vim.keymap.set("n", "<leader><tab>", ":BufferLineCycleNext<cr>")
-      vim.keymap.set("n", "<leader><s-tab>", ":BufferLineCyclePrev<cr>")
-      vim.keymap.set("n", "<leader>bd", ":Bdelete<cr>", { desc = "Delete current buffer" })
-      vim.keymap.set("n", "<leader>bdr", ":BufferLineCloseRight<cr>", { desc = "Delete buffers to the right" })
-      vim.keymap.set("n", "<leader>bdl", ":BufferLineCloseLeft<cr>", { desc = "Delete buffers to the left" })
-      vim.keymap.set("n", "<leader>bdo", ":BufferLineCloseOthers<cr>", { desc = "Delete other buffers" })
+      vim.keymap.set("n", "<leader><tab>", ":BufferLineCycleNext<cr>", { desc = "Cycle to next tab", silent = true })
+      vim.keymap.set(
+        "n",
+        "<leader><s-tab>",
+        ":BufferLineCyclePrev<cr>",
+        { desc = "Cycle to previous tab", silent = true }
+      )
+      vim.keymap.set("n", "<leader>bd", ":Bdelete<cr>", { desc = "Delete current buffer", silent = true })
+      vim.keymap.set(
+        "n",
+        "<leader>bdr",
+        ":BufferLineCloseRight<cr>",
+        { desc = "Delete buffers to the right", silent = true }
+      )
+      vim.keymap.set(
+        "n",
+        "<leader>bdl",
+        ":BufferLineCloseLeft<cr>",
+        { desc = "Delete buffers to the left", silent = true }
+      )
+      vim.keymap.set("n", "<leader>bdo", ":BufferLineCloseOthers<cr>", { desc = "Delete other buffers", silent = true })
 
       for i = 1, 15 do
         vim.keymap.set(
           "n",
-          "<leader>b" .. i,
+          "<leader>bs" .. i,
           ":BufferLineGoToBuffer " .. i .. "<cr>",
-          { desc = "Go to [b]uffer at " .. i }
+          { desc = "[B]uffer: [s]et " .. i }
         )
-        vim.keymap.set("n", "<leader>db" .. i, function()
+        vim.keymap.set("n", "<leader>bd" .. i, function()
           for _, buf in pairs(require("bufferline.buffers").get_components(require "bufferline.state")) do
             if buf.ordinal == i then vim.cmd("Bdelete! " .. buf.id) end
           end
-        end, { desc = "[D]elete [b]uffer at " .. i })
+        end, { desc = "[B]uffer: [d]elete " .. i })
       end
 
       require("bufferline").setup {
@@ -108,7 +123,7 @@ return {
     config = function()
       require("notify").setup {
         stages = "fade_in_slide_out",
-        timeout = 5000,
+        timeout = 3000,
         icons = {
           ERROR = "",
           WARN = "",

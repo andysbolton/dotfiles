@@ -1,5 +1,3 @@
-vim.g.copilot_no_tab_map = true
-
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 
 -- Remap for dealing with word wrap

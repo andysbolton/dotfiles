@@ -1,6 +1,6 @@
 return {
   name = "terraform",
-  ft = { "tf" },
+  ft = { "terraform" },
   ls = {
     name = "terraformls",
     settings = {},

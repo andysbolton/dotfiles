@@ -13,11 +13,33 @@ return {
   },
 
   {
+    "toppair/peek.nvim",
+    event = { "VeryLazy" },
+    build = "deno task --quiet build:fast",
+    keys = {
+      {
+        "<leader>po",
+        function() require("peek").open() end,
+        mode = { "n" },
+      },
+      {
+        "<leader>pc",
+        function() require("peek").close() end,
+        mode = { "n" },
+      },
+    },
+    config = true,
+  },
+
+  {
     "williamboman/mason.nvim",
     config = true,
   },
 
-  "svermeulen/nvim-teal-maker",
+  {
+    "julienvincent/nvim-paredit",
+    config = true,
+  },
 
   {
     "numToStr/Comment.nvim",
@@ -33,11 +55,6 @@ return {
     "alker0/chezmoi.vim",
     lazy = false,
     init = function() vim.g["chezmoi#use_tmp_buffer"] = true end,
-  },
-
-  {
-    "rafcamlet/nvim-luapad",
-    config = true,
   },
 
   "tpope/vim-sensible",
