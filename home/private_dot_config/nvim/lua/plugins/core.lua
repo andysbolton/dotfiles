@@ -38,7 +38,56 @@ return {
 
   {
     "julienvincent/nvim-paredit",
-    config = true,
+    config = function()
+      local paredit = require "nvim-paredit"
+      paredit.setup {
+        keys = {
+          ["<localleader>wh"] = {
+            function()
+              -- place cursor and set mode to `insert`
+              paredit.cursor.place_cursor(
+                -- wrap element under cursor with `( ` and `)`
+                paredit.wrap.wrap_element_under_cursor("( ", ")"),
+                -- cursor placement opts
+                { placement = "inner_start", mode = "insert" }
+              )
+            end,
+            "[W]rap element insert [h]ead",
+          },
+
+          ["<localleader>wt"] = {
+            function()
+              paredit.cursor.place_cursor(
+                paredit.wrap.wrap_element_under_cursor("(", ")"),
+                { placement = "inner_end", mode = "insert" }
+              )
+            end,
+            "[W]rap element insert [t]ail",
+          },
+
+          -- same as above but for enclosing form
+          ["<localleader>weh"] = {
+            function()
+              paredit.cursor.place_cursor(
+                paredit.wrap.wrap_enclosing_form_under_cursor("( ", ")"),
+                { placement = "inner_start", mode = "insert" }
+              )
+            end,
+            "[W]rap [e]nclosing form insert [h]ead",
+          },
+
+          ["<localleader>wet"] = {
+            function()
+              paredit.cursor.place_cursor(
+                paredit.wrap.wrap_enclosing_form_under_cursor("(", ")"),
+                { placement = "inner_end", mode = "insert" }
+              )
+            end,
+            "[W]rap [e]nclosing form insert [t]ail",
+          },
+        },
+      }
+    end,
   },
 
   {
@@ -65,78 +114,6 @@ return {
   "tpope/vim-sleuth",
 
   "romainl/vim-cool",
-
-  {
-    "mrjones2014/smart-splits.nvim",
-    keys = {
-      {
-        "<A-h>",
-        function() require("smart-splits").resize_left() end,
-        mode = { "n", "t" },
-      },
-      {
-        "<A-l>",
-        function() require("smart-splits").resize_right() end,
-        mode = { "n", "t" },
-      },
-      {
-        "<A-k>",
-        function() require("smart-splits").resize_up() end,
-        mode = { "n", "t" },
-      },
-      {
-        "<A-j>",
-        function() require("smart-splits").resize_down() end,
-        mode = { "n", "t" },
-      },
-      {
-        "<leader>swh",
-        function() require("smart-splits").swap_buf_left() end,
-        mode = { "n", "t" },
-        desc = "[S][w]ap buffer left",
-      },
-      {
-        "<leader>swj",
-        function() require("smart-splits").swap_buf_down() end,
-        mode = { "n", "t" },
-        desc = "[S][w]ap buffer down",
-      },
-      {
-        "<leader>swk",
-        function() require("smart-splits").swap_buf_up() end,
-        mode = { "n", "t" },
-        desc = "[S][w]ap buffer up",
-      },
-      {
-        "<leader>swl",
-        function() require("smart-splits").swap_buf_right() end,
-        mode = { "n", "t" },
-        desc = "[S][w]ap buffer right",
-      },
-      {
-        "<C-h>",
-        function() require("smart-splits").move_cursor_left() end,
-        mode = { "n", "t" },
-      },
-      {
-        "<C-j>",
-        function() require("smart-splits").move_cursor_down() end,
-        mode = { "n", "t" },
-      },
-      {
-        "<C-k>",
-        function() require("smart-splits").move_cursor_up() end,
-        mode = { "n", "t" },
-      },
-      {
-        "<C-l>",
-        function() require("smart-splits").move_cursor_right() end,
-        mode = { "n", "t" },
-      },
-    },
-  },
-
-  { "stevearc/stickybuf.nvim", config = true },
 
   {
     "rmagatti/auto-session",
@@ -190,8 +167,21 @@ return {
   },
 
   {
-    "kevinhwang91/nvim-bqf",
-    ft = "qf",
-    opts = {},
+    "ibhagwan/fzf-lua",
+    -- optional for icon support
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {
+      -- lsp = {
+      --   code_actions = {
+      --     previewer = "codeaction_native",
+      --     preview_pager = "delta --side-by-side --width=$FZF_PREVIEW_COLUMNS --hunk-header-style='omit' --file-style='omit'",
+      --   },
+      -- },
+    },
   },
+
+  -- {
+  --   "stevearc/dressing.nvim",
+  --   opts = {},
+  -- },
 }

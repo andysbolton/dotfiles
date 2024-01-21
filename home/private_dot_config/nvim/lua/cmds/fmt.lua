@@ -27,7 +27,15 @@ M.register_formatters = function()
       local formatter = formatters_by_filetype[vim.bo.filetype]
       if formatter then
         vim.cmd "FormatWrite"
-        vim.notify("Formatted " .. get_file_name(ev.file) .. " with " .. formatter.name .. " (buf " .. ev.buf .. ").")
+        vim.notify(
+          "Formatted "
+            .. get_file_name(ev.file)
+            .. " with "
+            .. (formatter.name or "[couldn't find formatter name]")
+            .. " (buf "
+            .. ev.buf
+            .. ")."
+        )
       end
     end,
   })

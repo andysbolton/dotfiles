@@ -21,6 +21,11 @@ alias nvimconf='nvim --cmd ":cd ~/.config/nvim"'
 alias nc="nvimconf"
 alias fishconf="nvim ~/.config/fish/config.fish"
 alias fc="fishconf"
+# Can't install this on Debian at the moment due to 
+# dependency issues, so using the Windows binary 
+alias delta="delta.exe"
+
+bind \cS 'history-pager'
 
 function add -a message
     set branch (git branch --show-current)
@@ -74,8 +79,32 @@ function cdn
     cd $argv[1] && nvim
 end
 
+function fsource 
+  for line in (cat $argv | grep -v '^#')
+    set item (string split -m 1 '=' $line)
+    set -gx $item[1] $item[2]
+    echo "Exported key $item[1]."
+  end
+end
+
+function lrepl
+    set -gx LEIN_USE_BOOTCLASSPARTH true
+    lein repl
+end
+
 if status is-login
     cd ~/
+end
+
+function install_neovim 
+    mkdir -p ~/.local/bin
+    if count $argv >/dev/null && [ $argv[1] = "nightly" ]
+        curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
+    else
+        curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+    end 
+    chmod u+x nvim.appimage
+    mv nvim.appimage ~/.local/bin/nvim
 end
 
 if status is-interactive

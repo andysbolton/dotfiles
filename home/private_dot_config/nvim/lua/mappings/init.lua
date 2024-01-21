@@ -44,3 +44,4 @@ vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagn
 
 -- Copy current buffer name
 vim.keymap.set("n", "<leader>c", ":let @+=expand('%')<cr>", { silent = true, desc = "[C]opy current buffer name" })
+

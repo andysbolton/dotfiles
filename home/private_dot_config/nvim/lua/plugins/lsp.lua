@@ -1,3 +1,60 @@
+local md_namespace = vim.api.nvim_create_namespace "lsp_float"
+
+--- LSP handler that adds extra inline highlights, keymaps, and window options.
+--- Code inspired from `noice`.
+---@param handler fun(err: any, result: any, ctx: any, config: any): integer?, integer?
+---@param title string
+---@return fun(err: any, result: any, ctx: any, config: any)
+local function enhanced_float_handler(handler, title)
+  return function(err, result, ctx, config)
+    print(err, result, ctx, config)
+    local bufnr, winnr = handler(
+      err,
+      result,
+      ctx,
+      vim.tbl_deep_extend("force", config or {}, {
+        border = "double",
+        title = title,
+        max_height = math.floor(vim.o.lines * 0.5),
+        max_width = math.floor(vim.o.columns * 0.4),
+      })
+    )
+
+    if not bufnr or not winnr then return end
+
+    -- Conceal everything.
+    vim.wo[winnr].concealcursor = "n"
+
+    -- Extra highlights.
+    -- add_inline_highlights(bufnr)
+
+    -- Add keymaps for opening links.
+    if not vim.b[bufnr].markdown_keys then
+      vim.keymap.set("n", "K", function()
+        -- Vim help links.
+        local url = (vim.fn.expand "<cWORD>" --[[@as string]]):match "|(%S-)|"
+        if url then return vim.cmd.help(url) end
+
+        -- Markdown links.
+        local col = vim.api.nvim_win_get_cursor(0)[2] + 1
+        local from, to
+        from, to, url = vim.api.nvim_get_current_line():find "%[.-%]%((%S-)%)"
+        if from and col >= from and col <= to then
+          vim.cmd("!open " .. url)
+          -- vim.system({ url, "open" }, nil, function(res)
+          --   if res.code ~= 0 then vim.notify("Failed to open URL" .. url, vim.log.levels.ERROR) end
+          -- end)
+        end
+      end, { buffer = bufnr, silent = true })
+      vim.b[bufnr].markdown_keys = true
+    end
+  end
+end
+
+vim.lsp.handlers["textDocument/hover"] = enhanced_float_handler(vim.lsp.handlers.hover, "textDocument/hover")
+vim.lsp.handlers["textDocument/signatureHelp"] =
+  enhanced_float_handler(vim.lsp.handlers.signature_help, "textDocument/signatureHelp")
+
 return {
   {
     "neovim/nvim-lspconfig",
@@ -35,7 +92,22 @@ return {
             )
 
             if client.supports_method "textDocument/codeAction" then
-              nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
+              vim.keymap.set(
+                { "n", "v" },
+                "<leader>ca",
+                function()
+                  require("fzf-lua").lsp_code_actions {
+                    winopts = {
+                      relative = "cursor",
+                      width = 0.6,
+                      height = 0.6,
+                      row = 1,
+                      preview = { vertical = "up:70%" },
+                    },
+                  }
+                end,
+                { buffer = bufnr, desc = "[C]ode [A]ction" }
+              )
               require("cmds.lsp").setup_codeactions(bufnr)
             end
 
@@ -166,8 +238,8 @@ return {
     },
   },
 
-  {
-    "ray-x/lsp_signature.nvim",
-    config = true,
-  },
+  -- {
+  --   "ray-x/lsp_signature.nvim",
+  --   config = true,
+  -- },
 }
