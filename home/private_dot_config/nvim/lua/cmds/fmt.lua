@@ -19,11 +19,6 @@ local function get_file_name(path)
   return matches[#matches]
 end
 
---- Register formatters.
--- Registers formatters on LspAttach, which are called on BufWritePost. Will
--- try to attach to the LPS's code formatter, if it exists. If an external
--- formatter is specified in the config, that will be used instead of the LSP
--- formatter.
 M.register_formatters = function()
   local group = vim.api.nvim_create_augroup("formatting-group", { clear = true })
   vim.api.nvim_create_autocmd("BufWritePost", {
