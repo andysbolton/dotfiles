@@ -17,14 +17,6 @@ return {
       "WhoIsSethDaniel/mason-tool-installer.nvim",
     },
     config = function()
-      vim.keymap.set("n", "<leader>f", ":Format<cr>", { silent = true, desc = "[F]ormat the current buffer" })
-      vim.keymap.set(
-        "n",
-        "<leader>fw",
-        ":FormatWrite<CR>",
-        { silent = true, desc = "[F]ormat and [w]rite the current buffer" }
-      )
-
       require("mason-tool-installer").setup {
         ensure_installed = { table.unpack(formatter_names) },
       }

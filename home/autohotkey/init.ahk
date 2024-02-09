@@ -46,4 +46,3 @@ ResizeWindow() {
 
     WinMove x, y, targetWidth, targetHeight
 }
-

@@ -8,7 +8,7 @@ return {
   version = "*",
   init = function() vim.g.neo_tree_remove_legacy_commands = true end,
   config = function()
-    vim.keymap.set("n", "<leader>e", ":Neotree toggle<cr>", { desc = "Toggle Neotree", silent = true })
+    vim.keymap.set("n", "<leader>f", ":Neotree toggle<cr>", { desc = "Toggle Neotree", silent = true })
     vim.keymap.set("n", "|", ":Neotree reveal<cr>", { silent = true })
 
     require("neo-tree").setup {

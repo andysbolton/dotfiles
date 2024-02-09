@@ -1,6 +1,6 @@
 return {
   name = "python",
-  ft = { "py" },
+  ft = { "python" },
   ls = {
     name = "pyright",
     settings = {},
