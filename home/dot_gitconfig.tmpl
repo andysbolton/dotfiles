@@ -8,7 +8,7 @@
 	pager = delta
 
 [diff]
-	; tool = meld 
+	tool = meld 
 	colorMoved = default
 
 ; [difftool "meld"]
@@ -20,13 +20,14 @@
 [delta]
     navigate = true    # use n and N to move between diff sections
     light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+    line-numbers = true
 
 [merge]
-	; tool = meld 
-	conflictstyle = diff3
+	tool = meld 
+	; conflictstyle = diff3
 
-; [mergetool "meld"]
-; 	cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
+[mergetool "meld"]
+	cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
 
 [push]
 	autoSetupRemote = true

@@ -7,7 +7,6 @@ local md_namespace = vim.api.nvim_create_namespace "lsp_float"
 ---@return fun(err: any, result: any, ctx: any, config: any)
 local function enhanced_float_handler(handler, title)
   return function(err, result, ctx, config)
-    print(err, result, ctx, config)
     local bufnr, winnr = handler(
       err,
       result,
@@ -26,7 +25,29 @@ local function enhanced_float_handler(handler, title)
     vim.wo[winnr].concealcursor = "n"
 
     -- Extra highlights.
-    -- add_inline_highlights(bufnr)
+    for l, line in ipairs(vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)) do
+      for pattern, hl_group in pairs {
+        ["|%S-|"] = "@text.reference",
+        ["@%S+"] = "@parameter",
+        ["^%s*(Parameters:)"] = "@text.title",
+        ["^%s*(Return:)"] = "@text.title",
+        ["^%s*(See also:)"] = "@text.title",
+        ["{%S-}"] = "@parameter",
+      } do
+        local from = 1 ---@type integer?
+        while from do
+          local to
+          from, to = line:find(pattern, from)
+          if from then
+            vim.api.nvim_buf_set_extmark(bufnr, md_namespace, l - 1, from - 1, {
+              end_col = to,
+              hl_group = hl_group,
+            })
+          end
+          from = to and to + 1 or nil
+        end
+      end
+    end
 
     -- Add keymaps for opening links.
     if not vim.b[bufnr].markdown_keys then
@@ -40,10 +61,8 @@ local function enhanced_float_handler(handler, title)
         local from, to
         from, to, url = vim.api.nvim_get_current_line():find "%[.-%]%((%S-)%)"
         if from and col >= from and col <= to then
-          vim.cmd("!open " .. url)
-          -- vim.system({ url, "open" }, nil, function(res)
-          --   if res.code ~= 0 then vim.notify("Failed to open URL" .. url, vim.log.levels.ERROR) end
-          -- end)
+          -- TODO: This isn't working if there are pound signs in the URL as they get expanded.
+          vim.cmd("silent !open " .. url)
         end
       end, { buffer = bufnr, silent = true })
       vim.b[bufnr].markdown_keys = true
@@ -85,11 +104,7 @@ return {
 
             nmap("<leader>wra", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")
             nmap("<leader>wrr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder")
-            nmap(
-              "<leader>wrl",
-              function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
-              "[W]orkspace [L]ist Folders"
-            )
+            nmap("<leader>wrl", vim.lsp.buf.list_workspace_folders, "[W]orkspace [L]ist Folders")
 
             if client.supports_method "textDocument/codeAction" then
               vim.keymap.set(
@@ -115,6 +130,37 @@ return {
               nmap("<C-s>", vim.lsp.buf.signature_help, "Signature Help")
             end
           end
+
+          local signs = {
+            ERROR = " ",
+            WARN = " ",
+            HINT = " ",
+            INFO = " ",
+          }
+
+          for type, icon in pairs(signs) do
+            local hl = "DiagnosticSign" .. type:sub(1, 1) .. type:sub(2):lower()
+            vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+          end
+
+          vim.diagnostic.config {
+            virtual_text = {
+              prefix = "",
+              format = function(diagnostic)
+                return signs[vim.diagnostic.severity[diagnostic.severity]:upper()] .. diagnostic.message
+              end,
+            },
+            float = {
+              border = "rounded",
+              source = "if_many",
+              -- Show severity icons as prefixes.
+              prefix = function(diag)
+                local level = vim.diagnostic.severity[diag.severity]:upper()
+                local prefix = string.format(" %s ", signs[level])
+                return prefix, "Diagnostic" .. level:gsub("^%l", string.upper)
+              end,
+            },
+          }
 
           local capabilities = vim.lsp.protocol.make_client_capabilities()
           -- nvim-cmp supports additional completion capabilities, so broadcast that to servers

@@ -145,18 +145,6 @@ return {
       require("trouble").setup {}
 
       vim.keymap.set("n", "<leader>tt", "<cmd>TroubleToggle<cr>", { desc = "[T]oggle [T]rouble" })
-
-      local signs = {
-        Error = " ",
-        Warn = " ",
-        Hint = " ",
-        Info = " ",
-      }
-
-      for type, icon in pairs(signs) do
-        local hl = "DiagnosticSign" .. type
-        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-      end
     end,
   },
 

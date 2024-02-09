@@ -67,9 +67,20 @@ function install_fish {
         return
     fi
 
-    echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_11/ /' | sudo tee /etc/apt/sources.list.d/shells:fish:release:3.list
-    curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_11/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg >/dev/null
-    sudo apt update && sudo apt install -y fish
+    echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_12/ /' | sudo tee /etc/apt/sources.list.d/shells:fish:release:3.list
+    curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg >/dev/null
+    sudo apt update
+    sudo apt install fish
+}
+
+function install_delta {
+    if package_exists git-delta; then
+        return
+    fi
+
+    wget https://github.com/dandavison/delta/releases/download/0.16.5/git-delta_0.16.5_amd64.deb
+    sudo dpkg -i git-delta_0.16.5_amd64.deb
+    rm -f git-delta_0.16.5_amd64.deb
 }
 
 install_op

@@ -10,9 +10,10 @@ fish_add_path ~/go/bin
 . ~/.asdf/asdf.fish
 . ~/.asdf/plugins/dotnet-core/set-dotnet-home.fish
 
-set -Ux BROWSER wslview
-set -Ux EDITOR nvim
-set -Ux RIPGREP_CONFIG_PATH $HOME/.ripgreprc
+set -gx BROWSER wslview
+set -gx EDITOR nvim
+set -gx RIPGREP_CONFIG_PATH $HOME/.ripgreprc
+set -gx MANPAGER "sh -c 'col -bx | batcat -l man -p'"
 
 alias cm="chezmoi"
 alias cma="chezmoi apply --verbose"
@@ -21,9 +22,8 @@ alias nvimconf='nvim --cmd ":cd ~/.config/nvim"'
 alias nc="nvimconf"
 alias fishconf="nvim ~/.config/fish/config.fish"
 alias fc="fishconf"
-# Can't install this on Debian at the moment due to 
-# dependency issues, so using the Windows binary 
-alias delta="delta.exe"
+alias bat="batcat"
+alias lrepl="lein repl"
 
 bind \cS 'history-pager'
 
@@ -85,11 +85,6 @@ function fsource
     set -gx $item[1] $item[2]
     echo "Exported key $item[1]."
   end
-end
-
-function lrepl
-    set -gx LEIN_USE_BOOTCLASSPARTH true
-    lein repl
 end
 
 if status is-login
