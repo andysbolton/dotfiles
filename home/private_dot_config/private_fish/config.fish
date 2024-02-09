@@ -3,12 +3,17 @@ fish_add_path ~/.local/bin
 fish_add_path ~/bin
 fish_add_path /usr/local/go/bin
 fish_add_path ~/.cargo/bin
+fish_add_path ~/.asdf/installs/lua/5.4.6/luarocks/bin
+fish_add_path ~/.dotnet/tools
+fish_add_path ~/go/bin
 
 . ~/.asdf/asdf.fish
+. ~/.asdf/plugins/dotnet-core/set-dotnet-home.fish
 
-set -Ux BROWSER wslview
-set -Ux EDITOR nvim
-set -Ux RIPGREP_CONFIG_PATH $HOME/.ripgreprc
+set -gx BROWSER wslview
+set -gx EDITOR nvim
+set -gx RIPGREP_CONFIG_PATH $HOME/.ripgreprc
+set -gx MANPAGER "sh -c 'col -bx | batcat -l man -p'"
 
 alias cm="chezmoi"
 alias cma="chezmoi apply --verbose"
@@ -17,6 +22,10 @@ alias nvimconf='nvim --cmd ":cd ~/.config/nvim"'
 alias nc="nvimconf"
 alias fishconf="nvim ~/.config/fish/config.fish"
 alias fc="fishconf"
+alias bat="batcat"
+alias lrepl="lein repl"
+
+bind \cS 'history-pager'
 
 function add -a message
     set branch (git branch --show-current)
@@ -66,8 +75,31 @@ function exercism
     end
 end
 
+function cdn 
+    cd $argv[1] && nvim
+end
+
+function fsource 
+  for line in (cat $argv | grep -v '^#')
+    set item (string split -m 1 '=' $line)
+    set -gx $item[1] $item[2]
+    echo "Exported key $item[1]."
+  end
+end
+
 if status is-login
     cd ~/
+end
+
+function install_neovim 
+    mkdir -p ~/.local/bin
+    if count $argv >/dev/null && [ $argv[1] = "nightly" ]
+        curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
+    else
+        curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+    end 
+    chmod u+x nvim.appimage
+    mv nvim.appimage ~/.local/bin/nvim
 end
 
 if status is-interactive

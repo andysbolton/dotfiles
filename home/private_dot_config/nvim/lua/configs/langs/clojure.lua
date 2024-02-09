@@ -1,11 +1,21 @@
 return {
   name = "clojure",
+  ft = { "clojure" },
   ls = {
     name = "clojure_lsp",
-    settings = {}
+    settings = {},
   },
   formatter = {
     name = "zprint",
-    actions = {}
-  }
+    actions = {
+      function()
+        return {
+          exe = "zprint",
+          args = {},
+          stdin = true,
+        }
+      end,
+    },
+  },
+  treesitter = "clojure",
 }

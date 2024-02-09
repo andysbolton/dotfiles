@@ -8,7 +8,7 @@ return {
   build = ":TSUpdate",
   config = function()
     local treesitters = require("configs.util").get_treesitters()
-    local default_treesitters = { "vimdoc", "vim", "markdown", "markdown_inline" }
+    local default_treesitters = { "vimdoc", "vim", "markdown_inline" }
 
     for _, v in ipairs(default_treesitters) do
       table.insert(treesitters, v)

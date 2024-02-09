@@ -1,13 +1,13 @@
 local M = {}
 
-local util = require("utils")
+local util = require "utils"
 
-vim.fn.sign_define("LightBulbSign", { text = "💡", texthl = "LspDiagnosticsDefaultInformation" })
+vim.fn.sign_define("light_bulb_sign", { text = "💡", texthl = "LspDiagnosticsDefaultInformation" })
 
 M.setup_codeactions = function(bufnr)
-  local ns_id = vim.api.nvim_create_namespace("code-actions-virtual-text" .. bufnr)
+  local ns_id = vim.api.nvim_create_namespace("code_actions_virtual_text_" .. bufnr)
   local lsp_util = vim.lsp.util
-  local code_action_group = vim.api.nvim_create_augroup("code-action-" .. bufnr, { clear = true })
+  local code_action_group = vim.api.nvim_create_augroup("code_action_bufnr_" .. bufnr, { clear = true })
 
   local line = 0
   local mark_id = 0
@@ -17,7 +17,7 @@ M.setup_codeactions = function(bufnr)
       params.context = { diagnostics = vim.lsp.diagnostic.get_line_diagnostics() }
 
       vim.lsp.buf_request_all(bufnr, "textDocument/codeAction", params, function(result)
-        if line ~= 0 then vim.fn.sign_unplace("LightBulbSign", { lnum = line, buffer = bufnr }) end
+        if line ~= 0 then vim.fn.sign_unplace("light_bulb_sign", { lnum = line, buffer = bufnr }) end
         if mark_id ~= 0 then vim.api.nvim_buf_del_extmark(bufnr, ns_id, mark_id) end
         line, _ = table.unpack(vim.api.nvim_win_get_cursor(0))
 
@@ -33,7 +33,7 @@ M.setup_codeactions = function(bufnr)
           }
 
           mark_id = vim.api.nvim_buf_set_extmark(bufnr, ns_id, line_num, col_num, opts)
-          vim.fn.sign_place(0, "LightBulbSign", "LightBulbSign", bufnr, { lnum = line, priority = 10 })
+          vim.fn.sign_place(0, "light_bulb_sign", "light_bulb_sign", bufnr, { lnum = line, priority = 10 })
         end
       end)
     end,
