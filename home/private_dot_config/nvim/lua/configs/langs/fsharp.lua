@@ -1,9 +1,20 @@
 return {
   name = "fsharp",
-  -- ft = { "fs", "fsi", "fsx" },
-  -- ls = {
-  --   name = "fsautocomplete",
-  --   settings = {},
-  -- },
-  -- formatter = "fantomas",
+  ft = { "fsharp" },
+  ls = {
+    name = "fsautocomplete",
+    settings = {},
+  },
+  formatter = {
+    name = "fantomas",
+    actions = {
+      function()
+        return {
+          exe = "fantomas",
+          args = {},
+          stdin = false,
+        }
+      end,
+    },
+  },
 }

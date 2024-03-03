@@ -126,15 +126,19 @@ return {
               require("cmds.lsp").setup_codeactions(bufnr)
             end
 
+            if client.supports_method "textDocument/formatting" then
+              nmap("<leader>cf", vim.lsp.buf.format, "[C]ode [f]ormat")
+            end
+
             if client.supports_method "textDocument/signatureHelp" then
               nmap("<C-s>", vim.lsp.buf.signature_help, "Signature Help")
             end
           end
 
           local signs = {
-            ERROR = " ",
-            WARN = " ",
-            HINT = " ",
+            ERROR = " ",
+            WARN = " ",
+            HINT = " ",
             INFO = " ",
           }
 

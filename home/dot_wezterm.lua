@@ -10,7 +10,7 @@ if wezterm.config_builder then
 end
 
 config.color_scheme = "TokyoNight (Gogh)"
-config.font = wezterm.font("CaskaydiaCove NF")
+config.font = wezterm.font("CaskaydiaCove Nerd Font")
 config.default_prog = { "pwsh" }
 config.font_size = 13
 config.line_height = 1.1
@@ -20,7 +20,8 @@ config.colors = {
 	cursor_fg = "black",
 }
 config.window_close_confirmation = "NeverPrompt"
-config.window_background_opacity  = 0.9
+config.window_background_opacity = 0.9
+config.front_end = "WebGpu"
 
 -- Equivalent to POSIX basename(3)
 -- Given "/foo/bar" returns "bar"
@@ -30,9 +31,8 @@ local function basename(s)
 end
 
 local function fmt_working_dir(s)
-	s = string.gsub(s, "file://", "")
 	-- clean up leftover front slash if it exists
-	s = string.gsub(s, "^/", "")
+	s = string.gsub(s.file_path, "^/", "")
 	local fmt_profile = string.gsub(wezterm.home_dir, "\\", "/")
 	s = string.gsub(s, fmt_profile, "~")
 	-- TODO: find a better way to format home directory if we're in WSL
@@ -141,6 +141,18 @@ config.keys = {
 		key = "w",
 		mods = "ALT",
 		action = wezterm.action.CloseCurrentPane({ confirm = true }),
+	},
+	-- Remap debug overlay
+	{ key = "D", mods = "CTRL", action = wezterm.action.ShowDebugOverlay },
+	{
+		key = "v",
+		mods = "CTRL|SHIFT|ALT",
+		action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }),
+	},
+	{
+		key = "h",
+		mods = "CTRL|SHIFT|ALT",
+		action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }),
 	},
 }
 
