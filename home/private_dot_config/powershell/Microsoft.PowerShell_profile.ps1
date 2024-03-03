@@ -8,6 +8,8 @@ function Invoke-Starship-TransientFunction {
     &starship module character
 }
 
+$Env:KOMOREBI_CONFIG_HOME = Resolve-Path "~\.config\komorebi"
+
 Invoke-Expression (&starship init powershell)
 
 Enable-TransientPrompt

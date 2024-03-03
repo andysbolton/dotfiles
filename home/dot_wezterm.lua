@@ -58,7 +58,7 @@ wezterm.on("format-tab-title", function(tab, tabs)
 	local title = tab_title(tab)
 	title = " " .. title .. " "
 	local title_cols = wezterm.column_width(title)
-	local icon = " ⦿"
+	local icon = " 😊"
 
 	-- Divide into 3 areas and center the title
 	if tab.is_active then
@@ -145,12 +145,12 @@ config.keys = {
 	-- Remap debug overlay
 	{ key = "D", mods = "CTRL", action = wezterm.action.ShowDebugOverlay },
 	{
-		key = "v",
+		key = "h",
 		mods = "CTRL|SHIFT|ALT",
 		action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }),
 	},
 	{
-		key = "h",
+		key = "v",
 		mods = "CTRL|SHIFT|ALT",
 		action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }),
 	},
