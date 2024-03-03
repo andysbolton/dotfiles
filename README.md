@@ -3,10 +3,16 @@
 My dotfiles for Windows and Linux (Debian at the moment), managed with [`chezmoi`](https://github.com/twpayne/chezmoi).
 
 # Setup
-## Debian
+
+## Debian (WSL)
 
 ```
+# Don't generate the default resolv.conf, and create a resolv.conf
+# pointing to Google's nameservers.
+# I have always had to do this in order to get internet connectivity
+# from WSL.
 # https://github.com/microsoft/WSL/issues/5336#issuecomment-653881695
+
 rm /etc/resolv.conf
 
 cat <<EOF > /etc/wsl.conf
