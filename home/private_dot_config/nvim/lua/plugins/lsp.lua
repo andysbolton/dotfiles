@@ -107,10 +107,12 @@ return {
             nmap("<leader>wrl", vim.lsp.buf.list_workspace_folders, "[W]orkspace [L]ist Folders")
 
             if client.supports_method "textDocument/codeAction" then
-              vim.keymap.set(
-                { "n", "v" },
-                "<leader>ca",
-                function()
+              vim.keymap.set({ "n", "v" }, "<leader>ca", function()
+                if vim.fn.has "win32" == 1 then
+                  vim.lsp.buf.code_action()
+                else
+                  -- This has a dependency on mkfifo at the moment
+                  -- so it can't be used on Windows.
                   require("fzf-lua").lsp_code_actions {
                     winopts = {
                       relative = "cursor",
@@ -120,9 +122,9 @@ return {
                       preview = { vertical = "up:70%" },
                     },
                   }
-                end,
-                { buffer = bufnr, desc = "[C]ode [A]ction" }
-              )
+                end
+              end, { buffer = bufnr, desc = "[C]ode [A]ction" })
+
               require("cmds.lsp").setup_codeactions(bufnr)
             end
 
@@ -232,10 +234,26 @@ return {
           }
 
           if vim.fn.has "win32" == 1 then
-            require("lspconfig").ahk2_ls.setup {
+            local ahk2_config = {
+              autostart = true,
+              cmd = {
+                "node",
+                vim.fn.expand "$HOME/vscode-autohotkey2-lsp/server/dist/server.js",
+                "--stdio",
+              },
+              filetypes = { "ahk", "autohotkey", "ah2" },
+              init_options = {
+                locale = "en-us",
+                InterpreterPath = vim.fn.expand "$HOME/scoop/shims/autohotkey.exe",
+              },
+              single_file_support = true,
+              flags = { debounce_text_changes = 500 },
               capabilities = capabilities,
               on_attach = on_attach,
             }
+            local configs = require "lspconfig.configs"
+            configs["ahk2"] = { default_config = ahk2_config }
+            require("lspconfig").ahk2.setup {}
           end
 
           require("lspkind").init {

@@ -2,7 +2,7 @@
 
 ; Load library
 #Include komorebic.lib.ahk
-; Load configuration
+; Load coKomorebinfiguration
 #Include komorebi.generated.ahk
 
 ; Send the ALT key whenever changing focus to force focus changes
@@ -12,35 +12,34 @@ WindowHidingBehaviour("cloak")
 ; Set cross-monitor move behaviour to insert instead of swap
 CrossMonitorMoveBehaviour("Insert")
 ; Enable hot reloading of changes to this file
-WatchConfiguration("enable")
+; WatchConfiguration("enable")
 
-; Create named workspaces I-V on monitor 0
-; EnsureNamedWorkspaces(0, "I II III IV V")
-EnsureNamedWorkspaces(0, "I II III")
-EnsureNamedWorkspaces(1, "I II III")
+EnsureNamedWorkspaces(0, "I Teams Discord Phone")
+EnsureNamedWorkspaces(1, "I II III Komorebi")
 EnsureNamedWorkspaces(2, "I II III")
 
 ; Assign layouts to workspaces, possible values: bsp, columns, rows, vertical-stack, horizontal-stack, ultrawide-vertical-stack
 ; NamedWorkspaceLayout("I", "bsp")
 
-; Set the gaps around the edge of the screen for a workspace
-; NamedWorkspacePadding("I", 20)
-; Set the gaps between the containers for a workspace
-; NamedWorkspaceContainerPadding("I", 20)
-
-; You can assign specific apps to named workspaces
-; NamedWorkspaceRule("exe", "Firefox.exe", "III")
-
 ; Configure the invisible border dimensions
 InvisibleBorders(7, 0, 14, 7)
 
 ; Uncomment the next lines if you want a visual border around the active window
-ActiveWindowBorderColour(66, 165, 245, "single")
+ActiveWindowBorderColour(180, 249, 248, "single")
 ActiveWindowBorderColour(256, 165, 66, "stack")
 ActiveWindowBorderColour(255, 51, 153, "monocle")
+
+ActiveWindowBorderWidth(4)
 ActiveWindowBorder("enable")
 
 CrossMonitorMoveBehaviour("insert")
+
+NamedWorkspaceRule("exe", "ms-teams.exe", "Teams")
+NamedWorkspaceRule("exe", "Discord.exe", "Discord")
+NamedWorkspaceRule("exe", "PhoneExperienceHost.exe", "Phone")
+
+NamedWorkspaceRule("title", "komorebic.exe", "Komorebi")
+NamedWorkspaceRule("title", "komorebi-visualizer.exe", "Komorebi")
 
 CompleteConfiguration()
 
@@ -53,10 +52,10 @@ CompleteConfiguration()
 !+]::CycleFocus("next")
 
 ; Move windows
-!^h::Move("left")
-!^j::Move("down")
-!^k::Move("up")
-!^l::Move("right")
+!^+h::Move("left")
+!^+j::Move("down")
+!^+k::Move("up")
+!^+l::Move("right")
 !+Enter::Promote()
 
 ; Stack windows
@@ -73,12 +72,13 @@ CompleteConfiguration()
 !-::ResizeAxis("horizontal", "decrease")
 !+=::ResizeAxis("vertical", "increase")
 !+-::ResizeAxis("vertical", "decrease")
-
+  
 ; Manipulate windows
 !f::ToggleFloat()
 !+f::ToggleMonocle()
 !m::ToggleMaximize()
 !+m::Manage()
++^m::Minimize()
 
 ; Window manager options
 !+r::Retile()
@@ -89,18 +89,29 @@ CompleteConfiguration()
 !y::FlipLayout("vertical")
 
 ; Workspaces
-!1::FocusMonitor(0)
-!2::FocusMonitor(1)
-!3::FocusMonitor(2)
+!+1::FocusMonitor(0)
+!+2::FocusMonitor(1)
+!+3::FocusMonitor(2)
 
-!+1::FocusWorkspace(0)
-!+2::FocusWorkspace(1)
-!+3::FocusWorkspace(2)
+!1::FocusWorkspace(0)
+!2::FocusWorkspace(1)
+!3::FocusWorkspace(2)
+!4::FocusWorkspace(3)
+
+!^+d::FocusNamedWorkspace("Discord")
+!^+t::FocusNamedWorkspace("Teams")
+!^+p::FocusNamedWorkspace("Phone")
+!^+v::FocusNamedWorkspace("Komorebi")
 
 ; Move windows across workspaces
 ; !+1::MoveToWorkspace(0)
 ; !+2::MoveToWorkspace(1)
 ; !+3::MoveToWorkspace(2)
 
-!r::ReloadConfiguration()
+; !r::ReloadConfiguration()
 !q::Close()
+
+FocusMonitor(2)
+FocusWorkspace(0)
+Retile()
+

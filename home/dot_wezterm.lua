@@ -20,7 +20,7 @@ config.colors = {
 	cursor_fg = "black",
 }
 config.window_close_confirmation = "NeverPrompt"
-config.window_background_opacity = 0.9
+config.window_background_opacity = 0.85
 config.front_end = "WebGpu"
 
 -- Equivalent to POSIX basename(3)
@@ -92,49 +92,44 @@ wezterm.on("format-tab-title", function(tab, tabs)
 	end
 end)
 
-wezterm.on("gui-startup", function()
-	local _, _, window = mux.spawn_window({})
-	window:gui_window():maximize()
-end)
-
 config.leader = { key = "a", mods = "CTRL" }
 config.keys = {
 	{ key = "Z", mods = "CTRL", action = wezterm.action.ActivateCopyMode },
 	{ key = "8", mods = "CTRL", action = act.PaneSelect },
 	{
 		key = "h",
-		mods = "ALT|SHIFT",
+		mods = "ALT|CTRL",
 		action = act.AdjustPaneSize({ "Left", 10 }),
 	},
 	{
 		key = "j",
-		mods = "ALT|SHIFT",
+		mods = "ALT|CTRL",
 		action = act.AdjustPaneSize({ "Down", 10 }),
 	},
-	{ key = "k", mods = "ALT|SHIFT", action = act.AdjustPaneSize({ "Up", 10 }) },
+	{ key = "k", mods = "ALT|CTRL", action = act.AdjustPaneSize({ "Up", 10 }) },
 	{
 		key = "l",
-		mods = "ALT|SHIFT",
+		mods = "ALT|CTRL",
 		action = act.AdjustPaneSize({ "Right", 10 }),
 	},
 	{
 		key = "h",
-		mods = "CTRL|SHIFT",
+		mods = "ALT|SHIFT",
 		action = act.ActivatePaneDirection("Left"),
 	},
 	{
 		key = "l",
-		mods = "CTRL|SHIFT",
+		mods = "ALT|SHIFT",
 		action = act.ActivatePaneDirection("Right"),
 	},
 	{
 		key = "k",
-		mods = "CTRL|SHIFT",
+		mods = "ALT|SHIFT",
 		action = act.ActivatePaneDirection("Up"),
 	},
 	{
 		key = "j",
-		mods = "CTRL|SHIFT",
+		mods = "ALT|SHIFT",
 		action = act.ActivatePaneDirection("Down"),
 	},
 	{
@@ -143,15 +138,15 @@ config.keys = {
 		action = wezterm.action.CloseCurrentPane({ confirm = true }),
 	},
 	-- Remap debug overlay
-	{ key = "D", mods = "CTRL", action = wezterm.action.ShowDebugOverlay },
+	{ key = "d", mods = "LEADER", action = wezterm.action.ShowDebugOverlay },
 	{
 		key = "h",
-		mods = "CTRL|SHIFT|ALT",
+		mods = "LEADER",
 		action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }),
 	},
 	{
 		key = "v",
-		mods = "CTRL|SHIFT|ALT",
+		mods = "LEADER",
 		action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }),
 	},
 }
