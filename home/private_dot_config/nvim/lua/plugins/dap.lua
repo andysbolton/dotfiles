@@ -4,7 +4,7 @@ return {
   "mfussenegger/nvim-dap",
   dependencies = {
     -- Creates a beautiful debugger UI
-    "rcarriga/nvim-dap-ui",
+    { "rcarriga/nvim-dap-ui", dependencies = { "nvim-neotest/nvim-nio" } },
 
     "williamboman/mason.nvim",
     "jay-babu/mason-nvim-dap.nvim",

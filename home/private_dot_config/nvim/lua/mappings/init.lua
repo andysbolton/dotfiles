@@ -19,6 +19,7 @@ vim.keymap.set("n", "<leader>O", "O<Esc>j", { silent = true })
 -- Delete to black hole register
 vim.keymap.set({ "n", "v" }, "<leader>dd", '"_dd<Esc>', { silent = true })
 vim.keymap.set({ "v" }, "<leader>d", '"_d<Esc>', { silent = true })
+vim.keymap.set({ "n" }, "<leader>x", '"_x<Esc>', { silent = true })
 
 -- Source current file
 vim.keymap.set("n", "<leader>xx", ":source %<cr>", { silent = true, desc = "Source current file" })

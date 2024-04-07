@@ -111,7 +111,7 @@ return {
                 if vim.fn.has "win32" == 1 then
                   vim.lsp.buf.code_action()
                 else
-                  -- This has a dependency on mkfifo at the moment
+                  -- This has a dependency on mkfifo at the moment,
                   -- so it can't be used on Windows.
                   require("fzf-lua").lsp_code_actions {
                     winopts = {

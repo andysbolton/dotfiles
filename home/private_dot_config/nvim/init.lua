@@ -1,6 +1,8 @@
 ---@diagnostic disable-next-line: deprecated
 table.unpack = table.unpack or unpack
 
+vim.g.python3_host_prog = vim.fn.expand "~" .. ".asdf/shims/python"
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
