@@ -12,11 +12,11 @@ function New-SymLink($Source, $Target) {
         return
     }
     Write-Host "Creating symlink from $Source to $Target."
-    Start-Process pwsh -Verb "RunAs" -ArgumentList ("-NoExit", "-Command", "New-Item", "-ItemType", "symboliclink", "-Path", "'$Target'", "-Value", "'$(Resolve-Path $Source)'")
+    Start-Process pwsh -Verb "RunAs" -ArgumentList "-NoExit", "-Command", "New-Item", "-ItemType", "symboliclink", "-Path", "'$Target'", "-Value", "'$(Resolve-Path $Source)'"
 }
 
-New-SymLink -Source "~/.config/nvim/" -Target "~/AppData/Local/nvim/"
-New-SymLink -Source "~/AppData/Local/nvim-data/" -Target "~/.local/share/nvim/"
+New-SymLink -Source "~/.config/nvim" -Target "~/AppData/Local/nvim/"
+New-SymLink -Source "~/AppData/Local/nvim-data" -Target "~/.local/share/nvim-data/"
 New-SymLink -Source "~/autohotkey/init.ahk" -Target "~/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/init.ahk"
 
 if (-not (Test-Path "~/Documents/Powershell")) {

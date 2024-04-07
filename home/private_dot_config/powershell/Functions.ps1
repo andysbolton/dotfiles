@@ -143,36 +143,3 @@ function Add-PathVariable([string]$path) {
     [System.Environment]::SetEnvironmentVariable("Path", $env:PATH + ";$path", "Machine")
 }
   
-function Get-ChocoPackagesWithDependencies() {
-    $packages = Get-ChildItem C:\ProgramData\chocolatey\lib\ -Recurse *.nuspec | Select-Object fullname, name 
-    foreach ($p in $packages) {
-        [xml]$xml = Get-Content $p.fullname
-        $dependencies = $xml.package.metadata.dependencies.dependency
-        if ($null -eq $dependencies) {  
-            [pscustomobject] {
-                package = $xml.package.metadata.id;
-                packageversion = $xml.package.metadata.version;
-                dependency = "";
-                dependencyversion = ""
-            }
-            continue
-        }
-        foreach ($d in $dependencies) {
-            [pscustomobject] {
-                package = $xml.package.metadata.id;
-                packageversion = $xml.package.metadata.version;
-                dependency = $d.id;
-                dependencyversion = $d.version;
-            }
-        }
-    }
-}
-  
-function Get-LocalChocoPackagesWithNoDependecies() {
-    $allPackages = Get-ChocoPackagesWithDependencies
-    $dependencyNames = $allPackages | Select-Object -ExpandProperty dependency | Sort-Object | Get-Unique
-    $allPackageNames = $allPackages | Select-Object -ExpandProperty package | Sort-Object | Get-Unique
-  
-    $allPackageNames | Where-Object { -not ($dependencyNames -contains $_) } | Sort-Object
-}
-

@@ -1,5 +1,3 @@
-packages
-
 {{- if eq .chezmoi.os "windows" }}
 .chezmoiscripts/linux/**
 .config/fish/
@@ -8,8 +6,10 @@ packages
 
 {{- if eq .chezmoi.os "linux" }}
 .chezmoiscripts/windows/**
+scoop.json
 AppData/
 autohotkey/
 .config/komorebi/
 .wezterm.lua
+scoop/
 {{- end }}
