@@ -11,4 +11,5 @@ packages
 AppData/
 autohotkey/
 .config/komorebi/
+.wezterm.lua
 {{- end }}
