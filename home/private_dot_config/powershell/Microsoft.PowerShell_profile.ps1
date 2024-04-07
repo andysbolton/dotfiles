@@ -8,7 +8,10 @@ function Invoke-Starship-TransientFunction {
     &starship module character
 }
 
-$Env:KOMOREBI_CONFIG_HOME = Resolve-Path "~\.config\komorebi"
+$komorebiPath = Resolve-Path "~\.config\komorebi"
+if ($komorebiPath) {
+    $env:KOMOREBI_CONFIG_HOME = $komorebiPath
+}
 
 Invoke-Expression (&starship init powershell)
 
