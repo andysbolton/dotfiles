@@ -1,4 +1,4 @@
-return not vim.fn.has "win32"
+return vim.fn.has "win32" == 0
     and {
       name = "clojure",
       ft = { "clojure" },
@@ -20,4 +20,4 @@ return not vim.fn.has "win32"
       },
       treesitter = "clojure",
     }
-  or nil
+  or {}

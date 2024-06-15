@@ -14,12 +14,13 @@ set -gx BROWSER wslview
 set -gx EDITOR nvim
 set -gx RIPGREP_CONFIG_PATH $HOME/.ripgreprc
 set -gx MANPAGER "sh -c 'col -bx | batcat -l man -p'"
+set -x GOPATH $(go env GOPATH)
 
 alias cm="chezmoi"
 alias cma="chezmoi apply --verbose"
 alias cmad="chezmoi apply --verbose --dry-run"
 alias nvimconf='nvim --cmd ":cd ~/.config/nvim"'
-alias nc="nvimconf"
+alias nvc="nvimconf"
 alias fishconf="nvim ~/.config/fish/config.fish"
 alias fc="fishconf"
 alias bat="batcat"
@@ -91,7 +92,7 @@ if status is-login
     cd ~/
 end
 
-function install_neovim 
+function install_neovim
     mkdir -p ~/.local/bin
     if count $argv >/dev/null && [ $argv[1] = "nightly" ]
         curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
@@ -100,6 +101,43 @@ function install_neovim
     end 
     chmod u+x nvim.appimage
     mv nvim.appimage ~/.local/bin/nvim
+end
+
+function sub --description "List or switch Azure subscriptions."
+    if count $argv >/dev/null
+        # We're in selection mode.
+        set ordinal $argv[1]
+
+        if ! string match -qr '^\d+$' $ordinal
+            echo "The subscription ordinal to select must be an integer, received '$argv[1]'."
+            return
+        end
+
+        set index (math $argv[1] - 1)
+
+        set sub $(
+            az account list --all --query "[].{name:name,id:id}" | 
+                jq -r --arg INDEX $index \
+                    'sort_by(.name) | to_entries | map(select(.key == ($INDEX | tonumber))) | .[].value.name'
+        )
+        if [ -n "$sub" ]
+            az account set --subscription $sub >/dev/null
+            echo "Switched to sub $sub."
+        else
+            echo "Subscription at ordinal '$ordinal' not found."
+        end
+    else
+        # We're in list mode.
+        set current_sub $(az account show --query name -o tsv)
+        az account list --all --query "[].{name:name,id:id}" |
+            jq -r --arg CURRENT_SUB $current_sub \
+                'sort_by(.name) 
+                    | to_entries 
+                    | .[] 
+                    | .value.name = if .value.name == $CURRENT_SUB then "*** \(.value.name) ***" else .value.name end
+                    | "\(.key + 1)~\(.value.name)~\(.value.id)"' | 
+            column -t -s'~' -N ' ',Name,Id
+    end
 end
 
 if status is-interactive

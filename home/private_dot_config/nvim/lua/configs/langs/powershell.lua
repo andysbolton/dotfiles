@@ -5,4 +5,8 @@ return {
     name = "powershell_es",
     settings = {},
   },
+  formatter = {
+    name = "powershell_es",
+    use_lsp = true,
+  },
 }

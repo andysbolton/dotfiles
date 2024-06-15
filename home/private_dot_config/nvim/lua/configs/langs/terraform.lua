@@ -6,9 +6,8 @@ return {
     settings = {},
   },
   formatter = {
-    actions = {
-      function() return require("formatter.filetypes.terraform").terraformfmt() end,
-    },
+    name = "terraformls",
+    use_lsp = true,
   },
   treesitter = "terraform",
 }

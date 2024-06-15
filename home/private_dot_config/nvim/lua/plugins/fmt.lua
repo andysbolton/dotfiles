@@ -3,7 +3,7 @@ local formatters = require("configs.util").get_formatters()
 local formatter_names = {}
 local filetype_actions = {}
 for _, formatter in pairs(formatters) do
-  if formatter.name then table.insert(formatter_names, formatter.name) end
+  if formatter.name and not formatter.use_lsp then table.insert(formatter_names, formatter.name) end
   for _, filetype in pairs(formatter.filetypes or {}) do
     filetype_actions[filetype] = formatter.actions
   end
@@ -21,7 +21,7 @@ return {
         ensure_installed = { table.unpack(formatter_names) },
       }
 
-      if not vim.fn.has "win32" then
+      if vim.fn.has "win32" == 0 then
         -- This formatter is dependent on sed, so disabling for win32.
         filetype_actions["*"] = {
           require("formatter.filetypes.any").remove_trailing_whitespace,

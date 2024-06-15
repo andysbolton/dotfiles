@@ -1,11 +1,11 @@
 return {
   name = "go",
+  ft = { "go" },
   ls = {
     name = "gopls",
     settings = {
       settings = {
         gopls = {
-          gofumpt = true,
           usePlaceholders = true,
           analyses = {
             unusedparams = true,
@@ -21,6 +21,12 @@ return {
           rangeVariableTypes = true,
         },
       },
+    },
+  },
+  formatter = {
+    name = "gofumpt",
+    actions = {
+      function() return require("formatter.filetypes.go").gofumpt() end,
     },
   },
   treesitter = "go",
