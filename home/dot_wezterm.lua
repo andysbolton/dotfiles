@@ -92,7 +92,7 @@ wezterm.on("format-tab-title", function(tab, tabs)
 	end
 end)
 
-config.leader = { key = "a", mods = "CTRL" }
+config.leader = { key = " ", mods = "CTRL" }
 config.keys = {
 	{ key = "Z", mods = "CTRL", action = wezterm.action.ActivateCopyMode },
 	{ key = "8", mods = "CTRL", action = act.PaneSelect },
