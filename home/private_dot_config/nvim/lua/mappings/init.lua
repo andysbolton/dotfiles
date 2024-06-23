@@ -22,7 +22,7 @@ vim.keymap.set({ "v" }, "<leader>d", '"_d<Esc>', { silent = true })
 vim.keymap.set({ "n" }, "<leader>x", '"_x<Esc>', { silent = true })
 
 -- Source current file
-vim.keymap.set("n", "<leader>xx", ":source %<cr>", { silent = true, desc = "Source current file" })
+-- vim.keymap.set("n", "<leader>xx", ":source %<cr>", { silent = true, desc = "Source current file" })
 
 -- Workaround to write and close all buffers when one or more is a terminal
 -- https://github.com/neovim/neovim/issues/14061

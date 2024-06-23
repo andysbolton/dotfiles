@@ -7,3 +7,4 @@ tree-sitter 0.20.8
 lua 5.4.6
 deno 1.39.1
 adr-tools 3.0.0
+golang 1.22.4

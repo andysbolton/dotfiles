@@ -5,7 +5,7 @@ fish_add_path /usr/local/go/bin
 fish_add_path ~/.cargo/bin
 fish_add_path ~/.asdf/installs/lua/5.4.6/luarocks/bin
 fish_add_path ~/.dotnet/tools
-fish_add_path ~/go/bin
+# fish_add_path ~/go/bin
 
 . ~/.asdf/asdf.fish
 . ~/.asdf/plugins/dotnet-core/set-dotnet-home.fish
@@ -14,7 +14,7 @@ set -gx BROWSER wslview
 set -gx EDITOR nvim
 set -gx RIPGREP_CONFIG_PATH $HOME/.ripgreprc
 set -gx MANPAGER "sh -c 'col -bx | batcat -l man -p'"
-set -x GOPATH $(go env GOPATH)
+# set -x GOPATH $(go env GOPATH)
 
 alias cm="chezmoi"
 alias cma="chezmoi apply --verbose"
