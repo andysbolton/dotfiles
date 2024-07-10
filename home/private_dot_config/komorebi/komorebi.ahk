@@ -14,7 +14,7 @@ CrossMonitorMoveBehaviour("Insert")
 ; Enable hot reloading of changes to this file
 ; WatchConfiguration("enable")
 
-EnsureNamedWorkspaces(0, "I Teams Discord Phone")
+EnsureNamedWorkspaces(0, "I II III IIII Teams Discord Phone")
 EnsureNamedWorkspaces(1, "I II III Komorebi")
 EnsureNamedWorkspaces(2, "I II III")
 
@@ -104,9 +104,10 @@ CompleteConfiguration()
 !^+v::FocusNamedWorkspace("Komorebi")
 
 ; Move windows across workspaces
-; !+1::MoveToWorkspace(0)
-; !+2::MoveToWorkspace(1)
-; !+3::MoveToWorkspace(2)
+!^+1::MoveToWorkspace(0)
+!^+2::MoveToWorkspace(1)
+!^+3::MoveToWorkspace(2)
+!^+4::MoveToWorkspace(3)
 
 ; !r::ReloadConfiguration()
 !q::Close()
