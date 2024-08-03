@@ -2,7 +2,13 @@
   "OpenInNewBrowserWindow": true,
   "BrowserPath": null,
   "LoadChromeBookmark": false,
-  "LoadFirefoxBookmark": true,
+  "LoadFirefoxBookmark": false,
   "LoadEdgeBookmark": false,
-  "CustomChromiumBrowsers": []
+  "CustomChromiumBrowsers": [
+    {
+      "Name": "Firefox (Scoop)",
+      "DataDirectoryPath": "C:\\Users\\AndyBolton\\scoop\\persist\\firefox\\profile",
+      "BrowserType": 1
+    }
+  ]
 }

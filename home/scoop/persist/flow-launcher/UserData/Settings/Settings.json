@@ -25,10 +25,10 @@
   "TimeFormat": "hh:mm tt",
   "DateFormat": "MM\u0027/\u0027dd ddd",
   "FirstLaunch": false,
-  "SettingWindowWidth": 924,
-  "SettingWindowHeight": 1002.4000000000001,
-  "SettingWindowTop": 55.2,
-  "SettingWindowLeft": 972.8000000000001,
+  "SettingWindowWidth": 1244,
+  "SettingWindowHeight": 1362,
+  "SettingWindowTop": 55,
+  "SettingWindowLeft": 1293,
   "SettingWindowState": 0,
   "CustomExplorerIndex": 0,
   "CustomExplorerList": [
@@ -101,12 +101,12 @@
   "AlwaysStartEn": false,
   "QuerySearchPrecision": "Regular",
   "AutoUpdates": false,
-  "WindowLeft": 670,
-  "WindowTop": 282,
+  "WindowLeft": -1250,
+  "WindowTop": -158,
   "CustomWindowLeft": 0,
   "CustomWindowTop": 0,
   "MaxResultsToShow": 5,
-  "ActivateTimes": 3791,
+  "ActivateTimes": 4417,
   "CustomPluginHotkeys": [],
   "CustomShortcuts": [],
   "DontPromptUpdateMsg": false,
@@ -134,16 +134,6 @@
     "PythonExecutablePath": "",
     "NodeExecutablePath": "",
     "Plugins": {
-      "0ECADE17459B49F587BF81DC3A125110": {
-        "ID": "0ECADE17459B49F587BF81DC3A125110",
-        "Name": "Browser Bookmarks",
-        "Version": "3.1.5",
-        "ActionKeywords": [
-          "*"
-        ],
-        "Priority": 0,
-        "Disabled": false
-      },
       "CEA0FDFC6D3B4085823D60DC76F28855": {
         "ID": "CEA0FDFC6D3B4085823D60DC76F28855",
         "Name": "Calculator",
@@ -275,6 +265,16 @@
         "Version": "4.0.6",
         "ActionKeywords": [
           "s"
+        ],
+        "Priority": 0,
+        "Disabled": false
+      },
+      "0ECADE17459B49F587BF81DC3A125110": {
+        "ID": "0ECADE17459B49F587BF81DC3A125110",
+        "Name": "Browser Bookmarks",
+        "Version": "3.2.0",
+        "ActionKeywords": [
+          "*"
         ],
         "Priority": 0,
         "Disabled": false
