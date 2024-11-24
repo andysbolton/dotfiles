@@ -1,4 +1,4 @@
-{{- if (or (eq .chezmoi.os "windows") (eq .chezmoi.osRelease.id "NixOS")) }}
+{{- if (or (eq .chezmoi.os "windows") (eq .chezmoi.osRelease.id "nixos")) }}
 .chezmoiscripts/linux/**
 .config/fish/
 .tool-versions
