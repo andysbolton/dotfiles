@@ -1,4 +1,4 @@
-{{- if eq .chezmoi.os "windows" }}
+{{- if eq .chezmoi.os "windows" or eq .chezmoi.osRelease.od "NixOS" }}
 .chezmoiscripts/linux/**
 .config/fish/
 .tool-versions
@@ -10,6 +10,5 @@ scoop.json
 AppData/
 autohotkey/
 .config/komorebi/
-.wezterm.lua
 scoop/
 {{- end }}
