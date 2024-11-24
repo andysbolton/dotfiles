@@ -35,11 +35,4 @@ require "mappings"
 require "options"
 require "cmds"
 
--- Move me pls
-vim.filetype.add {
-  pattern = {
-    ["%.env%.[%w_.-]+"] = "dotenv",
-  },
-}
-
 -- vim: ts=2 sts=2 sw=2 et

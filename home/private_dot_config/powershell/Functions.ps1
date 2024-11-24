@@ -131,7 +131,7 @@ function Stay-Awake {
       # http://www.zhornsoftware.co.uk/caffeine/
       # Unfortunately the above triggers a malware alert on Sophos so I needed to find a native solution - hence this script...
       $wsh.SendKeys('+{F15}')
-      Start-Sleep -seconds 59
+      Start-Sleep -seconds 29
     }
 }
 
