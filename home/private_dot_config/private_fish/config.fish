@@ -7,13 +7,13 @@ fish_add_path ~/.asdf/installs/lua/5.4.6/luarocks/bin
 fish_add_path ~/.dotnet/tools
 # fish_add_path ~/go/bin
 
-. ~/.asdf/asdf.fish
-. ~/.asdf/plugins/dotnet-core/set-dotnet-home.fish
+# . ~/.asdf/asdf.fish
+# . ~/.asdf/plugins/dotnet-core/set-dotnet-home.fish
 
 set -gx BROWSER wslview
 set -gx EDITOR nvim
 set -gx RIPGREP_CONFIG_PATH $HOME/.ripgreprc
-set -gx MANPAGER "sh -c 'col -bx | batcat -l man -p'"
+set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
 # set -x GOPATH $(go env GOPATH)
 
 alias cm="chezmoi"
@@ -23,7 +23,6 @@ alias nvimconf='nvim --cmd ":cd ~/.config/nvim"'
 alias nvc="nvimconf"
 alias fishconf="nvim ~/.config/fish/config.fish"
 alias fc="fishconf"
-alias bat="batcat"
 alias lrepl="lein repl"
 
 bind \cS 'history-pager'
@@ -45,6 +44,14 @@ function addp -a message
     add $message
     if ! git push
         git push --set-upstream origin (git branch --show-current)
+    end
+end
+
+function bat 
+    if command -v batcat
+        batcat
+    else
+        eval (command -v bat)
     end
 end
 

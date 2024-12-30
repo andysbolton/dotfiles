@@ -1,8 +1,11 @@
-{{- if (or (eq .chezmoi.os "windows") (eq .chezmoi.osRelease.id "nixos")) }}
-.chezmoiscripts/linux/**
+{{- if eq .chezmoi.os "windows" }}
 .config/fish/
 .tool-versions
 {{- end }}
+
+{{- if ne .chezmoi.osRelease.id "debian" }}
+.chezmoiscripts/debian/**
+{{- end}}
 
 {{- if eq .chezmoi.os "linux" }}
 .chezmoiscripts/windows/**

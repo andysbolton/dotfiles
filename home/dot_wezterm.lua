@@ -11,7 +11,7 @@ end
 
 config.color_scheme = "TokyoNight (Gogh)"
 config.font = wezterm.font("CaskaydiaCove Nerd Font")
-config.default_prog = { "pwsh" }
+config.default_prog = { "fish" }
 config.font_size = 13
 config.line_height = 1.1
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
@@ -21,7 +21,7 @@ config.colors = {
 }
 config.window_close_confirmation = "NeverPrompt"
 config.window_background_opacity = 0.85
-config.front_end = "WebGpu"
+-- config.front_end = "WebGpu"
 
 -- Equivalent to POSIX basename(3)
 -- Given "/foo/bar" returns "bar"
@@ -149,6 +149,8 @@ config.keys = {
 		mods = "LEADER",
 		action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }),
 	},
+	{ key = "V", mods = "CTRL", action = act.PasteFrom 'Clipboard' },
+	{ key = "V", mods = "CTRL", action = act.PasteFrom 'PrimarySelection' },
 }
 
 return config
