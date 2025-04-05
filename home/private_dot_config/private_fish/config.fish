@@ -1,20 +1,23 @@
 fish_add_path ~/smartwyre/infra-orchestrator/scripts/util
 fish_add_path ~/.local/bin
 fish_add_path ~/bin
-fish_add_path /usr/local/go/bin
+# fish_add_path /usr/local/go/bin
 fish_add_path ~/.cargo/bin
 fish_add_path ~/.asdf/installs/lua/5.4.6/luarocks/bin
 fish_add_path ~/.dotnet/tools
 # fish_add_path ~/go/bin
 
-# . ~/.asdf/asdf.fish
-# . ~/.asdf/plugins/dotnet-core/set-dotnet-home.fish
+. ~/.asdf/asdf.fish
+. ~/.asdf/plugins/dotnet-core/set-dotnet-home.fish
+. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
 
 set -gx BROWSER wslview
 set -gx EDITOR nvim
 set -gx RIPGREP_CONFIG_PATH $HOME/.ripgreprc
-set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
-# set -x GOPATH $(go env GOPATH)
+set -gx MANPAGER "sh -c 'col -bx | batcat -l man -p'"
+set -gx GOPATH "$(asdf where golang)/packages"
+set -gx GOROOT "$(asdf where golang)/go"
+fish_add_path "$(go env GOPATH)/bin"
 
 alias cm="chezmoi"
 alias cma="chezmoi apply --verbose"
@@ -23,7 +26,9 @@ alias nvimconf='nvim --cmd ":cd ~/.config/nvim"'
 alias nvc="nvimconf"
 alias fishconf="nvim ~/.config/fish/config.fish"
 alias fc="fishconf"
+alias bat="batcat"
 alias lrepl="lein repl"
+alias jil='jira issue list --plain -a andy.bolton@smartwyre.com -s "In progress" --columns key,summary'
 
 bind \cS 'history-pager'
 
@@ -47,14 +52,6 @@ function addp -a message
     end
 end
 
-function bat 
-    if command -v batcat
-        batcat
-    else
-        eval (command -v bat)
-    end
-end
-
 function starship_transient_prompt_func
     starship module character
 end
@@ -73,6 +70,10 @@ end
 
 function ops
     eval $(op signin)
+end
+
+function strip_ansi
+    sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2};?)?)?[mGK]//g" $argv[1]
 end
 
 function exercism

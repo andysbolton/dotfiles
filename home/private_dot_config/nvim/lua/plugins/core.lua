@@ -12,26 +12,26 @@ return {
     branch = "master",
   },
 
-  -- {
-  --   "toppair/peek.nvim",
-  --   event = { "VeryLazy" },
-  --   build = "deno task --quiet build:fast",
-  --   keys = {
-  --     {
-  --       "<leader>po",
-  --       function() require("peek").open() end,
-  --       mode = { "n" },
-  --       desc = "[P]eek [o]pen (markdown preview)",
-  --     },
-  --     {
-  --       "<leader>pc",
-  --       function() require("peek").close() end,
-  --       mode = { "n" },
-  --       desc = "[P]eek [c]lose (markdown preview)",
-  --     },
-  --   },
-  --   config = true,
-  -- },
+  {
+    "toppair/peek.nvim",
+    event = { "VeryLazy" },
+    build = "deno task --quiet build:fast",
+    keys = {
+      {
+        "<leader>po",
+        function() require("peek").open() end,
+        mode = { "n" },
+        desc = "[P]eek [o]pen (markdown preview)",
+      },
+      {
+        "<leader>pc",
+        function() require("peek").close() end,
+        mode = { "n" },
+        desc = "[P]eek [c]lose (markdown preview)",
+      },
+    },
+    config = true,
+  },
 
   {
     "toppair/peek.nvim",
@@ -120,8 +120,6 @@ return {
   },
 
   "tpope/vim-sensible",
-
-  "tpope/vim-abolish",
 
   "github/copilot.vim",
 

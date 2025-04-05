@@ -21,7 +21,7 @@ return {
 
     for filetype, _ in pairs(filetype_linters) do
       local formatted_filetype = { "*." .. filetype }
-      vim.api.nvim_create_autocmd({ "BufEnter", "TextChanged", "InsertLeave" }, {
+      vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "TextChanged", "InsertLeave" }, {
         pattern = formatted_filetype,
         callback = function() require("lint").try_lint() end,
       })

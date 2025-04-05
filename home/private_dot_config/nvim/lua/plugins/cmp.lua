@@ -3,7 +3,7 @@ return {
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
     "L3MON4D3/LuaSnip",
-    "saadparwaiz1/cmp_luasnip",
+    -- "saadparwaiz1/cmp_luasnip",
   },
   config = function()
     local cmp = require "cmp"
@@ -19,10 +19,10 @@ return {
         documentation = cmp.config.window.bordered(),
       },
       mapping = cmp.mapping.preset.insert {
-        ["<C-n>"] = cmp.mapping.select_next_item(),
-        ["<C-p>"] = cmp.mapping.select_prev_item(),
-        ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
+        -- ["<C-n>"] = cmp.mapping.select_next_item(),
+        -- ["<C-p>"] = cmp.mapping.select_prev_item(),
+        -- ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+        -- ["<C-f>"] = cmp.mapping.scroll_docs(4),
         ["<C-e>"] = cmp.mapping.abort(),
         ["<C-Space>"] = cmp.mapping.complete {},
         ["<CR>"] = cmp.mapping.confirm {

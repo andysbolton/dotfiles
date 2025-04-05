@@ -45,3 +45,17 @@ vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagn
 
 -- Copy current buffer name
 vim.keymap.set("n", "<leader>c", ":let @+=expand('%')<cr>", { silent = true, desc = "[C]opy current buffer name" })
+
+-- Copilot
+vim.keymap.set("i", "<C-L>", "<Plug>(copilot-accept-word)")
+
+-- Fugitive
+vim.keymap.set("n", "<leader>gs", ":Git<CR>")
+vim.keymap.set("n", "<leader>gd", ":Gdiffsplit<CR>")
+vim.keymap.set("n", "<leader>gc", ":Git commit<CR>")
+vim.keymap.set("n", "<leader>gb", ":Git blame<CR>")
+vim.keymap.set("n", "<leader>gm", ":Git mergetool<CR>")
+
+-- Improve diff experience (move me)
+vim.opt.diffopt:append "algorithm:patience"
+vim.opt.diffopt:append "indent-heuristic"

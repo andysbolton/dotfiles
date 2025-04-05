@@ -1,38 +1,20 @@
----@diagnostic disable-next-line: deprecated
-table.unpack = table.unpack or unpack
-
-vim.g.python3_host_prog = vim.fn.expand "~" .. ".asdf/shims/python"
-
+-- [nfnl] Compiled from init.fnl by https://github.com/Olical/nfnl, do not edit.
+table.unpack = (table.unpack or unpack)
+vim.g.python3_host_prog = (vim.fn.expand("~") .. ".asdf/shims/python")
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-
 vim.g.copilot_no_tab_map = true
-vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
-local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
+vim.api.nvim_set_keymap("i", "<C-J>", "copilot#Accept(\"<CR>\")", {silent = true, expr = true})
+local lazypath = (vim.fn.stdpath("data") .. "/lazy/lazy.nvim")
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system {
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  }
+  vim.fn.system({"git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", "--branch=stable", lazypath})
+else
 end
 vim.opt.rtp:prepend(lazypath)
-
-require("lazy").setup({
-  {
-    import = "plugins",
-  },
-}, {
-  change_detection = {
-    notify = false,
-  },
-})
-
-require "mappings"
-require "options"
-require "cmds"
-
--- vim: ts=2 sts=2 sw=2 et
+do
+  local lazy = require("lazy")
+  lazy.setup({{import = "plugins"}}, {{change_detection = {notify = false}}})
+end
+require("mappings")
+require("options")
+return require("cmds")

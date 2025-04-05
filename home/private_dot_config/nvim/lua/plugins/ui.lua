@@ -3,7 +3,7 @@ return {
   {
     "akinsho/bufferline.nvim",
     version = "*",
-    dependencies = { "nvim-tree/nvim-web-devicons", "famiu/bufdelete.nvim" },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
       vim.keymap.set("n", "<leader><tab>", ":BufferLineCycleNext<cr>", { desc = "Cycle to next tab", silent = true })
       vim.keymap.set(
@@ -12,7 +12,12 @@ return {
         ":BufferLineCyclePrev<cr>",
         { desc = "Cycle to previous tab", silent = true }
       )
-      vim.keymap.set("n", "<leader>bd", ":Bdelete<cr>", { desc = "Delete current buffer", silent = true })
+      vim.keymap.set(
+        "n",
+        "<leader>bd",
+        ":bp<bar>sp<bar>bn<bar>bd!<CR>",
+        { desc = "Delete current buffer", silent = true }
+      )
       vim.keymap.set(
         "n",
         "<leader>bdr",
@@ -36,14 +41,13 @@ return {
         )
         vim.keymap.set("n", "<leader>bd" .. i, function()
           for _, buf in pairs(require("bufferline.buffers").get_components(require "bufferline.state")) do
-            if buf.ordinal == i then vim.cmd("Bdelete! " .. buf.id) end
+            if buf.ordinal == i then vim.cmd("bd! " .. buf.id) end
           end
         end, { desc = "[B]uffer: [d]elete " .. i })
       end
 
       require("bufferline").setup {
         options = {
-          close_command = ":Bdelete %d",
           separator_style = "slant",
           buffer_close_icon = "✕",
           indicator = {
@@ -70,7 +74,7 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     opts = {
-      theme = "tokyonight",
+      theme = "tokyonight-storm",
     },
   },
 
@@ -78,7 +82,7 @@ return {
     "folke/tokyonight.nvim",
     lazy = false,
     priority = 1000,
-    config = function() vim.cmd [[colorscheme tokyonight-night]] end,
+    config = function() vim.cmd [[colorscheme tokyonight-storm]] end,
   },
 
   {
@@ -87,7 +91,7 @@ return {
       require("lualine").setup {
         options = {
           icons_enabled = true,
-          theme = "tokyonight",
+          theme = "tokyonight-storm",
           disabled_filetypes = { "neo-tree" },
         },
         extensions = { "lazy" },
@@ -135,6 +139,12 @@ return {
       vim.notify = require "notify"
     end,
   },
+
+  -- Would be nice if this supported ANSI escape sequences.
+  -- {
+  --   "norcalli/nvim-colorizer.lua",
+  --   config = true,
+  -- },
 
   -- {
   --   "folke/noice.nvim",
@@ -306,4 +316,55 @@ return {
       }
     end,
   },
+
+  -- "wfxr/minimap.vim",
+  -- {
+  --   "Isrothy/neominimap.nvim",
+  --   version = "v3.*.*",
+  --   enabled = true,
+  --   lazy = false, -- NOTE: NO NEED to Lazy load
+  --   -- Optional
+  --   keys = {
+  --     -- Global Minimap Controls
+  --     { "<leader>nm", "<cmd>Neominimap toggle<cr>", desc = "Toggle global minimap" },
+  --     { "<leader>no", "<cmd>Neominimap on<cr>", desc = "Enable global minimap" },
+  --     { "<leader>nc", "<cmd>Neominimap off<cr>", desc = "Disable global minimap" },
+  --     { "<leader>nr", "<cmd>Neominimap refresh<cr>", desc = "Refresh global minimap" },
+  --
+  --     -- Window-Specific Minimap Controls
+  --     { "<leader>nwt", "<cmd>Neominimap winToggle<cr>", desc = "Toggle minimap for current window" },
+  --     { "<leader>nwr", "<cmd>Neominimap winRefresh<cr>", desc = "Refresh minimap for current window" },
+  --     { "<leader>nwo", "<cmd>Neominimap winOn<cr>", desc = "Enable minimap for current window" },
+  --     { "<leader>nwc", "<cmd>Neominimap winOff<cr>", desc = "Disable minimap for current window" },
+  --
+  --     -- Tab-Specific Minimap Controls
+  --     { "<leader>ntt", "<cmd>Neominimap tabToggle<cr>", desc = "Toggle minimap for current tab" },
+  --     { "<leader>ntr", "<cmd>Neominimap tabRefresh<cr>", desc = "Refresh minimap for current tab" },
+  --     { "<leader>nto", "<cmd>Neominimap tabOn<cr>", desc = "Enable minimap for current tab" },
+  --     { "<leader>ntc", "<cmd>Neominimap tabOff<cr>", desc = "Disable minimap for current tab" },
+  --
+  --     -- Buffer-Specific Minimap Controls
+  --     { "<leader>nbt", "<cmd>Neominimap bufToggle<cr>", desc = "Toggle minimap for current buffer" },
+  --     { "<leader>nbr", "<cmd>Neominimap bufRefresh<cr>", desc = "Refresh minimap for current buffer" },
+  --     { "<leader>nbo", "<cmd>Neominimap bufOn<cr>", desc = "Enable minimap for current buffer" },
+  --     { "<leader>nbc", "<cmd>Neominimap bufOff<cr>", desc = "Disable minimap for current buffer" },
+  --
+  --     ---Focus Controls
+  --     { "<leader>nf", "<cmd>Neominimap focus<cr>", desc = "Focus on minimap" },
+  --     { "<leader>nu", "<cmd>Neominimap unfocus<cr>", desc = "Unfocus minimap" },
+  --     { "<leader>ns", "<cmd>Neominimap toggleFocus<cr>", desc = "Switch focus on minimap" },
+  --   },
+  --   init = function()
+  --     vim.opt.wrap = false
+  --     vim.opt.sidescrolloff = 36 -- Set a large value
+  --
+  --     vim.g.neominimap = {
+  --       auto_enable = true,
+  --     }
+  --   end,
+  -- },
+  -- {
+  --   "petertriho/nvim-scrollbar",
+  --   config = true,
+  -- },
 }
