@@ -15,7 +15,7 @@ config.adjust_window_size_when_changing_font_size = false
 config.enable_wayland = false
 {{ end }}
 
-{{ if eq .chezmoi.hostname "work" }}
+{{- if eq .chezmoi.hostname "work" -}}
 -- My thinkpad at work has issues unless using WebGPU
 config.front_end = "WebGPU"
 {{ else }}
