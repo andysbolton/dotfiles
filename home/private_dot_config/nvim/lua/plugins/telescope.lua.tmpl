@@ -31,6 +31,11 @@ return {
         desc = "[S]earch current [W]ord",
       },
       {
+        "<leader>sr",
+        function() require("telescope.builtin").resume() end,
+        desc = "[S]earch [R]esume",
+      },
+      {
         "<leader>sg",
         ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
         desc = "[S]earch by [G]rep",
