@@ -16,10 +16,10 @@
     {{- end }}
 
 [merge]
-    command = "pwsh"
+    command = "nvim"
     args = [
-        "-NoProfile",
-        "-Command",
-        "Start-Process -Wait meld -ArgumentList (\"{{ "{{ .Destination }}" }}\", \"{{ "{{ .Source }}" }}\", \"{{ "{{ .Target }}" }}\")",
+        "-d",
+        "{{ .Destination }}",
+        "{{ .Source }}",
+        "{{ .Target }}"
     ]
-
