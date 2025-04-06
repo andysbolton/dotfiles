@@ -9,6 +9,19 @@ if wezterm.config_builder then
 	config = wezterm.config_builder()
 end
 
+{{ if eq .chezmoi.osRelease.id "nixos" }}
+-- NixOS specific settings
+config.adjust_window_size_when_changing_font_size = false
+config.enable_wayland = false
+{{ end }}
+
+{{- if eq .chezmoi.hostname "work" -}}
+-- My thinkpad at work has issues unless using WebGPU
+config.front_end = "WebGPU"
+{{ else }}
+config.front_end = "OpenGL"
+{{ end }}
+
 config.color_scheme = "TokyoNight (Gogh)"
 config.font = wezterm.font("CaskaydiaCove Nerd Font")
 config.default_prog = { "fish" }
@@ -21,7 +34,6 @@ config.colors = {
 }
 config.window_close_confirmation = "NeverPrompt"
 config.window_background_opacity = 0.85
--- config.front_end = "WebGpu"
 
 -- Equivalent to POSIX basename(3)
 -- Given "/foo/bar" returns "bar"

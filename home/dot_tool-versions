@@ -1,10 +1,10 @@
 nodejs 23.10.0
 python 3.12.6
-dotnet-core 8.0.402
+dotnet-core 9.0.202
 clojure 1.11.1.1435
 leiningen 2.10.0
 tree-sitter 0.20.8
-lua 5.4.6
+lua 5.4.7
 deno 1.39.1
 adr-tools 3.0.0
 golang 1.22.4

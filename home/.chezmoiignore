@@ -9,9 +9,10 @@
 
 {{- if eq .chezmoi.os "linux" }}
 .chezmoiscripts/windows/**
-scoop.json
+.config/komorebi/
+.wslconfig
 AppData/
 autohotkey/
-.config/komorebi/
+scoop.json
 scoop/
 {{- end }}
