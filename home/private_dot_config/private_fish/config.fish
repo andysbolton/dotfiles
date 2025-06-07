@@ -1,23 +1,26 @@
 fish_add_path ~/smartwyre/infra-orchestrator/scripts/util
+
 fish_add_path ~/.local/bin
 fish_add_path ~/bin
-# fish_add_path /usr/local/go/bin
+fish_add_path /usr/local/go/bin
 fish_add_path ~/.cargo/bin
-fish_add_path ~/.asdf/installs/lua/5.4.6/luarocks/bin
+# fish_add_path ~/.asdf/installs/lua/5.4.6/luarocks/bin
+
 fish_add_path ~/.dotnet/tools
 # fish_add_path ~/go/bin
 
-. ~/.asdf/asdf.fish
-. ~/.asdf/plugins/dotnet-core/set-dotnet-home.fish
-. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
+set asdf_fish_path (dirname (dirname (readlink -f (which asdf))))/share/asdf-vm/asdf.fish
 
-set -gx BROWSER wslview
+if [ -f $asdf_fish_path ]
+    . $asdf_fish_path
+end
+# . $asdf_location/plugins/dotnet-core/set-dotnet-home.fish
+
+set -gx BROWSER firefox 
 set -gx EDITOR nvim
 set -gx RIPGREP_CONFIG_PATH $HOME/.ripgreprc
-set -gx MANPAGER "sh -c 'col -bx | batcat -l man -p'"
-set -gx GOPATH "$(asdf where golang)/packages"
-set -gx GOROOT "$(asdf where golang)/go"
-fish_add_path "$(go env GOPATH)/bin"
+set -gx MANPAGER "sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
+# set -x GOPATH $(go env GOPATH)
 
 alias cm="chezmoi"
 alias cma="chezmoi apply --verbose"
@@ -26,9 +29,11 @@ alias nvimconf='nvim --cmd ":cd ~/.config/nvim"'
 alias nvc="nvimconf"
 alias fishconf="nvim ~/.config/fish/config.fish"
 alias fc="fishconf"
-alias bat="batcat"
+alias riverconf="nvim ~/.config/river/init"
+alias rc="riverconf"
+alias wayconf='nvim --cmd ":cd ~/.config/waybar"'
+alias wyc="wayconf"
 alias lrepl="lein repl"
-alias jil='jira issue list --plain -a andy.bolton@smartwyre.com -s "In progress" --columns key,summary'
 
 bind \cS 'history-pager'
 
@@ -52,6 +57,14 @@ function addp -a message
     end
 end
 
+function bat 
+    if command -v batcat
+        batcat
+    else
+        eval (command -v bat)
+    end
+end
+
 function starship_transient_prompt_func
     starship module character
 end
@@ -72,10 +85,6 @@ function ops
     eval $(op signin)
 end
 
-function strip_ansi
-    sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2};?)?)?[mGK]//g" $argv[1]
-end
-
 function exercism
     if [ $argv[1] = "download" ]
         set dir (~/bin/exercism $argv) && echo $dir && cd $dir 
@@ -94,6 +103,10 @@ function fsource
     set -gx $item[1] $item[2]
     echo "Exported key $item[1]."
   end
+end
+
+function nwhich 
+    readlink -f (which $argv[1])
 end
 
 if status is-login

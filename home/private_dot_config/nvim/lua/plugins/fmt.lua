@@ -3,7 +3,7 @@ local formatters = require("configs.util").get_formatters()
 local formatter_names = {}
 local filetype_actions = {}
 for _, formatter in pairs(formatters) do
-  if formatter.name and not formatter.use_lsp and not formatter.installed_outside_mason then
+  if formatter.name and not formatter.use_lsp and formatter.autoinstall ~= false then
     table.insert(formatter_names, formatter.name)
   end
   for _, filetype in pairs(formatter.filetypes or {}) do

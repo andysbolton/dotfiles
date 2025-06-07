@@ -5,7 +5,7 @@
 (local formatters-by-ft {})
 
 (each [_ lang (pairs (config_utils.get_configs))]
-  (when lang.formatter
+  (when (and lang.formatter (not (= lang.autoinstall false)))
     (if (or (utils.empty lang.ft) (= #lang.ft 0))
         (vim.notify (.. "No filetypes specified for " lang.name ".")
                     vim.log.levels.WARN)

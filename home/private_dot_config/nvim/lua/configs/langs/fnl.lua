@@ -15,7 +15,7 @@ return {
         }
       end,
     },
-    installed_outside_mason = true,
+    autoinstall = false,
   },
   treesitter = "fennel",
 }
