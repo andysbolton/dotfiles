@@ -9,7 +9,7 @@ if wezterm.config_builder then
 	config = wezterm.config_builder()
 end
 
-{{ if eq .chezmoi.osRelease.id "nixos" }}
+{{ if and (.chezmoi.osRelease) (eq .chezmoi.osRelease.id "nixos") }}
 -- NixOS specific settings
 config.adjust_window_size_when_changing_font_size = false
 config.enable_wayland = false

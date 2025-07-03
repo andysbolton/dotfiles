@@ -3,7 +3,7 @@
 .tool-versions
 {{- end }}
 
-{{- if ne .chezmoi.osRelease.id "debian" }}
+{{- if or (not .chezmoi.osRelease) (ne .chezmoi.osRelease.id "debian") }}
 .chezmoiscripts/debian/**
 {{- end}}
 

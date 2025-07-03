@@ -14,9 +14,9 @@ Komorebic("cross-monitor-move-behaviour insert")
 ; Enable hot reloading of changes to this file
 ; WatchConfiguration("enable")
 
-Komorebic("ensure-named-workspaces 0 I II III IIII Teams Discord Phone")
+Komorebic("ensure-named-workspaces 0 I II III IIII Teams Discord Phone Foobar")
 Komorebic("ensure-named-workspaces 1 I II III Komorebi")
-Komorebic("ensure-named-workspaces 2 I II III")
+; Komorebic("ensure-named-workspaces 2 I II III")
 
 ; Assign layouts to workspaces, possible values: bsp, columns, rows, vertical-stack, horizontal-stack, ultrawide-vertical-stack
 Komorebic("named-workspace-layout I bsp")
@@ -35,6 +35,7 @@ Komorebic("active-window-border enable")
 Komorebic("named-workspace-rule exe ms-teams.exe Teams")
 Komorebic("named-workspace-rule exe Discord.exe Discord")
 Komorebic("named-workspace-rule exe PhoneExperienceHost.exe Phone")
+Komorebic("named-workspace-rule exe foobar2000.exe Foobar")
 
 Komorebic("named-workspace-rule title komorebic.exe Komorebi")
 Komorebic("named-workspace-rule title komorebi-visualizer.exe Komorebi")
@@ -47,8 +48,8 @@ Komorebic("complete-configuration")
 +^j::Komorebic("focus down")
 +^k::Komorebic("focus up")
 +^l::Komorebic("focus right")
-!+[::Komorebic("cycle-focus previous")
-!+]::Komorebic("cycle-focus next")
+; !+[::Komorebic("cycle-focus previous")
+; !+]::Komorebic("cycle-focus next")
 
 ; Move windows
 !^+h::Komorebic("move left")
@@ -62,9 +63,9 @@ Komorebic("complete-configuration")
 !^Right::Komorebic("stack right")
 !^Up::Komorebic("stack up")
 !^Down::Komorebic("stack down")
-!;::Komorebic("unstack")
-![::Komorebic("cycle-stack previous")
-!]::Komorebic("cycle-stack next")
+; !;::Komorebic("unstack")
+; ![::Komorebic("cycle-stack previous")
+; !]::Komorebic("cycle-stack next")
 
 ; Resize
 !=::Komorebic("resize-axis horizontal increase")
@@ -78,6 +79,7 @@ Komorebic("complete-configuration")
 !m::Komorebic("toggle-maximize")
 +^m::Komorebic("minimize")
 !+m::Komorebic("manage")
+!+^m::Komorebic("unmanage")
 
 ; Window manager options
 !+r::Komorebic("retile")
@@ -100,6 +102,7 @@ Komorebic("complete-configuration")
 !^+d::Komorebic("focus-named-workspace Discord")
 !^+t::Komorebic("focus-named-workspace Teams")
 !^+p::Komorebic("focus-named-workspace Phone")
+!^+f::Komorebic("focus-named-workspace Foobar")
 !^+v::Komorebic("focus-named-workspace Komorebi")
 
 ; Move windows across workspaces
