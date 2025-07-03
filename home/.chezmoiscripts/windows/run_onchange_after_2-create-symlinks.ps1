@@ -18,6 +18,7 @@ function New-SymLink($Source, $Target) {
 New-SymLink -Source "~/.config/nvim" -Target "~/AppData/Local/nvim/"
 New-SymLink -Source "~/AppData/Local/nvim-data" -Target "~/.local/share/nvim-data/"
 New-SymLink -Source "~/autohotkey/init.ahk" -Target "~/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/init.ahk"
+New-SymLink -Source "~/.config/lan-mouse" -Target "~/AppData/Local/lan-mouse/"
 
 if (-not (Test-Path "~/Documents/Powershell")) {
     mkdir "~/Documents/Powershell"
