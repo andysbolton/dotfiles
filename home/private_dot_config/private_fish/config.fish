@@ -20,6 +20,7 @@ set -gx BROWSER firefox
 set -gx EDITOR nvim
 set -gx RIPGREP_CONFIG_PATH $HOME/.ripgreprc
 set -gx MANPAGER "sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
+# set -x MANGOHUD 1
 # set -x GOPATH $(go env GOPATH)
 
 alias cm="chezmoi"
@@ -34,6 +35,7 @@ alias rc="riverconf"
 alias wayconf='nvim --cmd ":cd ~/.config/waybar"'
 alias wyc="wayconf"
 alias lrepl="lein repl"
+alias ls="lsd"
 
 bind \cS 'history-pager'
 

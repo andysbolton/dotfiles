@@ -9,10 +9,14 @@
 
 {{- if eq .chezmoi.os "linux" }}
 .chezmoiscripts/windows/**
-.config/komorebi/
+.config/komorebi/**
 .wslconfig
 AppData/
 autohotkey/
 scoop.json
 scoop/
+{{- end }}
+
+{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "nixos") }}
+.config/powershell/**
 {{- end }}
