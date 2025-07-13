@@ -4,6 +4,8 @@ Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
 Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
 
+$env:PATH += ";$(Join-Path (Resolve-Path "~") "lan-mouse-windows")"
+
 function Invoke-Starship-TransientFunction {
     &starship module character
 }
@@ -15,7 +17,6 @@ if (Test-Path "~\.config\komorebi") {
 Invoke-Expression (&starship init powershell)
 
 Enable-TransientPrompt
-
 
 $prompt = ""
 function Invoke-Starship-PreCommand {
