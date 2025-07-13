@@ -9,7 +9,7 @@ if wezterm.config_builder then
 	config = wezterm.config_builder()
 end
 
-{{ if and (.chezmoi.osRelease) (eq .chezmoi.osRelease.id "nixos") }}
+{{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "nixos") }}
 -- NixOS specific settings
 config.adjust_window_size_when_changing_font_size = false
 config.enable_wayland = false
@@ -22,9 +22,14 @@ config.front_end = "WebGPU"
 config.front_end = "OpenGL"
 {{ end }}
 
+{{ if (eq .chezmoi.os "linux") }}
+config.default_prog = { "fish" }
+{{ elseif (eq .chezmoi.os "windows") }}
+config.default_prog = { "pwsh" }
+{{ end }}
+
 config.color_scheme = "TokyoNight (Gogh)"
 config.font = wezterm.font("CaskaydiaCove Nerd Font")
-config.default_prog = { "fish" }
 config.font_size = 13
 config.line_height = 1.1
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
