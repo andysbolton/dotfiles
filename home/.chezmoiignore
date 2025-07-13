@@ -3,7 +3,7 @@
 .tool-versions
 {{- end }}
 
-{{- if and (eq .chezmoi.os "linux") (ne .chezmoi.osRelease.id "debian") }}
+{{- if or (eq .chezmoi.os "windows") (and (eq .chezmoi.os "linux") (ne .chezmoi.osRelease.id "debian")) }}
 .chezmoiscripts/debian/**
 {{- end}}
 

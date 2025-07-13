@@ -9,24 +9,24 @@ if wezterm.config_builder then
 	config = wezterm.config_builder()
 end
 
-{{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "nixos") }}
+{{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "nixos") -}}
 -- NixOS specific settings
 config.adjust_window_size_when_changing_font_size = false
 config.enable_wayland = false
-{{ end }}
+{{ end -}}
 
-{{- if eq .chezmoi.hostname "work" -}}
--- My thinkpad at work has issues unless using WebGPU
-config.front_end = "WebGPU"
-{{ else }}
+{{ if eq .chezmoi.hostname "work" -}}
+-- My thinkpad at work has issues unless using WebGpu
+config.front_end = "WebGpu"
+{{ else -}}
 config.front_end = "OpenGL"
-{{ end }}
+{{ end -}}
 
-{{ if (eq .chezmoi.os "linux") }}
+{{ if (eq .chezmoi.os "linux") -}}
 config.default_prog = { "fish" }
-{{ elseif (eq .chezmoi.os "windows") }}
+{{ else if (eq .chezmoi.os "windows") -}}
 config.default_prog = { "pwsh" }
-{{ end }}
+{{ end -}}
 
 config.color_scheme = "TokyoNight (Gogh)"
 config.font = wezterm.font("CaskaydiaCove Nerd Font")

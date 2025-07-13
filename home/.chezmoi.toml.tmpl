@@ -1,8 +1,13 @@
 {{- $email := promptStringOnce . "email" "Email address" -}}
+{{- $lanMouseHost := promptStringOnce . "lanMouse.hostname" "Hostname to connect to with lan-mouse" -}}
+{{- $lanMouseDirection := promptStringOnce . "lanMouse.direction" "Direction for lan-mouse" -}}
 
 [data]
     email = {{ $email | quote }}
     name = "Andy Bolton"
+[data.lanMouse]
+    host = {{ $lanMouseHost | quote }}
+    direction = {{ $lanMouseDirection | quote }}
 
 [edit]
     command = "nvim"

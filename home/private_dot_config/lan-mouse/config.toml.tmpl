@@ -1,13 +1,10 @@
-{{ $host := promptOnceString "Enter the hostname for the right side:" -}}
-{{ $direction := promptOnceString "Enter the direction:" -}}
-
 release_bind = [ "KeyA", "KeyS", "KeyD", "KeyF" ]
 
 port = 4242
 frontend = "cli"
 
-[{{ $direction }}]
-hostname = {{ $host | quote }}
+[{{ .chezmoi.config.data.lanMouse.direction }}]
+hostname = {{ .chezmoi.config.data.lanMouse.host | quote }}
 activate_on_startup = true
 ips = []
 
