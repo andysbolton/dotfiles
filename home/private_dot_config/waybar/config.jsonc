@@ -1,0 +1,292 @@
+[
+  {
+    "layer": "top",
+    "modules-left": ["river/tags", "river/window"],
+    "modules-center": ["systemd-failed-units", "clock"],
+    "modules-right": [
+      "pulseaudio",
+      "pulseaudio/slider",
+      "disk",
+      "memory",
+      "cpu",
+      "temperature",
+      "custom/gpu-utilization",
+      "custom/gpu-temperature",
+    ],
+    "clock": {
+      "interval": 1,
+      "format": "{:%A, %B %d | %I:%M:%S %Z}",
+      "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    },
+    "river/window": {
+      "max-length": 70,
+    },
+    "river/tags": {
+      "num-tags": 10,
+      "hide-vacant": true,
+    },
+    "disk": {
+      "format": " {used} / {total}",
+    },
+    "cpu": {
+      "format": " {usage} %",
+      "tooltip": false,
+      "interval": 1,
+    },
+    "memory": {
+      "format": " {used:0.1f}G / {total:0.1f}G",
+      "interval": 1,
+    },
+    "temperature": {
+      "hwmon-path": "/sys/devices/platform/nct6687.2592/hwmon/hwmon3/temp1_input",
+      "interval": 1,
+      "critical-threshold": 80,
+      "format": " {icon} {temperatureC}°C",
+      "format-icons": ["", "", "", ""],
+    },
+    "custom/gpu-utilization": {
+      "exec": "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader",
+      "format": "⚙ {}",
+      "interval": 1,
+    },
+    "custom/gpu-temperature": {
+      "exec": "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader",
+      "format": "⚙{icon} {}°C",
+      "interval": 1,
+      "critical-threshold": 80,
+      "format-icons": ["", "", "", ""],
+    },
+    "pulseaudio": {
+      "scroll-step": 1,
+      "format": "{icon} {volume}%{format_source}",
+      "format-bluetooth": "{icon} {volume}%{format_source}",
+      "format-bluetooth-muted": " {icon}{format_source}",
+      "format-muted": " {format_source}",
+      "format-source": "  {volume}%",
+      "format-source-muted": " ",
+      "format-icons": {
+        "headphone": "",
+        "phone": "",
+        "portable": "",
+        "car": "",
+        "default": ["", "", ""],
+      },
+      "on-click": "pavucontrol",
+    },
+    "pulseaudio/slider": {
+      "min": 0,
+      "max": 100,
+      "orientation": "horizontal",
+    },
+  },
+]
+// {
+//   "name": "bottombar",
+//   "layer": "top",
+//   "position": "bottom",
+//   "height": 30,
+//   "modules-left": ["tray"],
+//   "modules-center": ["wlr/taskbar"],
+//   "modules-right": ["sway/workspaces", "sway/mode"],
+//   "tray": {
+//     "icon-size": 13,
+//     "spacing": 10,
+//   },
+//   "wlr/taskbar": {
+//     "format": "{icon} {name}",
+//     "icon-size": 13,
+//     "tooltip": false,
+//     "on-click": "activate",
+//     "on-click-right": "close",
+//     "app_ids-mapping": {
+//       "gnome-terminal-server": "org.gnome.Terminal",
+//     },
+//   },
+//   "sway/mode": {
+//     "format": "<span style=\"italic\">{}</span>",
+//   },
+// },
+// {
+//     "name": "topbar",
+//     "layer": "top",
+//     "position": "top",
+//     "height": 30,
+//     "modules-left": [
+//         // "power-profiles-daemon",
+//         // "battery#bat1",
+//         // "battery#bat2",
+//         "disk",
+//         "memory",
+//         "cpu",
+//         "temperature",
+//         "pulseaudio",
+//         "backlight",
+//         "idle_inhibitor"
+//     ],
+//     "modules-center": ["river/tags", "river/window"],
+//     "modules-right": [
+//         "network#vpn",
+//         "network#wifi",
+//         "network#ethernet",
+//         "network#disconnected",
+//         "custom/mail",
+//         "custom/weather",
+//         "clock",
+//         "custom/poweroff"
+//     ],
+//     "sway/window": {
+//         "format": "{} ",
+//         "on-click": "swaymsg kill"
+//     },
+//     "idle_inhibitor": {
+//         "format": "{icon}",
+//         "format-icons": {
+//             "activated": "",
+//             "deactivated": ""
+//         }
+//     },
+//     "clock": {
+//         "interval": 1,
+//         "format": "<b>{:%H:%M:%S}</b>",
+//         "format-alt": "{:%Y-%m-%d}",
+//         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+//     },
+//     "cpu": {
+//         "format": " {usage}%",
+//         "tooltip": false
+//     },
+//     "disk": {
+//         "format": " {}%",
+//         "tooltip-format": "{used} / {total} used"
+//     },
+//     "memory": {
+//         "format": " {}%",
+//         "tooltip-format": "{used:0.1f}G / {total:0.1f}G used"
+//     },
+//     "temperature": {
+//         "critical-threshold": 80,
+//         "format": "{icon} {temperatureC}°C",
+//         "format-icons": ["", "", "", "", ""]
+//     },
+//     "backlight": {
+//         "device": "intel_backlight",
+//         "interval": 1,
+//         "on-scroll-down": "brightlight -pd 1",
+//         "on-scroll-up": "brightlight -pi 1",
+//         "format": "{icon} {percent}%",
+//         "format-icons": ["", ""],
+//         "on-click": "wdisplays"
+//     },
+//     "battery#bat1": {
+//         "bat": "BAT0",
+//         "adapter": "AC",
+//         "interval": 10,
+//         "full-at": 99,
+//         "states": {
+//             "full": 100,
+//             "good": 99,
+//             "empty": 5
+//         },
+//         "format": "{icon} {capacity}%",
+//         "format-charging": " {capacity}%",
+//         "format-plugged": " {capacity}%",
+//         "format-empty": "",
+//         "format-full": "",
+//         "format-icons": ["", "", "", "", ""]
+//     },
+//     "battery#bat2": {
+//         "bat": "BAT1",
+//         "adapter": "AC",
+//         "interval": 10,
+//         "states": {
+//             "full": 100,
+//             "good": 99,
+//             "critical": 15
+//         },
+//         "format": "{icon} {capacity}%",
+//         "format-charging": " {capacity}%",
+//         "format-plugged": " {capacity}%",
+//         "format-full": "",
+//         "format-icons": ["", "", "", "", ""]
+//     },
+//     "network#disconnected": {
+//         "tooltip-format": "No connection!",
+//         "format-ethernet": "",
+//         "format-wifi": "",
+//         "format-linked": "",
+//         "format-disconnected": "",
+//         "on-click": "nm-connection-editor"
+//     },
+//     "network#ethernet": {
+//         "interface": "enp*",
+//         "format-ethernet": "",
+//         "format-wifi": "",
+//         "format-linked": "",
+//         "format-disconnected": "",
+//         "tooltip-format": "{ifname}: {ipaddr}/{cidr}",
+//         "on-click": "nm-connection-editor"
+//     },
+//     "network#wifi": {
+//         "interface": "wlp*",
+//         "format-ethernet": "",
+//         "format-wifi": " {essid} ({signalStrength}%)",
+//         "format-linked": "",
+//         "format-disconnected": "",
+//         "tooltip-format": "{ifname}: {ipaddr}/{cidr}",
+//         "on-click": "nm-connection-editor"
+//     },
+//     "network#vpn": {
+//         "interface": "tun0",
+//         "format": "",
+//         "format-disconnected": "",
+//         "tooltip-format": "{ifname}: {ipaddr}/{cidr}",
+//         "on-click": "nm-connection-editor"
+//     },
+//     "pulseaudio": {
+//         "scroll-step": 1,
+//         "format": "{icon} {volume}%{format_source}",
+//         "format-bluetooth": "{icon} {volume}%{format_source}",
+//         "format-bluetooth-muted": " {icon}{format_source}",
+//         "format-muted": " {format_source}",
+//         "format-source": "  {volume}%",
+//         "format-source-muted": " ",
+//         "format-icons": {
+//             "headphone": "",
+//             "phone": "",
+//             "portable": "",
+//             "car": "",
+//             "default": ["", "", ""]
+//         },
+//         "on-click": "pavucontrol"
+//     },
+//     "power-profiles-daemon": {
+//         "format": "{icon}",
+//         "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+//         "tooltip": true,
+//         "format-icons": {
+//             "default": "",
+//             "performance": "",
+//             "balanced": "",
+//             "power-saver": ""
+//         },
+//     },
+//     "custom/weather": {
+//         "return-type": "json",
+//         "exec": "sh $HOME/.config/waybar/scripts/weather.sh",
+//         "interval": 300,
+//         "on-click": "firefox https://wttr.in"
+//     },
+//     "custom/poweroff": {
+//         "tooltip": false,
+//         "format": "",
+//         "on-click": "bash $HOME/.config/waybar/scripts/poweroff.sh"
+//     },
+//     "custom/mail": {
+//         "tooltip": false,
+//         "exec": "sh $HOME/.config/waybar/scripts/mail.sh",
+//         "interval": 120,
+//         "on-click": "thunderbird && swaymsg '[app_id=thunderbird] focus'"
+//     }
+
+
+// }
