@@ -12,7 +12,7 @@ local function get_configs() return require "configs" end
 local function get_language_servers()
   if utils.empty(language_servers) then
     for _, lang in pairs(get_configs()) do
-      if lang.ls then language_servers[lang.ls.name] = lang.ls.settings end
+      if lang.ls then language_servers[lang.ls.name] = lang.ls end
     end
   end
 

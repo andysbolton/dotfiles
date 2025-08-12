@@ -1,78 +1,20 @@
-local md_namespace = vim.api.nvim_create_namespace "lsp_float"
-
---- LSP handler that adds extra inline highlights, keymaps, and window options.
---- Code inspired from `noice`.
----@param handler fun(err: any, result: any, ctx: any, config: any): integer?, integer?
----@param title string
----@return fun(err: any, result: any, ctx: any, config: any)
-local function enhanced_float_handler(handler, title)
-  return function(err, result, ctx, config)
-    local bufnr, winnr = handler(
-      err,
-      result,
-      ctx,
-      vim.tbl_deep_extend("force", config or {}, {
-        border = "double",
-        title = title,
-        max_height = math.floor(vim.o.lines * 0.5),
-        max_width = math.floor(vim.o.columns * 0.4),
-      })
-    )
-
-    if not bufnr or not winnr then return end
-
-    -- Conceal everything.
-    vim.wo[winnr].concealcursor = "n"
-
-    -- Extra highlights.
-    for l, line in ipairs(vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)) do
-      for pattern, hl_group in pairs {
-        ["|%S-|"] = "@text.reference",
-        ["@%S+"] = "@parameter",
-        ["^%s*(Parameters:)"] = "@text.title",
-        ["^%s*(Return:)"] = "@text.title",
-        ["^%s*(See also:)"] = "@text.title",
-        ["{%S-}"] = "@parameter",
-      } do
-        local from = 1 ---@type integer?
-        while from do
-          local to
-          from, to = line:find(pattern, from)
-          if from then
-            vim.api.nvim_buf_set_extmark(bufnr, md_namespace, l - 1, from - 1, {
-              end_col = to,
-              hl_group = hl_group,
-            })
-          end
-          from = to and to + 1 or nil
-        end
-      end
-    end
-
-    -- Add keymaps for opening links.
-    if not vim.b[bufnr].markdown_keys then
-      vim.keymap.set("n", "K", function()
-        -- Vim help links.
-        local url = (vim.fn.expand "<cWORD>" --[[@as string]]):match "|(%S-)|"
-        if url then return vim.cmd.help(url) end
-
-        -- Markdown links.
-        local col = vim.api.nvim_win_get_cursor(0)[2] + 1
-        local from, to
-        from, to, url = vim.api.nvim_get_current_line():find "%[.-%]%((%S-)%)"
-        if from and col >= from and col <= to then
-          -- TODO: This isn't working if there are pound signs in the URL as they get expanded.
-          vim.cmd("silent !open " .. url)
-        end
-      end, { buffer = bufnr, silent = true })
-      vim.b[bufnr].markdown_keys = true
-    end
-  end
+local hover = vim.lsp.buf.hover
+---@diagnostic disable-next-line: duplicate-set-field
+vim.lsp.buf.hover = function()
+  return hover {
+    max_height = math.floor(vim.o.lines * 0.5),
+    max_width = math.floor(vim.o.columns * 0.4),
+  }
 end
 
-vim.lsp.handlers["textDocument/hover"] = enhanced_float_handler(vim.lsp.handlers.hover, "textDocument/hover")
-vim.lsp.handlers["textDocument/signatureHelp"] =
-  enhanced_float_handler(vim.lsp.handlers.signature_help, "textDocument/signatureHelp")
+local signature_help = vim.lsp.buf.signature_help
+---@diagnostic disable-next-line: duplicate-set-field
+vim.lsp.buf.signature_help = function()
+  return signature_help {
+    max_height = math.floor(vim.o.lines * 0.5),
+    max_width = math.floor(vim.o.columns * 0.4),
+  }
+end
 
 return {
   {
@@ -114,7 +56,7 @@ return {
                   -- This has a dependency on mkfifo at the moment,
                   -- so it can't be used on Windows.
                   require("fzf-lua").lsp_code_actions {
-                    winopts = {
+                    winoonts = {
                       relative = "cursor",
                       width = 0.6,
                       height = 0.6,
@@ -126,10 +68,6 @@ return {
               end, { buffer = bufnr, desc = "[C]ode [A]ction" })
 
               require("cmds.lsp").setup_codeactions(bufnr)
-            end
-
-            if client.supports_method "textDocument/formatting" then
-              nmap("<leader>cf", vim.lsp.buf.format, "[C]ode [f]ormat")
             end
 
             if client.supports_method "textDocument/signatureHelp" then
@@ -175,64 +113,30 @@ return {
           local mason_lspconfig = require "mason-lspconfig"
           local language_servers = require("configs.util").get_language_servers()
 
-          local language_servers_to_install = vim.tbl_keys(language_servers)
+          local language_servers_to_install = {}
+
+          for _, ls in pairs(language_servers) do
+            if ls.auto_install ~= false then
+              table.insert(language_servers_to_install, ls.name)
+            else
+              vim.lsp.enable(ls.name)
+              vim.lsp.config(ls.name, {
+                settings = {
+                  [ls.name] = ls.settings,
+                },
+              })
+            end
+          end
+
           -- table.insert(language_servers_to_install, "efm")
           mason_lspconfig.setup {
             ensure_installed = language_servers_to_install,
           }
 
-          -- This method has been deprecated for nvim 0.11.
-          -- mason_lspconfig.setup_handlers {
-          --   function(server_name)
-          --     if server_name ~= "efm" then
-          --       require("lspconfig")[server_name].setup {
-          --         capabilities = capabilities,
-          --         on_attach = on_attach,
-          --         settings = language_servers[server_name],
-          --       }
-          --     else
-          --       require("lspconfig").efm.setup {
-          --         capabilities = capabilities,
-          --         on_attach = on_attach,
-          --         filetypes = { "teal" },
-          --         root_dir = require("lspconfig.util").root_pattern "tlconfig.lua",
-          --         settings = {
-          --           languages = {
-          --             teal = {
-          --               {
-          --                 lintStdin = true,
-          --                 lintIgnoreExitCode = true,
-          --                 -- the sed command will transform the output from:
-          --                 --   2 warnings:
-          --                 --   teal/init.tl:1:1: unused function add: function(number): number
-          --                 --   teal/init.tl:2:1: unused function add2: function(number): number
-          --                 --   ========================================
-          --                 --   3 errors:
-          --                 --   teal/init.tl:4:1: unknown variable: vim
-          --                 --   teal/init.tl:5:1: unknown variable: vim
-          --                 --   teal/init.tl:7:1: unknown variable: vim
-          --                 -- to:
-          --                 --   2 warnings:
-          --                 --   w: teal/init.tl:1:1: unused function add: function(number): number
-          --                 --   w: teal/init.tl:2:1: unused function add2: function(number): number
-          --                 --   ========================================
-          --                 --   13 errors:
-          --                 --   e: teal/init.tl:4:1: unknown variable: vim
-          --                 --   e: teal/init.tl:5:1: unknown variable: vim
-          --                 --   e: teal/init.tl:7:1: unknown variable: vim
-          --                 -- lintCommand = "tl check ${INPUT} 2>&1 | sed -r '/warning/,/=/ { /warning/b; /=/b; s/^/w: / }; /error/,/$p/ { /error/b; /$p/b; s/^/e: / }'",
-          --                 lintCommand = [[tl check ${INPUT} 2>&1 | sed -r '/warning/,/=/ { s|^|w: | }; /error/,/$p/ { s|^|e: | }']],
-          --                 lintFormats = {
-          --                   "%t: %f:%l:%c: %m",
-          --                 },
-          --               },
-          --             },
-          --           },
-          --         },
-          --       }
-          --     end
-          --   end,
-          -- }
+          vim.lsp.config("*", {
+            capabilities = capabilities,
+            on_attach = on_attach,
+          })
 
           if vim.fn.has "win32" == 1 then
             local ahk2_config = {

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-riverctl map normal Alt Return spawn wezterm
+riverctl map normal Super Return spawn wezterm
 riverctl map normal Alt+Shift F spawn firefox
 riverctl map normal Super T spawn "rofi -show run"
 
@@ -192,4 +192,4 @@ riverctl spawn blueman-applet
 riverctl spawn blueman-manager
 riverctl spawn discord
 riverctl spawn steam
-riverctl spawn firefox 
+riverctl spawn firefox

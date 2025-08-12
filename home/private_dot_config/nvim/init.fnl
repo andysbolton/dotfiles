@@ -5,6 +5,7 @@
 (set vim.g.mapleader " ")
 (set vim.g.maplocalleader " ")
 (set vim.g.copilot_no_tab_map true)
+(set vim.o.winborder "rounded")
 (vim.api.nvim_set_keymap "i" "<C-J>" "copilot#Accept(\"<CR>\")"
                          {:silent true :expr true})
 

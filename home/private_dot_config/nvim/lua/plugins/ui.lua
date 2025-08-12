@@ -140,12 +140,6 @@ return {
     end,
   },
 
-  -- Would be nice if this supported ANSI escape sequences.
-  -- {
-  --   "norcalli/nvim-colorizer.lua",
-  --   config = true,
-  -- },
-
   -- {
   --   "folke/noice.nvim",
   --   event = "VeryLazy",

@@ -23,7 +23,7 @@
 [merge]
     command = "nvim"
     args = [
-        "-d",
+        "-d", 
         {{ printf "%q" "{{ .Destination }}" }},
         {{ printf "%q" "{{ .Source }}" }},
         {{ printf "%q" "{{ .Target }}" }}
