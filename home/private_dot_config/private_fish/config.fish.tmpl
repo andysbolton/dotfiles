@@ -88,6 +88,12 @@ function ops
     eval $(op signin)
 end
 
+{{- if eq .chezmoi.osRelease.id "nixos" }}
+function nix-which
+    readlink -f (which $argv[1])
+end
+{{ end -}}
+
 function exercism
     if [ $argv[1] = "download" ]
         set dir (~/bin/exercism $argv) && echo $dir && cd $dir 
