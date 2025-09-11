@@ -4,6 +4,11 @@ local util = require "utils"
 
 vim.fn.sign_define("light_bulb_sign", { text = "💡", texthl = "LspDiagnosticsDefaultInformation" })
 
+vim.diagnostic.config {
+  virtual_text = true,
+  virtual_lines = false,
+}
+
 M.setup_codeactions = function(bufnr)
   local ns_id = vim.api.nvim_create_namespace("code_actions_virtual_text_" .. bufnr)
   local lsp_util = vim.lsp.util
@@ -13,7 +18,7 @@ M.setup_codeactions = function(bufnr)
   local mark_id = 0
   vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
     callback = function()
-      local params = lsp_util.make_range_params()
+      local params = lsp_util.make_range_params(0, "utf-8")
       params.context = { diagnostics = vim.lsp.diagnostic.get_line_diagnostics() }
 
       vim.lsp.buf_request_all(bufnr, "textDocument/codeAction", params, function(result)
@@ -25,11 +30,12 @@ M.setup_codeactions = function(bufnr)
           local line_num = line - 1
           local col_num = 0
 
-          local text = " " .. #result[1].result .. " code " .. (#result[1].result > 1 and "actions" or "action")
+          -- local text = " " .. #result[1].result .. " code " .. (#result[1].result > 1 and "actions" or "action")
+          local text = tostring(#result[1].result)
 
           local opts = {
             virt_text = { { text, "DiagnosticInfo" } },
-            virt_text_pos = "right_align",
+            virt_text_pos = "overlay",
           }
 
           mark_id = vim.api.nvim_buf_set_extmark(bufnr, ns_id, line_num, col_num, opts)

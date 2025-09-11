@@ -94,6 +94,13 @@ return {
                 return signs[vim.diagnostic.severity[diagnostic.severity]:upper()] .. diagnostic.message
               end,
             },
+            -- Is this doing anything?
+            virtual_lines = {
+              prefix = "",
+              format = function(diagnostic)
+                return signs[vim.diagnostic.severity[diagnostic.severity]:upper()] .. diagnostic.message
+              end,
+            },
             float = {
               border = "rounded",
               source = "if_many",
@@ -116,16 +123,11 @@ return {
           local language_servers_to_install = {}
 
           for _, ls in pairs(language_servers) do
-            if ls.auto_install ~= false then
-              table.insert(language_servers_to_install, ls.name)
-            else
-              vim.lsp.enable(ls.name)
-              vim.lsp.config(ls.name, {
-                settings = {
-                  [ls.name] = ls.settings,
-                },
-              })
-            end
+            vim.lsp.enable(ls.name)
+            vim.lsp.config(ls.name, {
+              settings = ls.settings,
+            })
+            if ls.auto_install ~= false then table.insert(language_servers_to_install, ls.name) end
           end
 
           -- table.insert(language_servers_to_install, "efm")

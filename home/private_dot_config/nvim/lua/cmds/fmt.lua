@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/cmds/fmt.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] fnl/cmds/fmt.fnl
 local M = {}
 local config_utils = require("configs.util")
 local utils = require("utils")

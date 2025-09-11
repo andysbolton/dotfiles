@@ -1,7 +1,9 @@
 #!/bin/sh
 
+layout_generator=rivertile
+
 riverctl map normal Super Return spawn wezterm
-riverctl map normal Alt+Shift F spawn firefox
+riverctl map normal Alt+Shift F spawn "firefox"
 riverctl map normal Super T spawn "rofi -show run"
 
 # Close window
@@ -24,8 +26,13 @@ riverctl map normal Control+Shift L focus-view right
 
 # Control+Shift+J and Control+Shift+K to swap the focused view with the next/previous
 # view in the layout stack
-# riverctl map normal Control+Shift J swap next
-# riverctl map normal Control+Shift K swap previous
+riverctl map normal Control+Shift bracketright swap next
+riverctl map normal Control+Shift bracketleft swap previous
+
+riverctl map normal Control+Shift+Alt K swap up
+riverctl map normal Control+Shift+Alt J swap down
+riverctl map normal Control+Shift+Alt H swap left
+riverctl map normal Control+Shift+Alt L swap right
 
 # Control+Period and Control+Comma to focus the next/previous output
 riverctl map normal Control Period focus-output next
@@ -38,12 +45,12 @@ riverctl map normal Control+Shift Comma send-to-output previous
 # Control+Return to bump the focused view to the top of the layout stack
 riverctl map normal Control Return zoom
 
-riverctl map normal Control+Shift MINUS send-layout-cmd rivertile "main-ratio -0.05"
-riverctl map normal Control+Shift EQUAL send-layout-cmd rivertile "main-ratio +0.05"
+riverctl map normal Control+Shift MINUS send-layout-cmd "$layout_generator" "main-ratio -0.05"
+riverctl map normal Control+Shift EQUAL send-layout-cmd "$layout_generator" "main-ratio +0.05"
 
 # Control+Shift+H and Control+Shift+L to increment/decrement the main count of rivertile(1)
-# riverctl map normal Control+Shift H send-layout-cmd rivertile "main-count +1"
-# riverctl map normal Control+Shift L send-layout-cmd rivertile "main-count -1"
+# riverctl map normal Control+Shift H send-layout-cmd "$layout_generator" "main-count +1"
+# riverctl map normal Control+Shift L send-layout-cmd "$layout_generator" "main-count -1"
 
 # Control+Alt+{H,J,K,L} to move views
 riverctl map normal Control+Alt H move left 100
@@ -58,10 +65,10 @@ riverctl map normal Super+Alt+Control K snap up
 riverctl map normal Super+Alt+Control L snap right
 
 # Super+Alt+Shift+{H,J,K,L} to resize views
-riverctl map normal Super+Alt+Shift H resize horizontal -100
+riverctl map normal Super+Alt+Shift H resize horizontal 100
 riverctl map normal Super+Alt+Shift J resize vertical 100
-riverctl map normal Super+Alt+Shift K resize vertical -100
-riverctl map normal Super+Alt+Shift L resize horizontal 100
+riverctl map normal Super+Alt+Shift K resize vertical 100
+riverctl map normal Super+Alt+Shift L resize horizontal -100
 
 # Super + Left Mouse Button to move views
 riverctl map-pointer normal Super BTN_LEFT move-view
@@ -100,9 +107,9 @@ games_tag=$((1 << 7))
 riverctl rule-add -app-id "*steam*" tags $games_tag
 riverctl map normal Super G set-focused-tags $games_tag
 
-web_browser_tag=$((1 << 1))
-riverctl rule-add -app-id "*firefox*" tags $web_browser_tag
-riverctl map normal Super W set-focused-tags $web_browser_tag
+# web_browser_tag=$((1 << 1))
+# riverctl rule-add -app-id "*firefox*" tags $web_browser_tag
+# riverctl map normal Super W set-focused-tags $web_browser_tag
 
 # Super+0 to focus all tags
 # Super+Shift+0 to tag focused view with all tags
@@ -117,10 +124,10 @@ riverctl map normal Super Space toggle-float
 riverctl map normal Super F toggle-fullscreen
 
 # Super+{Up,Right,Down,Left} to change layout orientation
-riverctl map normal Super Up send-layout-cmd rivertile "main-location top"
-riverctl map normal Super Right send-layout-cmd rivertile "main-location right"
-riverctl map normal Super Down send-layout-cmd rivertile "main-location bottom"
-riverctl map normal Super Left send-layout-cmd rivertile "main-location left"
+riverctl map normal Super Up send-layout-cmd "$layout_generator" "main-location top"
+riverctl map normal Super Right send-layout-cmd "$layout_generator" "main-location right"
+riverctl map normal Super Down send-layout-cmd "$layout_generator" "main-location bottom"
+riverctl map normal Super Left send-layout-cmd "$layout_generator" "main-location left"
 
 # Declare a passthrough mode. This mode has only a single mapping to return to
 # normal mode. This makes it useful for testing a nested wayland compositor
@@ -158,6 +165,7 @@ done
 riverctl background-color 0x002b36
 riverctl border-color-focused 0x93a1a1
 riverctl border-color-unfocused 0x586e75
+riverctl border-width 3
 
 # Set keyboard repeat rate
 riverctl set-repeat 50 300
@@ -170,8 +178,8 @@ riverctl rule-add -app-id "bar" csd
 
 # Set the default layout generator to be rivertile and start it.
 # River will send the process group of the init executable SIGTERM on exit.
-riverctl default-layout rivertile
-rivertile -view-padding 6 -outer-padding 6 &
+riverctl default-layout "$layout_generator"
+$layout_generator -view-padding 6 -outer-padding 6 &
 
 riverctl spawn waybar
 riverctl spawn "dunst --startup_notification"
@@ -192,4 +200,5 @@ riverctl spawn blueman-applet
 riverctl spawn blueman-manager
 riverctl spawn discord
 riverctl spawn steam
+riverctl spawn lxqt-policykit-agent
 riverctl spawn firefox

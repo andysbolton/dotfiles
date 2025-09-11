@@ -24,15 +24,41 @@ return {
         filetypes = {
           yaml = true,
         },
-        {
-          enabled = true,
-          auto_start = true,
-        },
       }
     end,
   },
+  -- {
+  --   "zbirenbaum/copilot-cmp",
+  --   config = function() require("copilot_cmp").setup() end,
+  -- },
+  -- {
+  --   "CopilotC-Nvim/CopilotChat.nvim",
+  --   dependencies = {
+  --     { "nvim-lua/plenary.nvim", branch = "master" },
+  --   },
+  --   build = "make tiktoken",
+  --   opts = {
+  --     -- See Configuration section for options
+  --   },
+  -- },
   {
-    "zbirenbaum/copilot-cmp",
-    config = function() require("copilot_cmp").setup() end,
+    "olimorris/codecompanion.nvim",
+    opts = {},
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = function()
+      require("codecompanion").setup {
+        -- strategies = {
+        --   chat = {
+        --     adapter = "anthropic",
+        --   },
+        --   inline = {
+        --     adapter = "anthropic",
+        --   },
+        -- },
+      }
+    end,
   },
 }

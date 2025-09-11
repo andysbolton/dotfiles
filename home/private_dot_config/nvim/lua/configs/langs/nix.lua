@@ -6,9 +6,9 @@ return {
     settings = {},
   },
   formatter = {
-    name = "nixpkgs-fmt",
+    name = "nixfmt",
     actions = {
-      function() return require("formatter.filetypes.nix").nixpkgs_fmt() end,
+      function() return require("formatter.filetypes.nix").nixfmt() end,
     },
   },
   treesitter = "nix",
