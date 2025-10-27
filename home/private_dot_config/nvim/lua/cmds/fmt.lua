@@ -29,22 +29,22 @@ local function get_file_name(path)
   end
   return matches[#matches]
 end
+local function buf_write_post_callback(ev)
+  local formatter = formatters_by_ft[vim.bo.filetype]
+  if formatter then
+    if formatter.use_lsp then
+      vim.lsp.buf.format()
+    else
+      vim.cmd("FormatWrite")
+    end
+    vim.notify(("Formatted " .. get_file_name(ev.file) .. " with " .. (formatter.name or "[couldn't find formatter name]") .. ((formatter.use_lsp and " (LSP)") or "") .. " (buf " .. ev.buf .. ")."))
+    return nil
+  else
+    return nil
+  end
+end
 M.register_formatters = function()
   local group = vim.api.nvim_create_augroup("formatting-group", {clear = true})
-  local function _5_(ev)
-    local formatter = formatters_by_ft[vim.bo.filetype]
-    if formatter then
-      if formatter.use_lsp then
-        vim.lsp.buf.format()
-      else
-        vim.cmd("FormatWrite")
-      end
-      vim.notify(("Formatted " .. get_file_name(ev.file) .. " with " .. (formatter.name or "[couldn't find formatter name]") .. ((formatter.use_lsp and " (LSP)") or "") .. " (buf " .. ev.buf .. ")."))
-      return nil
-    else
-      return nil
-    end
-  end
-  return vim.api.nvim_create_autocmd("BufWritePost", {group = group, callback = _5_})
+  return vim.api.nvim_create_autocmd("BufWritePost", {group = group, callback = buf_write_post_callback})
 end
 return M

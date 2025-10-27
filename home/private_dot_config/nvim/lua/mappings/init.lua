@@ -1,61 +1,38 @@
-vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
-
--- Remap for dealing with word wrap
-vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-
--- Move lines up/down
-vim.keymap.set("n", "<A-Down>", ":m .+1<CR>==", { silent = true, desc = "Move line down" })
-vim.keymap.set("n", "<A-Up>", ":m .-2<CR>==", { silent = true, desc = "Move line up" })
-vim.keymap.set("i", "<A-Down>", "<Esc>:m .+1<CR>==gi", { silent = true, desc = "Move line down" })
-vim.keymap.set("i", "<A-Up>", "<Esc>:m .-2<CR>==gi", { silent = true, desc = "Move line up" })
-vim.keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv", { silent = true, desc = "Move line down" })
-vim.keymap.set("v", "<A-Up>", ":m '<-2<CR>gv=gv", { silent = true, desc = "Move line up" })
-
--- Insert newlines without entering insert mode
-vim.keymap.set("n", "<leader>o", "o<Esc>k", { silent = true })
-vim.keymap.set("n", "<leader>O", "O<Esc>j", { silent = true })
-
--- Delete to black hole register
-vim.keymap.set({ "n", "v" }, "<leader>dd", '"_dd<Esc>', { silent = true })
-vim.keymap.set({ "v" }, "<leader>d", '"_d<Esc>', { silent = true })
-vim.keymap.set({ "n" }, "<leader>x", '"_x<Esc>', { silent = true })
-
--- Source current file
--- vim.keymap.set("n", "<leader>xx", ":source %<cr>", { silent = true, desc = "Source current file" })
-
--- Workaround to write and close all buffers when one or more is a terminal
--- https://github.com/neovim/neovim/issues/14061
-vim.keymap.set(
-  "n",
-  "<leader>xa",
-  ":wa | qa<cr>",
-  { silent = true, desc = "Write and close all buffers while terminal open" }
-)
-vim.keymap.set("n", "<leader>w", ":w<cr>", { silent = true, desc = "[W]rite" })
-vim.keymap.set("n", "<leader>wa", ":wa<cr>", { silent = true, desc = "[W]rite [A]ll" })
-
-vim.keymap.set("n", "<C-a>", ":normal gg0vG$<cr>", { desc = "Select all text" })
-
--- Diagnostic keymaps
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" })
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
-vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
-
--- Copy current buffer name
-vim.keymap.set("n", "<leader>c", ":let @+=expand('%')<cr>", { silent = true, desc = "[C]opy current buffer name" })
-
--- Copilot
-vim.keymap.set("i", "<C-L>", "<Plug>(copilot-accept-word)")
-
--- Fugitive
-vim.keymap.set("n", "<leader>gs", ":Git<CR>")
-vim.keymap.set("n", "<leader>gd", ":Gdiffsplit<CR>")
-vim.keymap.set("n", "<leader>gc", ":Git commit<CR>")
-vim.keymap.set("n", "<leader>gb", ":Git blame<CR>")
-vim.keymap.set("n", "<leader>gm", ":Git mergetool<CR>")
-
--- Improve diff experience (move me)
-vim.opt.diffopt:append "algorithm:patience"
-vim.opt.diffopt:append "indent-heuristic"
+-- [nfnl] fnl/mappings/init.fnl
+local km_set = vim.keymap.set
+km_set({"n", "v"}, "<Space>", "<Nop>", {silent = true})
+km_set("n", "k", "v:count == 0 ? 'gk' : 'k'", {expr = true, silent = true})
+km_set("n", "j", "v:count == 0 ? 'gj' : 'j'", {expr = true, silent = true})
+km_set("n", "<A-Down>", ":m .+1<CR>==", {desc = "Move line down", silent = true})
+km_set("n", "<A-Up>", ":m .-2<CR>==", {desc = "Move line up", silent = true})
+km_set("i", "<A-Down>", "<Esc>:m .+1<CR>==gi", {desc = "Move line down", silent = true})
+km_set("i", "<A-Up>", "<Esc>:m .-2<CR>==gi", {desc = "Move line up", silent = true})
+km_set("v", "<A-Down>", ":m '>+1<CR>gv=gv", {desc = "Move line down", silent = true})
+km_set("v", "<A-Up>", ":m '<-2<CR>gv=gv", {desc = "Move line up", silent = true})
+km_set("n", "<leader>o", "o<Esc>k", {silent = true})
+km_set("n", "<leader>O", "O<Esc>j", {silent = true})
+km_set({"n", "v"}, "<leader>dd", "\"_dd<Esc>", {silent = true})
+km_set({"v"}, "<leader>d", "\"_d<Esc>", {silent = true})
+km_set({"n"}, "<leader>x", "\"_x<Esc>", {silent = true})
+km_set("n", "<leader>xa", ":wa | qa<cr>", {desc = "Write and close all buffers while terminal open", silent = true})
+km_set("n", "<leader>w", ":w<cr>", {desc = "[W]rite", silent = true})
+km_set("n", "<leader>wa", ":wa<cr>", {desc = "[W]rite [A]ll", silent = true})
+km_set("n", "<C-a>", ":normal gg0vG$<cr>", {desc = "Select all text"})
+local function _1_()
+  return vim.diagnostic.jump({count = 1, float = true})
+end
+km_set("n", "[d", _1_, {desc = "Go to previous diagnostic message"})
+local function _2_()
+  return vim.diagnostic.jump({count = -1, float = true})
+end
+km_set("n", "]d", _2_, {desc = "Go to next diagnostic message"})
+km_set("n", "<leader>d", vim.diagnostic.open_float, {desc = "Open floating diagnostic message"})
+km_set("n", "<leader>c", ":let @+=expand('%')<cr>", {desc = "[C]opy current buffer name", silent = true})
+km_set("i", "<C-L>", "<Plug>(copilot-accept-word)")
+km_set("n", "<leader>gs", ":Git<CR>")
+km_set("n", "<leader>gd", ":Gdiffsplit<CR>")
+km_set("n", "<leader>gc", ":Git commit<CR>")
+km_set("n", "<leader>gb", ":Git blame<CR>")
+km_set("n", "<leader>gm", ":Git mergetool<CR>")
+vim.opt.diffopt:append("algorithm:patience")
+return vim.opt.diffopt:append("indent-heuristic")

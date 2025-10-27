@@ -1,11 +1,3 @@
-vim.fn.setenv("ENV_VAR", "value")
-
-
-vim.api.nvim_create_autocmd("BufWritePost", {group = group, callback = function()
-
-end })
-
-
 return {
   name = "jsonc",
   ft = { "jsonc" },
@@ -16,7 +8,18 @@ return {
   formatter = {
     name = "prettierd",
     actions = {
-      function() return require("formatter.filetypes.json").prettierd() end,
+      function()
+        local util = require "formatter.util"
+        return {
+          exe = string.format(
+            "PRETTIERD_DEFAULT_CONFIG=%s %s",
+            vim.fn.expand "~/.config/nvim/lua/configs/linter/.prettierrc.json",
+            "prettierd"
+          ),
+          args = { util.escape_path(util.get_current_buffer_file_path()) },
+          stdin = true,
+        }
+      end,
     },
   },
   treesitter = "jsonc",

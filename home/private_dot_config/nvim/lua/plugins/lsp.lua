@@ -56,12 +56,11 @@ return {
                   -- This has a dependency on mkfifo at the moment,
                   -- so it can't be used on Windows.
                   require("fzf-lua").lsp_code_actions {
-                    winoonts = {
+                    winopts = {
                       relative = "cursor",
                       width = 0.6,
                       height = 0.6,
                       row = 1,
-                      preview = { vertical = "up:70%" },
                     },
                   }
                 end
