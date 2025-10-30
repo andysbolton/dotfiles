@@ -70,13 +70,6 @@ return {
         "<cmd>ToggleTerm size=80 direction=vertical<cr>",
         { silent = true, desc = "[T]oggle [s]ide terminal" }
       )
-
-      -- local term_insert_group = vim.api.nvim_create_augroup("TermStartInsert", { clear = true })
-      -- vim.api.nvim_create_autocmd("BufEnter", {
-      --   callback = start_insert,
-      --   group = term_insert_group,
-      --   pattern = "term://*",
-      -- })
     end,
   },
 }

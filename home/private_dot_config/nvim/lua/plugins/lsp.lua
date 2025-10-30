@@ -211,9 +211,4 @@ return {
       "onsails/lspkind.nvim",
     },
   },
-
-  -- {
-  --   "ray-x/lsp_signature.nvim",
-  --   config = true,
-  -- },
 }

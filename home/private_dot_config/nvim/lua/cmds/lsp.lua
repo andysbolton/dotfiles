@@ -1,15 +1,15 @@
 -- [nfnl] fnl/cmds/lsp.fnl
 local M = {}
 local lsp_util = vim.lsp.util
-local buf_request_all = vim.api["buf_request_all"]
-local nvim_buf_clear_namespace = vim.api["nvim_buf_clear_namespace"]
-local nvim_buf_set_extmark = vim.api["nvim_buf_set_extmark"]
-local nvim_create_augroup = vim.api["nvim_create_augroup"]
-local nvim_create_autocmd = vim.api["nvim_create_autocmd"]
-local nvim_create_namespace = vim.api["nvim_create_namespace"]
-local nvim_win_get_cursor = vim.api["nvim_win_get_cursor"]
+local buf_request_all = vim.api.buf_request_all
+local nvim_buf_clear_namespace = vim.api.nvim_buf_clear_namespace
+local nvim_buf_set_extmark = vim.api.nvim_buf_set_extmark
+local nvim_create_augroup = vim.api.nvim_create_augroup
+local nvim_create_autocmd = vim.api.nvim_create_autocmd
+local nvim_create_namespace = vim.api.nvim_create_namespace
+local nvim_win_get_cursor = vim.api.nvim_win_get_cursor
 vim.fn.sign_define("light_bulb_sign", {text = "\240\159\146\161", texthl = "LspDiagnosticsDefaultInformation"})
-vim.diagnostic.config({virtual_text = true, virtual_lines = false})
+vim.diagnostic.config({virtual_lines = true, virtual_text = false})
 local function buf_request_callback(line, ns_id, bufnr, res)
   vim.fn.sign_unplace("light_bulb_sign")
   nvim_buf_clear_namespace(bufnr, ns_id, 0, -1)

@@ -10,83 +10,8 @@ return {
     branch = "master",
   },
   {
-    "toppair/peek.nvim",
-    event = { "VeryLazy" },
-    build = "deno task --quiet build:fast",
-    keys = {
-      {
-        "<leader>po",
-        function() require("peek").open() end,
-        mode = { "n" },
-        desc = "[P]eek [o]pen (markdown preview)",
-      },
-      {
-        "<leader>pc",
-        function() require("peek").close() end,
-        mode = { "n" },
-        desc = "[P]eek [c]lose (markdown preview)",
-      },
-    },
-    config = true,
-  },
-  {
     "williamboman/mason.nvim",
     config = true,
-  },
-  "gpanders/nvim-parinfer",
-  {
-    "julienvincent/nvim-paredit",
-    config = function()
-      local paredit = require "nvim-paredit"
-      paredit.setup {
-        indent = { enable = true },
-        keys = {
-          ["<localleader>wh"] = {
-            function()
-              -- place cursor and set mode to `insert`
-              paredit.cursor.place_cursor(
-                -- wrap element under cursor with `( ` and `)`
-                paredit.wrap.wrap_element_under_cursor("( ", ")"),
-                -- cursor placement opts
-                { placement = "inner_start", mode = "insert" }
-              )
-            end,
-            "[W]rap element insert [h]ead",
-          },
-
-          ["<localleader>wt"] = {
-            function()
-              paredit.cursor.place_cursor(
-                paredit.wrap.wrap_element_under_cursor("(", ")"),
-                { placement = "inner_end", mode = "insert" }
-              )
-            end,
-            "[W]rap element insert [t]ail",
-          },
-
-          -- same as above but for enclosing form
-          ["<localleader>weh"] = {
-            function()
-              paredit.cursor.place_cursor(
-                paredit.wrap.wrap_enclosing_form_under_cursor("( ", ")"),
-                { placement = "inner_start", mode = "insert" }
-              )
-            end,
-            "[W]rap [e]nclosing form insert [h]ead",
-          },
-
-          ["<localleader>wet"] = {
-            function()
-              paredit.cursor.place_cursor(
-                paredit.wrap.wrap_enclosing_form_under_cursor("(", ")"),
-                { placement = "inner_end", mode = "insert" }
-              )
-            end,
-            "[W]rap [e]nclosing form insert [t]ail",
-          },
-        },
-      }
-    end,
   },
   {
     "numToStr/Comment.nvim",
@@ -103,7 +28,6 @@ return {
     init = function() vim.g["chezmoi#use_tmp_buffer"] = true end,
   },
   "tpope/vim-sensible",
-  -- "github/copilot.vim",
   -- Detect tabstop and shiftwidth automatically
   "tpope/vim-sleuth",
   "romainl/vim-cool",

@@ -1,4 +1,3 @@
----@diagnostic disable: missing-fields
 return {
   {
     "akinsho/bufferline.nvim",
@@ -135,39 +134,11 @@ return {
           DEBUG = "",
           TRACE = "✎",
         },
-        max_width = 100,
         render = "wrapped-default",
       }
       vim.notify = require "notify"
     end,
   },
-
-  -- {
-  --   "folke/noice.nvim",
-  --   event = "VeryLazy",
-  --   opts = {
-  --     lsp = {
-  --       -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-  --       override = {
-  --         ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-  --         ["vim.lsp.util.stylize_markdown"] = true,
-  --         ["cmp.entry.get_documentation"] = true,
-  --       },
-  --     },
-  --     -- you can enable a preset for easier configuration
-  --     presets = {
-  --       bottom_search = true, -- use a classic bottom cmdline for search
-  --       command_palette = false, -- position the cmdline and popupmenu together
-  --       -- long_message_to_split = true, -- long messages will be sent to a split
-  --       inc_rename = false, -- enables an input dialog for inc-rename.nvim
-  --       lsp_doc_border = true, -- add a border to hover docs and signature help
-  --     },
-  --   },
-  --   dependencies = {
-  --     "MunifTanjim/nui.nvim",
-  --     "rcarriga/nvim-notify",
-  --   },
-  -- },
 
   {
     "mrjones2014/smart-splits.nvim",
@@ -238,82 +209,4 @@ return {
       },
     },
   },
-
-  {
-    "kevinhwang91/nvim-bqf",
-    dependencies = {
-      { "junegunn/fzf", config = function() vim.fn["fzf#install"]() end },
-    },
-    ft = "qf",
-    config = function()
-      -- Adapt fzf's delimiter in nvim-bqf
-      require("bqf").setup {
-        auto_enable = true,
-        auto_resize_height = true, -- highly recommended enable
-        preview = {
-          win_height = 12,
-          win_vheight = 12,
-          delay_syntax = 80,
-          border = { "┏", "━", "┓", "┃", "┛", "━", "┗", "┃" },
-          show_title = false,
-        },
-        filter = {
-          fzf = {
-            extra_opts = { "--bind", "ctrl-o:toggle-all", "--delimiter", "│" },
-          },
-        },
-      }
-    end,
-  },
-
-  -- "wfxr/minimap.vim",
-  -- {
-  --   "Isrothy/neominimap.nvim",
-  --   version = "v3.*.*",
-  --   enabled = true,
-  --   lazy = false, -- NOTE: NO NEED to Lazy load
-  --   -- Optional
-  --   keys = {
-  --     -- Global Minimap Controls
-  --     { "<leader>nm", "<cmd>Neominimap toggle<cr>", desc = "Toggle global minimap" },
-  --     { "<leader>no", "<cmd>Neominimap on<cr>", desc = "Enable global minimap" },
-  --     { "<leader>nc", "<cmd>Neominimap off<cr>", desc = "Disable global minimap" },
-  --     { "<leader>nr", "<cmd>Neominimap refresh<cr>", desc = "Refresh global minimap" },
-  --
-  --     -- Window-Specific Minimap Controls
-  --     { "<leader>nwt", "<cmd>Neominimap winToggle<cr>", desc = "Toggle minimap for current window" },
-  --     { "<leader>nwr", "<cmd>Neominimap winRefresh<cr>", desc = "Refresh minimap for current window" },
-  --     { "<leader>nwo", "<cmd>Neominimap winOn<cr>", desc = "Enable minimap for current window" },
-  --     { "<leader>nwc", "<cmd>Neominimap winOff<cr>", desc = "Disable minimap for current window" },
-  --
-  --     -- Tab-Specific Minimap Controls
-  --     { "<leader>ntt", "<cmd>Neominimap tabToggle<cr>", desc = "Toggle minimap for current tab" },
-  --     { "<leader>ntr", "<cmd>Neominimap tabRefresh<cr>", desc = "Refresh minimap for current tab" },
-  --     { "<leader>nto", "<cmd>Neominimap tabOn<cr>", desc = "Enable minimap for current tab" },
-  --     { "<leader>ntc", "<cmd>Neominimap tabOff<cr>", desc = "Disable minimap for current tab" },
-  --
-  --     -- Buffer-Specific Minimap Controls
-  --     { "<leader>nbt", "<cmd>Neominimap bufToggle<cr>", desc = "Toggle minimap for current buffer" },
-  --     { "<leader>nbr", "<cmd>Neominimap bufRefresh<cr>", desc = "Refresh minimap for current buffer" },
-  --     { "<leader>nbo", "<cmd>Neominimap bufOn<cr>", desc = "Enable minimap for current buffer" },
-  --     { "<leader>nbc", "<cmd>Neominimap bufOff<cr>", desc = "Disable minimap for current buffer" },
-  --
-  --     ---Focus Controls
-  --     { "<leader>nf", "<cmd>Neominimap focus<cr>", desc = "Focus on minimap" },
-  --     { "<leader>nu", "<cmd>Neominimap unfocus<cr>", desc = "Unfocus minimap" },
-  --     { "<leader>ns", "<cmd>Neominimap toggleFocus<cr>", desc = "Switch focus on minimap" },
-  --   },
-  --   init = function()
-  --     vim.opt.wrap = false
-  --     vim.opt.sidescrolloff = 36 -- Set a large value
-  --
-  --     vim.g.neominimap = {
-  --       auto_enable = true,
-  --     }
-  --   end,
-  -- },
-  -- {
-  --   "petertriho/nvim-scrollbar",
-  --   config = true,
-  -- },
 }

@@ -41,12 +41,18 @@
 (set vim.o.softtabstop 4)
 (set vim.o.expandtab true)
 
+(set vim.o.autoread true)
+; I should move this out of this file.
+(vim.api.nvim_create_autocmd [:BufEnter :CursorHold :CursorHoldI :FocusGained]
+                             {:command "if mode() != 'c' | checktime | endif"
+                              :pattern ["*"]})
+
 (set vim.opt.list true)
-(table.insert vim.opt.listchars {:extends "›"
-                                 :precedes "‹"
-                                 :eol "⏎"
-                                 :trail "·"
-                                 :nbsp "⎵"
-                                 :space " "})
+(vim.opt.listchars:append {:extends "›"
+                           :precedes "‹"
+                           :eol "⏎"
+                           :trail "·"
+                           :nbsp "⎵"
+                           :space " "})
 
 (set vim.o.mousemoveevent true)
