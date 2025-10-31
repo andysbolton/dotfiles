@@ -13,7 +13,7 @@ return {
         },
         suggestion = {
           keymap = {
-            accept = "<M-j>",
+            accept = "<C-j>",
           },
           auto_trigger = true,
           layout = {
@@ -27,10 +27,10 @@ return {
       }
     end,
   },
-  -- {
-  --   "zbirenbaum/copilot-cmp",
-  --   config = function() require("copilot_cmp").setup() end,
-  -- },
+  {
+    "zbirenbaum/copilot-cmp",
+    config = function() require("copilot_cmp").setup() end,
+  },
   -- {
   --   "CopilotC-Nvim/CopilotChat.nvim",
   --   dependencies = {

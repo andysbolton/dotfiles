@@ -6,9 +6,6 @@
 (set vim.g.maplocalleader " ")
 (set vim.g.copilot_no_tab_map true)
 (set vim.o.winborder :rounded)
-(set vim.opt.messages :delta)
-(vim.api.nvim_set_keymap :i :<C-J> "copilot#Accept(\"<CR>\")"
-                         {:silent true :expr true})
 
 ; bootstrap lazy
 (local lazypath (.. (vim.fn.stdpath :data) :/lazy/lazy.nvim))
