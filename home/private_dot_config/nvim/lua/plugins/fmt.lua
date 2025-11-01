@@ -1,42 +1,46 @@
-local formatters = require("configs.util").get_formatters()
-
-local formatter_names = {}
-local filetype_actions = {}
-for _, formatter in pairs(formatters) do
-  if formatter.name and not formatter.use_lsp and formatter.autoinstall ~= false then
-    table.insert(formatter_names, formatter.name)
-  end
-  for _, filetype in pairs(formatter.filetypes or {}) do
-    filetype_actions[filetype] = formatter.actions
-  end
+-- [nfnl] fnl/plugins/fmt.fnl
+local formatters
+do
+  local _let_1_ = require("configs.util")
+  local get_formatters = _let_1_.get_formatters
+  formatters = get_formatters()
 end
-
-return {
-  {
-    "mhartington/formatter.nvim",
-    dependencies = {
-      "williamboman/mason.nvim",
-      "WhoIsSethDaniel/mason-tool-installer.nvim",
-    },
-    config = function()
-      require("mason-tool-installer").setup {
-        ensure_installed = { table.unpack(formatter_names) },
-      }
-
-      if vim.fn.has "win32" == 0 then
-        -- This formatter is dependent on sed, so disabling for win32.
-        filetype_actions["*"] = {
-          require("formatter.filetypes.any").remove_trailing_whitespace,
-        }
-      end
-
-      require("formatter").setup {
-        logging = true,
-        log_level = vim.log.levels.WARN,
-        filetype = filetype_actions,
-      }
-
-      require("cmds.fmt").register_formatters()
-    end,
-  },
-}
+local formatter_names
+do
+  local acc = {}
+  for _, formatter in pairs(formatters) do
+    if (formatter.name and (formatter.use_lsp ~= true) and (formatter.autoinstall ~= false)) then
+      table.insert(acc, formatter.name)
+    else
+    end
+    acc = acc
+  end
+  formatter_names = acc
+end
+local filetype_actions
+do
+  local acc = {}
+  for _, formatter in pairs(formatters) do
+    for _0, filetype in pairs((formatter.filetypes or {})) do
+      acc[filetype] = formatter.actions
+    end
+    acc = acc
+  end
+  filetype_actions = acc
+end
+local function _3_()
+  local mason_tool_installer = require("mason-tool-installer")
+  local _let_4_ = require("formatter.filetypes.any")
+  local remove_trailing_whitespace = _let_4_.remove_trailing_whitespace
+  local _let_5_ = require("cmds.fmt")
+  local register_formatters = _let_5_.register_formatters
+  local formatter = require("formatter")
+  mason_tool_installer.setup({ensure_installed = {table.unpack(formatter_names)}})
+  if (vim.fn.has == "win32") then
+    filetype_actions["*"] = remove_trailing_whitespace()
+  else
+  end
+  formatter.setup({logging = true, log_level = vim.log.levels.WARN, filetype = filetype_actions})
+  return register_formatters()
+end
+return {{"mhartington/formatter.nvim", config = _3_, dependencies = {"williamboman/mason.nvim", "WhoIsSethDaniel/mason-tool-installer.nvim"}}}

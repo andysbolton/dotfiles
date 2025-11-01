@@ -3,8 +3,8 @@
 [:gpanders/fennel-repl.nvim
  :gpanders/nvim-parinfer
  :vlime/vlime
- ; (tx :Olical/conjure {:config #(set vim.g.conjure#extract#tree_sitter#enabled
- ;                                    true)})
+ (tx :Olical/conjure {:config #(set vim.g.conjure#extract#tree_sitter#enabled
+                                    true)})
  (tx :julienvincent/nvim-paredit
      {:config (fn []
                 (let [paredit (require :nvim-paredit)]
