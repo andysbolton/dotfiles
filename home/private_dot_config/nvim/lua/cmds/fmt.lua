@@ -23,9 +23,19 @@ for _, lang in pairs(config_utils.get_configs()) do
   end
 end
 local function get_file_name(path)
-  local matches = {}
-  for seg in string.gmatch(path, "([^/\\]+)") do
-    table.insert(matches, seg)
+  local matches
+  do
+    local tbl_26_ = {}
+    local i_27_ = 0
+    for seg in string.gmatch(path, "([^/\\]+)") do
+      local val_28_ = seg
+      if (nil ~= val_28_) then
+        i_27_ = (i_27_ + 1)
+        tbl_26_[i_27_] = val_28_
+      else
+      end
+    end
+    matches = tbl_26_
   end
   return matches[#matches]
 end
@@ -34,11 +44,12 @@ local function buf_write_post_callback(ev)
   if formatter then
     if formatter.use_lsp then
       vim.lsp.buf.format()
+      return vim.cmd("FormatWrite")
+    elseif vim.notify(("Formatted " .. get_file_name(ev.file) .. " with " .. (formatter.name or "[couldn't find formatter name]") .. ((formatter.use_lsp and " (LSP)") or "") .. " (buf " .. ev.buf .. ").")) then
+      return nil
     else
-      vim.cmd("FormatWrite")
+      return nil
     end
-    vim.notify(("Formatted " .. get_file_name(ev.file) .. " with " .. (formatter.name or "[couldn't find formatter name]") .. ((formatter.use_lsp and " (LSP)") or "") .. " (buf " .. ev.buf .. ")."))
-    return nil
   else
     return nil
   end

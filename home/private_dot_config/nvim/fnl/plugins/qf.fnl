@@ -16,22 +16,21 @@
                                        {:desc "Collapse quickfix context"})]})))})
  (tx :kevinhwang91/nvim-bqf
      {:ft :qf
-      :config (fn []
-                (let [{: setup} (require :bqf)]
-                  (setup {:auto_enable true} :auto_resize_height true :preview
-                         {:win_height 12
-                          :win_vheight 12
-                          :delay_syntax 80
-                          :show_title false
-                          :border ["┏"
-                                   "━"
-                                   "┓"
-                                   "┃"
-                                   "┛"
-                                   "━"
-                                   "┗"
-                                   "┃"]} :filter
-                         {:fzf {:extra_opts [:--bind
-                                             "ctrl-o:toggle-all"
-                                             :--delimiter
-                                             "│"]}})))})]
+      :config #(let [{: setup} (require :bqf)]
+                 (setup {:auto_enable true} :auto_resize_height true :preview
+                        {:win_height 12
+                         :win_vheight 12
+                         :delay_syntax 80
+                         :show_title false
+                         :border ["┏"
+                                  "━"
+                                  "┓"
+                                  "┃"
+                                  "┛"
+                                  "━"
+                                  "┗"
+                                  "┃"]} :filter
+                        {:fzf {:extra_opts [:--bind
+                                            "ctrl-o:toggle-all"
+                                            :--delimiter
+                                            "│"]}}))})]

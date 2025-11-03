@@ -5,28 +5,22 @@ do
   local get_formatters = _let_1_.get_formatters
   formatters = get_formatters()
 end
-local formatter_names
+local formatter_names, filetype_actions
 do
-  local acc = {}
+  local formatter_names0 = {}
+  local filetype_actions0 = {}
   for _, formatter in pairs(formatters) do
-    if (formatter.name and (formatter.use_lsp ~= true) and (formatter.autoinstall ~= false)) then
-      table.insert(acc, formatter.name)
-    else
+    do
+      if (formatter.name and (formatter.use_lsp ~= true) and (formatter.autoinstall ~= false)) then
+        table.insert(formatter_names0, formatter.name)
+      else
+      end
     end
-    acc = acc
-  end
-  formatter_names = acc
-end
-local filetype_actions
-do
-  local acc = {}
-  for _, formatter in pairs(formatters) do
     for _0, filetype in pairs((formatter.filetypes or {})) do
-      acc[filetype] = formatter.actions
+      filetype_actions0[filetype] = formatter.actions
     end
-    acc = acc
   end
-  filetype_actions = acc
+  formatter_names, filetype_actions = formatter_names0, filetype_actions0
 end
 local function _3_()
   local mason_tool_installer = require("mason-tool-installer")

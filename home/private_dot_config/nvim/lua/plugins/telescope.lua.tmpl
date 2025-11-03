@@ -44,9 +44,9 @@ return {
       { "<leader>sd", function() require("telescope.builtin").diagnostics() end, desc = "[S]earch [D]iagnostics" },
       { "<leader>sk", function() require("telescope.builtin").keymaps() end, desc = "[S]earch [K]eymaps" },
       {
-        "<leader>ss",
+        "<leader>ssn",
         function() require("telescope").extensions.luasnip.luasnip {} end,
-        desc = "[S]earch [S]ymbols",
+        desc = "[S]earch [S][n]ippets",
       },
       {
         "<leader>/",
