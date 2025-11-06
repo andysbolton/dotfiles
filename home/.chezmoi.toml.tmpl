@@ -24,9 +24,18 @@
     command = "nvim"
     args = [
         "-d", 
+        "-O",
         {{ printf "%q" "{{ .Destination }}" }},
         {{ printf "%q" "{{ .Source }}" }},
-        {{ printf "%q" "{{ .Target }}" }}
+        {{ printf "%q" "{{ .Target }}" }},
+        "-c",
+        "set diffopt+=horizontal",
+        "-c",
+        "new",
+        "-c",
+        "wincmd J",
+        "-c",
+        {{ printf "%q" "e {{ .Source }}" }}
     ]
 
 [diff]
