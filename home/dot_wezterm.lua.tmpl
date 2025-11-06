@@ -170,6 +170,11 @@ config.keys = {
 	},
 	{ key = "V", mods = "CTRL", action = act.PasteFrom 'Clipboard' },
 	{ key = "V", mods = "CTRL", action = act.PasteFrom 'PrimarySelection' },
+	{
+		key = "Enter",
+		mods = "ALT",
+		action = wezterm.action.DisableDefaultAssignment,
+	},
 }
 
 return config

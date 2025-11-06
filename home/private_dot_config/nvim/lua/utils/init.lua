@@ -1,9 +1,6 @@
+-- [nfnl] fnl/utils/init.fnl
 local M = {}
-
-local function empty(table)
-    return table == nil or next(table) == nil
+M.empty = function(table)
+  return ((nil == table) or (nil == next(table)))
 end
-
-M.empty = empty
-
 return M

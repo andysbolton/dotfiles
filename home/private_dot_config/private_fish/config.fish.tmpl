@@ -2,24 +2,26 @@ fish_add_path ~/smartwyre/infra-orchestrator/scripts/util
 
 fish_add_path ~/.local/bin
 fish_add_path ~/bin
-fish_add_path /usr/local/go/bin
-fish_add_path ~/.cargo/bin
-# fish_add_path ~/.asdf/installs/lua/5.4.6/luarocks/bin
 
-fish_add_path ~/.dotnet/tools
-# fish_add_path ~/go/bin
-
+{{- if ne .chezmoi.osRelease.id "nixos" }}
 set asdf_fish_path (dirname (dirname (readlink -f (which asdf))))/share/asdf-vm/asdf.fish
 
 if [ -f $asdf_fish_path ]
     . $asdf_fish_path
 end
-# . $asdf_location/plugins/dotnet-core/set-dotnet-home.fish
+fish_add_path ~/.cargo/bin
+fish_add_path ~/.dotnet/tools
+fish_add_path ~/.asdf/installs/lua/5.4.6/luarocks/bin
+. $asdf_location/plugins/dotnet-core/set-dotnet-home.fish
+fish_add_path ~/go/bin
+fish_add_path /usr/local/go/bin
+{{- end }}
 
 set -gx BROWSER firefox 
 set -gx EDITOR nvim
 set -gx RIPGREP_CONFIG_PATH $HOME/.ripgreprc
 set -gx MANPAGER "sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
+# set -x MANGOHUD 1
 # set -x GOPATH $(go env GOPATH)
 
 alias cm="chezmoi"
@@ -34,6 +36,8 @@ alias rc="riverconf"
 alias wayconf='nvim --cmd ":cd ~/.config/waybar"'
 alias wyc="wayconf"
 alias lrepl="lein repl"
+alias ls="lsd"
+alias syc="systemctl"
 
 bind \cS 'history-pager'
 
@@ -84,6 +88,12 @@ end
 function ops
     eval $(op signin)
 end
+
+{{- if eq .chezmoi.osRelease.id "nixos" }}
+function nix-which
+    readlink -f (which $argv[1])
+end
+{{ end -}}
 
 function exercism
     if [ $argv[1] = "download" ]

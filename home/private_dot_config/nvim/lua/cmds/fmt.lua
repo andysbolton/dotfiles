@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/cmds/fmt.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] fnl/cmds/fmt.fnl
 local M = {}
 local config_utils = require("configs.util")
 local utils = require("utils")
@@ -23,28 +23,39 @@ for _, lang in pairs(config_utils.get_configs()) do
   end
 end
 local function get_file_name(path)
-  local matches = {}
-  for seg in string.gmatch(path, "([^/\\]+)") do
-    table.insert(matches, seg)
+  local matches
+  do
+    local tbl_26_ = {}
+    local i_27_ = 0
+    for seg in string.gmatch(path, "([^/\\]+)") do
+      local val_28_ = seg
+      if (nil ~= val_28_) then
+        i_27_ = (i_27_ + 1)
+        tbl_26_[i_27_] = val_28_
+      else
+      end
+    end
+    matches = tbl_26_
   end
   return matches[#matches]
 end
-M.register_formatters = function()
-  local group = vim.api.nvim_create_augroup("formatting-group", {clear = true})
-  local function _5_(ev)
-    local formatter = formatters_by_ft[vim.bo.filetype]
-    if formatter then
-      if formatter.use_lsp then
-        vim.lsp.buf.format()
-      else
-        vim.cmd("FormatWrite")
-      end
-      vim.notify(("Formatted " .. get_file_name(ev.file) .. " with " .. (formatter.name or "[couldn't find formatter name]") .. ((formatter.use_lsp and " (LSP)") or "") .. " (buf " .. ev.buf .. ")."))
+local function buf_write_post_callback(ev)
+  local formatter = formatters_by_ft[vim.bo.filetype]
+  if formatter then
+    if formatter.use_lsp then
+      vim.lsp.buf.format()
+      return vim.cmd("FormatWrite")
+    elseif vim.notify(("Formatted " .. get_file_name(ev.file) .. " with " .. (formatter.name or "[couldn't find formatter name]") .. ((formatter.use_lsp and " (LSP)") or "") .. " (buf " .. ev.buf .. ").")) then
       return nil
     else
       return nil
     end
+  else
+    return nil
   end
-  return vim.api.nvim_create_autocmd("BufWritePost", {group = group, callback = _5_})
+end
+M.register_formatters = function()
+  local group = vim.api.nvim_create_augroup("formatting-group", {clear = true})
+  return vim.api.nvim_create_autocmd("BufWritePost", {group = group, callback = buf_write_post_callback})
 end
 return M

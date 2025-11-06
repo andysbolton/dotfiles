@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/cmds/init.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] fnl/cmds/init.fnl
 local highlight_group = vim.api.nvim_create_augroup("highlight_on_yank", {clear = true})
 local function _1_()
   vim.highlight.on_yank()

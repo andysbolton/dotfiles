@@ -6,6 +6,7 @@ return {
       "nvim-lua/plenary.nvim",
       "BurntSushi/ripgrep",
       "nvim-telescope/telescope-live-grep-args.nvim",
+      "benfowler/telescope-luasnip.nvim",
     },
     keys = {
       {
@@ -41,7 +42,12 @@ return {
         desc = "[S]earch by [G]rep",
       },
       { "<leader>sd", function() require("telescope.builtin").diagnostics() end, desc = "[S]earch [D]iagnostics" },
-      { "<leader>km", function() require("telescope.builtin").keymaps() end, desc = "[S]earch [K]eymaps" },
+      { "<leader>sk", function() require("telescope.builtin").keymaps() end, desc = "[S]earch [K]eymaps" },
+      {
+        "<leader>ssn",
+        function() require("telescope").extensions.luasnip.luasnip {} end,
+        desc = "[S]earch [S][n]ippets",
+      },
       {
         "<leader>/",
         function()
@@ -62,7 +68,7 @@ return {
             mappings = {
               i = {
                 ["<C-h>"] = lga_actions.quote_prompt { postfix = " --hidden" },
-                ["<C-i>"] = lga_actions.quote_prompt { postfix = " --iglob " },
+                ["<C-i>"] = lga_actions.quote_prompt { postfix = " --iglob" },
                 ["<C-k>"] = lga_actions.quote_prompt(),
               },
             },
@@ -82,12 +88,15 @@ return {
           },
         },
       }
+
+      require("telescope").load_extension "luasnip"
+
       -- Enable telescope fzf native, if installed
       pcall(require("telescope").load_extension, "fzf")
     end,
   },
   {
-    'nvim-telescope/telescope-fzf-native.nvim',
+    "nvim-telescope/telescope-fzf-native.nvim",
     {{- if eq .chezmoi.os "windows" }}
     build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
     cond = function()
