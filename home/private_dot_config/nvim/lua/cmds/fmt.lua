@@ -44,12 +44,11 @@ local function buf_write_post_callback(ev)
   if formatter then
     if formatter.use_lsp then
       vim.lsp.buf.format()
-      return vim.cmd("FormatWrite")
-    elseif vim.notify(("Formatted " .. get_file_name(ev.file) .. " with " .. (formatter.name or "[couldn't find formatter name]") .. ((formatter.use_lsp and " (LSP)") or "") .. " (buf " .. ev.buf .. ").")) then
-      return nil
     else
-      return nil
+      vim.cmd("FormatWrite")
     end
+    vim.notify(("Formatted " .. get_file_name(ev.file) .. " with " .. (formatter.name or "[couldn't find formatter name]") .. ((formatter.use_lsp and " (LSP)") or "") .. " (buf " .. ev.buf .. ")."))
+    return nil
   else
     return nil
   end
