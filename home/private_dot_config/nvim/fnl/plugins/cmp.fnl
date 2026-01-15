@@ -24,11 +24,13 @@
                                                                    :<C-p> (cmp.mapping.select_prev_item)
                                                                    :<C-e> (cmp.mapping.abort)
                                                                    :<CR> (cmp.mapping (fn [fallback]
-                                                                                        (if (cmp.visible)
-                                                                                            (if (luasnip.expandable)
-                                                                                                (luasnip.expand)
-                                                                                                (cmp.confirm))
-                                                                                            (fallback))))
+                                                                                        (let [entry (cmp.get_selected_entry)]
+                                                                                          (if entry
+                                                                                              (if (cmp.visible)
+                                                                                                  (if (luasnip.expandable)
+                                                                                                      (luasnip.expand)
+                                                                                                      (cmp.confirm {:select true})))
+                                                                                              (fallback)))))
                                                                    :<Tab> (cmp.mapping (fn [fallback]
                                                                                          (if (luasnip.locally_jumpable 1)
                                                                                              (luasnip.jump 1)

@@ -20,14 +20,14 @@
 (fn buf-write-post-callback [ev]
   (let [formatter (. formatters-by-ft vim.bo.filetype)]
     (when formatter
-      (when formatter.use_lsp
-        (vim.lsp.buf.format {:timeout 3000}))
-      (vim.cmd :FormatWrite)
+      (if formatter.use_lsp
+          (vim.lsp.buf.format)
+          (vim.cmd :FormatWrite))
       (vim.notify (.. "Formatted " (get-file-name ev.file) " with "
                       (or formatter.name "[couldn't find formatter name]")
                       (or (and formatter.use_lsp " (LSP)") "") " (buf " ev.buf
-                      ").")))
-    nil))
+                      ")."))
+      nil)))
 
 ; TODO: Replace function name with kebab case once consumer is refactored.
 (fn M.register_formatters []
