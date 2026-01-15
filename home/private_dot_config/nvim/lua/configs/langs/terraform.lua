@@ -5,7 +5,7 @@ return {
     name = "terraformls",
     settings = {},
   },
-  linter = { name = "tflint" },
+  -- linter = { name = "tflint" },
   formatter = {
     name = "terraformls",
     use_lsp = true,

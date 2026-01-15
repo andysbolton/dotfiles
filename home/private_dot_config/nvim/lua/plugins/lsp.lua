@@ -133,7 +133,6 @@ return {
           mason_lspconfig.setup {
             ensure_installed = language_servers_to_install,
           }
-
           vim.lsp.config("*", {
             capabilities = capabilities,
             on_attach = on_attach,

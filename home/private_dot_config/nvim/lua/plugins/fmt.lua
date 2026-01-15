@@ -30,8 +30,8 @@ local function _3_()
   local register_formatters = _let_5_.register_formatters
   local formatter = require("formatter")
   mason_tool_installer.setup({ensure_installed = {table.unpack(formatter_names)}})
-  if (vim.fn.has == "win32") then
-    filetype_actions["*"] = remove_trailing_whitespace()
+  if (vim.fn.has("win32") == 0) then
+    filetype_actions["*"] = remove_trailing_whitespace
   else
   end
   formatter.setup({logging = true, log_level = vim.log.levels.WARN, filetype = filetype_actions})

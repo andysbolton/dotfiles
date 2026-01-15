@@ -1,5 +1,6 @@
--- [nfnl] init.fnl
+-- [nfnl] Compiled from init.fnl by https://github.com/Olical/nfnl, do not edit.
 table.unpack = (table.unpack or unpack)
+vim.g.python3_host_prog = (vim.fn.expand("~") .. ".asdf/shims/python3")
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.g.copilot_no_tab_map = true

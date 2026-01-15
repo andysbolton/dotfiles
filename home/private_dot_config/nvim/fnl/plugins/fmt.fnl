@@ -8,8 +8,7 @@
              filetype-actions {}]
          (each [_ formatter (pairs formatters)]
            (do
-             (if (and formatter.name
-                      (not= formatter.use_lsp true)
+             (if (and formatter.name (not= formatter.use_lsp true)
                       (not= formatter.autoinstall false))
                  (table.insert formatter-names formatter.name)))
            (each [_ filetype (pairs (or formatter.filetypes {}))]
@@ -24,8 +23,8 @@
                      {: register_formatters} (require :cmds.fmt)
                      formatter (require :formatter)]
                  (mason-tool-installer.setup {:ensure_installed [(table.unpack formatter-names)]})
-                 (if (= vim.fn.has :win32)
-                     (tset filetype-actions "*" (remove_trailing_whitespace)))
+                 (when (= (vim.fn.has :win32) 0)
+                   (tset filetype-actions :* remove_trailing_whitespace))
                  (formatter.setup {:logging true
                                    :log_level vim.log.levels.WARN
                                    :filetype filetype-actions})

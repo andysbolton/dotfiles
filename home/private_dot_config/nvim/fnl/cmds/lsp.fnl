@@ -12,7 +12,7 @@
 (vim.fn.sign_define :light_bulb_sign
                     {:text "💡" :texthl :LspDiagnosticsDefaultInformation})
 
-(vim.diagnostic.config {:virtual_text false :virtual_lines true})
+(vim.diagnostic.config {:virtual_text true :virtual_lines false})
 
 (fn buf-request-callback [line ns_id bufnr res]
   (vim.fn.sign_unplace :light_bulb_sign)

@@ -64,6 +64,7 @@ return {
       require("telescope").setup {
         extensions = {
           live_grep_args = {
+            file_ignore_patterns = { ".git/" },
             auto_quoting = true,
             mappings = {
               i = {
@@ -84,6 +85,7 @@ return {
         },
         pickers = {
           find_files = {
+            file_ignore_patterns = { ".git/" },
             hidden = true,
           },
         },

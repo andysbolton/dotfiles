@@ -43,16 +43,14 @@ local function buf_write_post_callback(ev)
   local formatter = formatters_by_ft[vim.bo.filetype]
   if formatter then
     if formatter.use_lsp then
-      vim.lsp.buf.format()
-      return vim.cmd("FormatWrite")
-    elseif vim.notify(("Formatted " .. get_file_name(ev.file) .. " with " .. (formatter.name or "[couldn't find formatter name]") .. ((formatter.use_lsp and " (LSP)") or "") .. " (buf " .. ev.buf .. ").")) then
-      return nil
+      vim.lsp.buf.format({timeout = 3000})
     else
-      return nil
     end
+    vim.cmd("FormatWrite")
+    vim.notify(("Formatted " .. get_file_name(ev.file) .. " with " .. (formatter.name or "[couldn't find formatter name]") .. ((formatter.use_lsp and " (LSP)") or "") .. " (buf " .. ev.buf .. ")."))
   else
-    return nil
   end
+  return nil
 end
 M.register_formatters = function()
   local group = vim.api.nvim_create_augroup("formatting-group", {clear = true})
