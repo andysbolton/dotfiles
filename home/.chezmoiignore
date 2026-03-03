@@ -7,7 +7,7 @@
 .chezmoiscripts/debian/**
 {{- end}}
 
-{{- if eq .chezmoi.os "linux" }}
+{{- if or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") }}
 .chezmoiscripts/windows/**
 .config/komorebi/**
 .wslconfig

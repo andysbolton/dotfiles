@@ -6,20 +6,9 @@ return {
     settings = {},
   },
   formatter = {
-    name = "prettierd",
+    name = "fixjson",
     actions = {
-      function()
-        local util = require "formatter.util"
-        return {
-          exe = string.format(
-            "PRETTIERD_DEFAULT_CONFIG=%s %s",
-            vim.fn.expand "~/.config/nvim/lua/configs/linter/.prettierrc.json",
-            "prettierd"
-          ),
-          args = { util.escape_path(util.get_current_buffer_file_path()) },
-          stdin = true,
-        }
-      end,
+      function() return require("formatter.filetypes.json").fixjson() end,
     },
   },
   treesitter = "jsonc",

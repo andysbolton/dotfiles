@@ -26,12 +26,17 @@ set --erase _asdf_shims
 # fish_add_path /usr/local/go/bin
 {{- end }}
 
+{{- if eq .chezmoi.osRelease.id "debian" }}
+set -gx BROWSER wslview 
+set -x GOPATH $(go env GOPATH)
+set -x GOBIN $GOPATH/bin
+{{ else }}
 set -gx BROWSER firefox 
+{{ end -}}
 set -gx EDITOR nvim
 set -gx RIPGREP_CONFIG_PATH $HOME/.ripgreprc
 set -gx MANPAGER "sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
 # set -x MANGOHUD 1
-# set -x GOPATH $(go env GOPATH)
 
 alias cm="chezmoi"
 alias cma="chezmoi apply --verbose"

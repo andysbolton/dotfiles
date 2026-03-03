@@ -56,3 +56,5 @@
                            :space " "})
 
 (set vim.o.mousemoveevent true)
+
+(set vim.fileformats "unix")

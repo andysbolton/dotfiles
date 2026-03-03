@@ -25,4 +25,5 @@ vim.api.nvim_create_autocmd({"BufEnter", "CursorHold", "CursorHoldI", "FocusGain
 vim.opt.list = true
 vim.opt.listchars:append({extends = "\226\128\186", precedes = "\226\128\185", eol = "\226\143\142", trail = "\194\183", nbsp = "\226\142\181", space = " "})
 vim.o.mousemoveevent = true
+vim.fileformats = "unix"
 return nil
