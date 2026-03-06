@@ -1,13 +1,13 @@
-{{- if eq .chezmoi.os "windows" }}
+{{- if eq .osid "windows" }}
 .config/fish/
 .tool-versions
 {{- end }}
 
-{{- if or (eq .chezmoi.os "windows") (and (eq .chezmoi.os "linux") (ne .osid "debian")) }}
+{{- if ne .osid "debian" }}
 .chezmoiscripts/debian/**
 {{- end}}
 
-{{- if or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") }}
+{{- if ne .osid "windows" }}
 .chezmoiscripts/windows/**
 .config/komorebi/**
 .wslconfig
@@ -17,7 +17,7 @@ scoop.json
 scoop/
 {{- end }}
 
-{{- if and (eq .chezmoi.os "linux") (eq .osid "nixos") }}
+{{- if eq .osid "nixos" }}
 .config/powershell/**
 {{- end }}
 
