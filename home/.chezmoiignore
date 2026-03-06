@@ -3,7 +3,7 @@
 .tool-versions
 {{- end }}
 
-{{- if or (eq .chezmoi.os "windows") (and (eq .chezmoi.os "linux") (ne .chezmoi.osRelease.id "debian")) }}
+{{- if or (eq .chezmoi.os "windows") (and (eq .chezmoi.os "linux") (ne .osid "debian")) }}
 .chezmoiscripts/debian/**
 {{- end}}
 
@@ -17,11 +17,11 @@ scoop.json
 scoop/
 {{- end }}
 
-{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "nixos") }}
+{{- if and (eq .chezmoi.os "linux") (eq .osid "nixos") }}
 .config/powershell/**
 {{- end }}
 
-{{- if ne .chezmoi.osRelease.id "nixos" }}
+{{- if ne .osid "nixos" }}
 .config/river
 .config/waybar
 {{- end }}
