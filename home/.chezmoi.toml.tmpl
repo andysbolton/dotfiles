@@ -2,9 +2,15 @@
 {{- $lanMouseHost := promptStringOnce . "lanMouse.hostname" "Hostname to connect to with lan-mouse" -}}
 {{- $lanMouseDirection := promptStringOnce . "lanMouse.direction" "Direction for lan-mouse" -}}
 
+{{- $osid := .chezmoi.os -}}
+{{- if hasKey .chezmoi.osRelease "id" -}}
+{{-   $osid = .chezmoi.osRelease.id -}}
+{{- end -}}
+
 [data]
     email = {{ $email | quote }}
     name = "Andy Bolton"
+    osid = {{ $osid | quote }}
 [data.lanMouse]
     host = {{ $lanMouseHost | quote }}
     direction = {{ $lanMouseDirection | quote }}

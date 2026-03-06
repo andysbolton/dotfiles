@@ -3,7 +3,7 @@ fish_add_path ~/smartwyre/infra-orchestrator/scripts/util
 fish_add_path ~/.local/bin
 fish_add_path ~/bin
 
-{{- if ne .chezmoi.osRelease.id "nixos" }}
+{{- if ne .osid "nixos" }}
 # ASDF configuration code
 if test -z $ASDF_DATA_DIR
     set _asdf_shims "$HOME/.asdf/shims"
@@ -26,7 +26,7 @@ set --erase _asdf_shims
 # fish_add_path /usr/local/go/bin
 {{- end }}
 
-{{- if eq .chezmoi.osRelease.id "debian" }}
+{{- if eq .osid "debian" }}
 set -gx BROWSER wslview 
 set -x GOPATH $(go env GOPATH)
 set -x GOBIN $GOPATH/bin
@@ -103,7 +103,7 @@ function ops
     eval $(op signin)
 end
 
-{{ if eq .chezmoi.osRelease.id "nixos" }}
+{{ if eq .osid "nixos" }}
 function nix-which
     readlink -f (which $argv[1])
 end
