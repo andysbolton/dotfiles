@@ -15,12 +15,7 @@ config.adjust_window_size_when_changing_font_size = false
 config.enable_wayland = false
 {{ end -}}
 
-{{ if eq .chezmoi.hostname "work" -}}
--- My thinkpad at work has issues unless using WebGpu
-config.front_end = "WebGpu"
-{{ else -}}
 config.front_end = "OpenGL"
-{{ end -}}
 
 {{ if (eq .chezmoi.os "linux") -}}
 config.default_prog = { "fish" }
@@ -30,7 +25,7 @@ config.default_prog = { "pwsh" }
 
 config.color_scheme = "TokyoNight (Gogh)"
 config.font = wezterm.font("CaskaydiaCove Nerd Font")
-config.font_size = 13
+config.font_size = 15
 config.line_height = 1.1
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 config.use_dead_keys = false
