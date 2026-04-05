@@ -16,5 +16,8 @@ return {
     },
   },
   "APZelos/blamer.nvim",
-  "sindrets/diffview.nvim"
+  {
+    "sindrets/diffview.nvim",
+    config = true,
+  },
 }

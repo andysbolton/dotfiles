@@ -34,22 +34,24 @@ return {
   {
     "rmagatti/auto-session",
     config = function()
-      local function close_neo_tree() require("neo-tree.sources.manager").close_all() end
-
       ---@diagnostic disable-next-line: missing-fields
       require("auto-session").setup {
         log_level = "error",
         pre_save_cmds = {
-          close_neo_tree,
+          "NeotreeClose",
         },
         pre_restore_cmds = {
-          close_neo_tree,
+          "NeotreeClose",
         },
         post_restore_cmds = {
-          function() require("neo-tree.sources.manager").show "filesystem" end,
+          function()
+            if not vim.tbl_contains(vim.v.argv, "DiffviewOpen") then
+              require("neo-tree.sources.manager").show "filesystem"
+              vim.cmd "Neotree show filesystem"
+            end
+          end,
         },
       }
-      -- vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
       vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,localoptions"
     end,
   },

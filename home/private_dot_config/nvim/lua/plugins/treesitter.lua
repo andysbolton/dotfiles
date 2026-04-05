@@ -5,6 +5,7 @@ return {
     "nvim-treesitter/nvim-treesitter-refactor",
     "nvim-treesitter/playground",
   },
+  branch = "master",
   build = ":TSUpdate",
   config = function()
     local treesitters = require("configs.util").get_treesitters()
@@ -16,15 +17,10 @@ return {
 
     require("nvim-treesitter.configs").setup {
       ensure_installed = treesitters,
-
       sync_install = false,
-
       auto_install = false,
-
       modules = {},
-
       ignore_install = {},
-
       highlight = {
         enable = true,
       },
